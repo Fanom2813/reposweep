@@ -261,6 +261,13 @@ export class Application extends Element {
     return true;
   }
 
+  // ===== History =====
+
+  ["on click at button#clear-history"]() {
+    store.clearHistory();
+    return true;
+  }
+
   // ===== Workspace =====
 
   ["on click at button#rescan"]() { store.scan(); return true; }

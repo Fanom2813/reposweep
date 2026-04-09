@@ -102,6 +102,8 @@ html:not(:theme(dark)) {
   var(tag-red-fg): #e03e3e;
   var(tag-yellow-bg): rgba(253, 236, 200, 0.5);
   var(tag-yellow-fg): #dfab01;
+  var(tag-purple-bg): rgba(232, 222, 238, 0.5);
+  var(tag-purple-fg): #9065b0;
 }
 
 /* ============================================
@@ -150,6 +152,8 @@ html:theme(dark) {
   var(tag-red-fg): #ff6b6b;
   var(tag-yellow-bg): rgba(223, 171, 1, 0.2);
   var(tag-yellow-fg): #dfab01;
+  var(tag-purple-bg): rgba(144, 101, 176, 0.2);
+  var(tag-purple-fg): #b494c7;
 }
 
 /* System dark auto */
@@ -172,6 +176,7 @@ html:theme(dark) {
     var(tag-orange-bg): rgba(232,147,12,0.2); var(tag-orange-fg): #e8930c;
     var(tag-red-bg): rgba(255,107,107,0.2); var(tag-red-fg): #ff6b6b;
     var(tag-yellow-bg): rgba(223,171,1,0.2); var(tag-yellow-fg): #dfab01;
+    var(tag-purple-bg): rgba(144,101,176,0.2); var(tag-purple-fg): #b494c7;
   }
 }
 

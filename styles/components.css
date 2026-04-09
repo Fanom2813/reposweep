@@ -280,22 +280,22 @@ input[type="radio"]:checked {
 
 .badge {
   display: inline-block;
+  flow: horizontal;
+  vertical-align: middle;
   padding: 2dip 8dip;
   border-radius: length(r-sm);
-  background: color(tag-gray-bg);
-  color: color(tag-gray-fg);
   font-size: length(text-xs);
   font-weight: 500;
   line-height: 1.4;
   white-space: nowrap;
+  color: color(fg-2);
 }
 
-.badge.node    { background: color(tag-green-bg);  color: color(tag-green-fg); }
-.badge.flutter { background: color(tag-blue-bg);   color: color(tag-blue-fg); }
-.badge.rust    { background: color(tag-orange-bg); color: color(tag-orange-fg); }
-.badge.python  { background: color(tag-yellow-bg); color: color(tag-yellow-fg); }
-.badge.git     { background: color(tag-red-bg);    color: color(tag-red-fg); }
-.badge.unknown { background: color(tag-gray-bg);   color: color(tag-gray-fg); }
+img.devicon {
+  size: 14dip;
+  margin-right: 4dip;
+  vertical-align: middle;
+}
 
 /* ============================================
    TABLE

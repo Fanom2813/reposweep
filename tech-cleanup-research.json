@@ -1,0 +1,1730 @@
+[
+  {
+    "id": "nodejs",
+    "name": "Node.js",
+    "icon": "nodejs",
+    "devicon": "icons/devicon/nodejs-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", ".npm", ".pnpm-store", ".yarn", "dist", "build", ".turbo", ".parcel-cache", ".cache", "coverage", ".nyc_output", "*.log"],
+    "priority": 10
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "icon": "javascript",
+    "devicon": "icons/devicon/javascript-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist", "build", ".cache", "coverage", ".nyc_output"],
+    "priority": 10
+  },
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "icon": "typescript",
+    "devicon": "icons/devicon/typescript-original.svg",
+    "markers": ["tsconfig.json", "package.json"],
+    "targets": ["node_modules", "dist", "build", "*.tsbuildinfo", ".cache"],
+    "priority": 10
+  },
+  {
+    "id": "react",
+    "name": "React",
+    "icon": "react",
+    "devicon": "icons/devicon/react-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "build", "dist", ".cache", "coverage"],
+    "priority": 10
+  },
+  {
+    "id": "nextjs",
+    "name": "Next.js",
+    "icon": "nextjs",
+    "devicon": "icons/devicon/nextjs-original.svg",
+    "markers": ["next.config.js", "next.config.mjs", "package.json"],
+    "targets": ["node_modules", ".next", "out", "dist", ".turbo"],
+    "priority": 10
+  },
+  {
+    "id": "vue",
+    "name": "Vue.js",
+    "icon": "vue",
+    "devicon": "icons/devicon/vuejs-original.svg",
+    "markers": ["vue.config.js", "vite.config.js", "package.json"],
+    "targets": ["node_modules", "dist", ".nuxt", ".output", ".cache"],
+    "priority": 10
+  },
+  {
+    "id": "nuxtjs",
+    "name": "Nuxt",
+    "icon": "nuxtjs",
+    "devicon": "icons/devicon/nuxtjs-original.svg",
+    "markers": ["nuxt.config.ts", "nuxt.config.js", "package.json"],
+    "targets": ["node_modules", ".nuxt", ".output", "dist", ".cache", ".nitro"],
+    "priority": 9
+  },
+  {
+    "id": "angular",
+    "name": "Angular",
+    "icon": "angular",
+    "devicon": "icons/devicon/angular-original.svg",
+    "markers": ["angular.json", "package.json"],
+    "targets": ["node_modules", "dist", ".angular", "coverage"],
+    "priority": 9
+  },
+  {
+    "id": "svelte",
+    "name": "Svelte",
+    "icon": "svelte",
+    "devicon": "icons/devicon/svelte-original.svg",
+    "markers": ["svelte.config.js", "vite.config.js", "package.json"],
+    "targets": ["node_modules", "dist", ".svelte-kit", "build", ".vercel"],
+    "priority": 8
+  },
+  {
+    "id": "astro",
+    "name": "Astro",
+    "icon": "astro",
+    "devicon": "icons/devicon/astro-original.svg",
+    "markers": ["astro.config.mjs", "astro.config.js", "package.json"],
+    "targets": ["node_modules", "dist", ".astro", ".vercel", ".netlify"],
+    "priority": 8
+  },
+  {
+    "id": "vite",
+    "name": "Vite",
+    "icon": "vite",
+    "devicon": "icons/devicon/vitejs-original.svg",
+    "markers": ["vite.config.js", "vite.config.ts", "package.json"],
+    "targets": ["node_modules", "dist", "build", ".vite"],
+    "priority": 9
+  },
+  {
+    "id": "webpack",
+    "name": "Webpack",
+    "icon": "webpack",
+    "devicon": "icons/devicon/webpack-original.svg",
+    "markers": ["webpack.config.js", "package.json"],
+    "targets": ["node_modules", "dist", "build", ".cache"],
+    "priority": 8
+  },
+  {
+    "id": "rollup",
+    "name": "Rollup",
+    "icon": "rollup",
+    "devicon": "icons/devicon/rollup-original.svg",
+    "markers": ["rollup.config.js", "package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 7
+  },
+  {
+    "id": "parcel",
+    "name": "Parcel",
+    "icon": "parcel",
+    "devicon": "icons/devicon/parcel-original.svg",
+    "markers": [".parcelrc", "package.json"],
+    "targets": ["node_modules", "dist", "build", ".parcel-cache"],
+    "priority": 6
+  },
+  {
+    "id": "gulp",
+    "name": "Gulp",
+    "icon": "gulp",
+    "devicon": "icons/devicon/gulp-plain.svg",
+    "markers": ["gulpfile.js", "package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 6
+  },
+  {
+    "id": "grunt",
+    "name": "Grunt",
+    "icon": "grunt",
+    "devicon": "icons/devicon/grunt-original.svg",
+    "markers": ["Gruntfile.js", "package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 5
+  },
+  {
+    "id": "bun",
+    "name": "Bun",
+    "icon": "bun",
+    "devicon": "icons/devicon/bun-original.svg",
+    "markers": ["bun.lockb", "package.json"],
+    "targets": ["node_modules", "dist", "build", ".bun"],
+    "priority": 7
+  },
+  {
+    "id": "deno",
+    "name": "Deno",
+    "icon": "deno",
+    "devicon": "icons/devicon/denojs-original.svg",
+    "markers": ["deno.json", "deno.jsonc", "deno.lock"],
+    "targets": ["dist", "build", "coverage", ".deno"],
+    "priority": 6
+  },
+  {
+    "id": "yarn",
+    "name": "Yarn",
+    "icon": "yarn",
+    "devicon": "icons/devicon/yarn-original.svg",
+    "markers": ["yarn.lock", ".yarnrc.yml", "package.json"],
+    "targets": ["node_modules", ".yarn", ".pnp.*", ".yarnrc.yml"],
+    "priority": 9
+  },
+  {
+    "id": "pnpm",
+    "name": "pnpm",
+    "icon": "pnpm",
+    "devicon": "icons/devicon/pnpm-original.svg",
+    "markers": ["pnpm-lock.yaml", "package.json"],
+    "targets": ["node_modules", ".pnpm-store"],
+    "priority": 8
+  },
+  {
+    "id": "express",
+    "name": "Express",
+    "icon": "express",
+    "devicon": "icons/devicon/express-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist", "build", "coverage"],
+    "priority": 9
+  },
+  {
+    "id": "fastify",
+    "name": "Fastify",
+    "icon": "fastify",
+    "devicon": "icons/devicon/fastify-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 7
+  },
+  {
+    "id": "nestjs",
+    "name": "NestJS",
+    "icon": "nestjs",
+    "devicon": "icons/devicon/nestjs-original.svg",
+    "markers": ["nest-cli.json", "package.json"],
+    "targets": ["node_modules", "dist", "build", "coverage"],
+    "priority": 8
+  },
+  {
+    "id": "remix",
+    "name": "Remix",
+    "icon": "remix",
+    "devicon": "icons/devicon/remix-original.svg",
+    "markers": ["remix.config.js", "vite.config.js", "package.json"],
+    "targets": ["node_modules", "build", ".cache", ".netlify", ".vercel"],
+    "priority": 8
+  },
+  {
+    "id": "gatsby",
+    "name": "Gatsby",
+    "icon": "gatsby",
+    "devicon": "icons/devicon/gatsby-original.svg",
+    "markers": ["gatsby-config.js", "gatsby-config.ts", "package.json"],
+    "targets": ["node_modules", "public", ".cache"],
+    "priority": 7
+  },
+  {
+    "id": "ember",
+    "name": "Ember.js",
+    "icon": "ember",
+    "devicon": "icons/devicon/ember-original-wordmark.svg",
+    "markers": ["ember-cli-build.js", "package.json"],
+    "targets": ["node_modules", "dist", "tmp"],
+    "priority": 6
+  },
+  {
+    "id": "backbonejs",
+    "name": "Backbone.js",
+    "icon": "backbonejs",
+    "devicon": "icons/devicon/backbonejs-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist"],
+    "priority": 5
+  },
+  {
+    "id": "jquery",
+    "name": "jQuery",
+    "icon": "jquery",
+    "devicon": "icons/devicon/jquery-original.svg",
+    "markers": ["package.json", "bower.json"],
+    "targets": ["node_modules", "bower_components", "dist"],
+    "priority": 7
+  },
+  {
+    "id": "electron",
+    "name": "Electron",
+    "icon": "electron",
+    "devicon": "icons/devicon/electron-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist", "out", "release", "build"],
+    "priority": 8
+  },
+  {
+    "id": "reactnative",
+    "name": "React Native",
+    "icon": "reactnative",
+    "devicon": "icons/devicon/react-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "android/build", "ios/build", "ios/Pods", ".expo", "build"],
+    "priority": 9
+  },
+  {
+    "id": "expo",
+    "name": "Expo",
+    "icon": "expo",
+    "devicon": "icons/devicon/expo-original.svg",
+    "markers": ["app.json", "app.config.js", "package.json"],
+    "targets": ["node_modules", ".expo", "dist", "web-build", "android", "ios"],
+    "priority": 8
+  },
+  {
+    "id": "ionic",
+    "name": "Ionic",
+    "icon": "ionic",
+    "devicon": "icons/devicon/ionic-original.svg",
+    "markers": ["ionic.config.json", "package.json"],
+    "targets": ["node_modules", "www", "platforms", "plugins", ".ionic"],
+    "priority": 7
+  },
+  {
+    "id": "capacitor",
+    "name": "Capacitor",
+    "icon": "capacitor",
+    "devicon": "icons/devicon/capacitor-original.svg",
+    "markers": ["capacitor.config.ts", "capacitor.config.json", "package.json"],
+    "targets": ["node_modules", "android/app/build", "ios/App/build", "dist"],
+    "priority": 7
+  },
+  {
+    "id": "preact",
+    "name": "Preact",
+    "icon": "preact",
+    "devicon": "icons/devicon/preact-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "build", "dist"],
+    "priority": 6
+  },
+  {
+    "id": "angularjs",
+    "name": "AngularJS",
+    "icon": "angularjs",
+    "devicon": "icons/devicon/angularjs-original.svg",
+    "markers": ["package.json", "bower.json"],
+    "targets": ["node_modules", "bower_components", "dist", "build"],
+    "priority": 5
+  },
+  {
+    "id": "tailwind",
+    "name": "Tailwind CSS",
+    "icon": "tailwind",
+    "devicon": "icons/devicon/tailwindcss-original.svg",
+    "markers": ["tailwind.config.js", "tailwind.config.ts", "package.json"],
+    "targets": ["node_modules", ".turbo"],
+    "priority": 10
+  },
+  {
+    "id": "sass",
+    "name": "Sass",
+    "icon": "sass",
+    "devicon": "icons/devicon/sass-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", ".sass-cache", "*.css.map"],
+    "priority": 8
+  },
+  {
+    "id": "less",
+    "name": "Less",
+    "icon": "less",
+    "devicon": "icons/devicon/less-plain-wordmark.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 6
+  },
+  {
+    "id": "stylus",
+    "name": "Stylus",
+    "icon": "stylus",
+    "devicon": "icons/devicon/stylus-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 5
+  },
+  {
+    "id": "postcss",
+    "name": "PostCSS",
+    "icon": "postcss",
+    "devicon": "icons/devicon/postcss-original.svg",
+    "markers": ["postcss.config.js", "package.json"],
+    "targets": ["node_modules", ".cache"],
+    "priority": 7
+  },
+  {
+    "id": "jest",
+    "name": "Jest",
+    "icon": "jest",
+    "devicon": "icons/devicon/jest-plain.svg",
+    "markers": ["jest.config.js", "package.json"],
+    "targets": ["node_modules", "coverage", ".cache"],
+    "priority": 9
+  },
+  {
+    "id": "vitest",
+    "name": "Vitest",
+    "icon": "vitest",
+    "devicon": "icons/devicon/vitest-original.svg",
+    "markers": ["vitest.config.ts", "vitest.config.js", "package.json"],
+    "targets": ["node_modules", "coverage", "dist"],
+    "priority": 8
+  },
+  {
+    "id": "cypress",
+    "name": "Cypress",
+    "icon": "cypress",
+    "devicon": "icons/devicon/cypress-original.svg",
+    "markers": ["cypress.config.js", "cypress.json", "package.json"],
+    "targets": ["node_modules", "cypress/screenshots", "cypress/videos", "cypress/downloads"],
+    "priority": 8
+  },
+  {
+    "id": "playwright",
+    "name": "Playwright",
+    "icon": "playwright",
+    "devicon": "icons/devicon/playwright-original.svg",
+    "markers": ["playwright.config.ts", "playwright.config.js", "package.json"],
+    "targets": ["node_modules", "test-results", "playwright-report", "playwright/.cache"],
+    "priority": 8
+  },
+  {
+    "id": "puppeteer",
+    "name": "Puppeteer",
+    "icon": "puppeteer",
+    "devicon": "icons/devicon/puppeteer-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", ".cache/puppeteer"],
+    "priority": 7
+  },
+  {
+    "id": "mocha",
+    "name": "Mocha",
+    "icon": "mocha",
+    "devicon": "icons/devicon/mocha-plain.svg",
+    "markers": [".mocharc.js", "package.json"],
+    "targets": ["node_modules"],
+    "priority": 6
+  },
+  {
+    "id": "jasmine",
+    "name": "Jasmine",
+    "icon": "jasmine",
+    "devicon": "icons/devicon/jasmine-original.svg",
+    "markers": ["spec/support/jasmine.json", "package.json"],
+    "targets": ["node_modules"],
+    "priority": 6
+  },
+  {
+    "id": "storybook",
+    "name": "Storybook",
+    "icon": "storybook",
+    "devicon": "icons/devicon/storybook-original.svg",
+    "markers": [".storybook/main.js", "package.json"],
+    "targets": ["node_modules", "storybook-static"],
+    "priority": 8
+  },
+  {
+    "id": "graphql",
+    "name": "GraphQL",
+    "icon": "graphql",
+    "devicon": "icons/devicon/graphql-plain.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 8
+  },
+  {
+    "id": "prisma",
+    "name": "Prisma",
+    "icon": "prisma",
+    "devicon": "icons/devicon/prisma-original.svg",
+    "markers": ["prisma/schema.prisma", "package.json"],
+    "targets": ["node_modules", "prisma/migrations"],
+    "priority": 8
+  },
+  {
+    "id": "sequelize",
+    "name": "Sequelize",
+    "icon": "sequelize",
+    "devicon": "icons/devicon/sequelize-original.svg",
+    "markers": [".sequelizerc", "package.json"],
+    "targets": ["node_modules"],
+    "priority": 7
+  },
+  {
+    "id": "mongoose",
+    "name": "Mongoose",
+    "icon": "mongoose",
+    "devicon": "icons/devicon/mongoose-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 7
+  },
+  {
+    "id": "typeorm",
+    "name": "TypeORM",
+    "icon": "typeorm",
+    "devicon": "icons/devicon/typeorm-original.svg",
+    "markers": ["ormconfig.json", "data-source.ts", "package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 7
+  },
+  {
+    "id": "d3js",
+    "name": "D3.js",
+    "icon": "d3js",
+    "devicon": "icons/devicon/d3js-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist"],
+    "priority": 7
+  },
+  {
+    "id": "threejs",
+    "name": "Three.js",
+    "icon": "threejs",
+    "devicon": "icons/devicon/threejs-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 7
+  },
+  {
+    "id": "p5js",
+    "name": "p5.js",
+    "icon": "p5js",
+    "devicon": "icons/devicon/p5js-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist"],
+    "priority": 6
+  },
+  {
+    "id": "polymer",
+    "name": "Polymer",
+    "icon": "polymer",
+    "devicon": "icons/devicon/polymer-original.svg",
+    "markers": ["polymer.json", "package.json"],
+    "targets": ["node_modules", "build", "dist"],
+    "priority": 5
+  },
+  {
+    "id": "vuetify",
+    "name": "Vuetify",
+    "icon": "vuetify",
+    "devicon": "icons/devicon/vuetify-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist"],
+    "priority": 7
+  },
+  {
+    "id": "quasar",
+    "name": "Quasar",
+    "icon": "quasar",
+    "devicon": "icons/devicon/quasar-original.svg",
+    "markers": ["quasar.config.js", "package.json"],
+    "targets": ["node_modules", "dist", ".quasar"],
+    "priority": 6
+  },
+  {
+    "id": "blazor",
+    "name": "Blazor",
+    "icon": "blazor",
+    "devicon": "icons/devicon/blazor-original.svg",
+    "markers": ["*.csproj", "*.sln"],
+    "targets": ["bin", "obj", "wwwroot", ".vs"],
+    "priority": 7
+  },
+  {
+    "id": "pug",
+    "name": "Pug",
+    "icon": "pug",
+    "devicon": "icons/devicon/pug-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 6
+  },
+  {
+    "id": "handlebars",
+    "name": "Handlebars",
+    "icon": "handlebars",
+    "devicon": "icons/devicon/handlebars-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 6
+  },
+  {
+    "id": "ejs",
+    "name": "EJS",
+    "icon": "ejs",
+    "devicon": "icons/devicon/ejs-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 6
+  },
+  {
+    "id": "feathersjs",
+    "name": "Feathers",
+    "icon": "feathersjs",
+    "devicon": "icons/devicon/feathersjs-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "lib", "dist"],
+    "priority": 6
+  },
+  {
+    "id": "hapi",
+    "name": "Hapi",
+    "icon": "hapi",
+    "devicon": "icons/devicon/hapi-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 5
+  },
+  {
+    "id": "koa",
+    "name": "Koa",
+    "icon": "koa",
+    "devicon": "icons/devicon/koa-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 6
+  },
+  {
+    "id": "meteor",
+    "name": "Meteor",
+    "icon": "meteor",
+    "devicon": "icons/devicon/meteor-original.svg",
+    "markers": [".meteor/release", "package.json"],
+    "targets": ["node_modules", ".meteor/local"],
+    "priority": 5
+  },
+  {
+    "id": "sapper",
+    "name": "Sapper",
+    "icon": "sapper",
+    "devicon": "icons/devicon/sapper-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "__sapper__", "dist"],
+    "priority": 5
+  },
+  {
+    "id": "elm",
+    "name": "Elm",
+    "icon": "elm",
+    "devicon": "icons/devicon/elm-original.svg",
+    "markers": ["elm.json", "elm-package.json"],
+    "targets": ["elm-stuff", "dist"],
+    "priority": 5
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "icon": "java",
+    "devicon": "icons/devicon/java-original.svg",
+    "markers": ["pom.xml", "build.gradle", "build.gradle.kts"],
+    "targets": ["target", "build", ".gradle", "out", "*.class"],
+    "priority": 10
+  },
+  {
+    "id": "kotlin",
+    "name": "Kotlin",
+    "icon": "kotlin",
+    "devicon": "icons/devicon/kotlin-original.svg",
+    "markers": ["build.gradle.kts", "pom.xml"],
+    "targets": ["build", ".gradle", "target", "out"],
+    "priority": 9
+  },
+  {
+    "id": "scala",
+    "name": "Scala",
+    "icon": "scala",
+    "devicon": "icons/devicon/scala-original.svg",
+    "markers": ["build.sbt", "pom.xml"],
+    "targets": ["target", ".bloop", ".metals", "project/target", "dist"],
+    "priority": 7
+  },
+  {
+    "id": "maven",
+    "name": "Maven",
+    "icon": "maven",
+    "devicon": "icons/devicon/maven-original.svg",
+    "markers": ["pom.xml"],
+    "targets": ["target"],
+    "priority": 9
+  },
+  {
+    "id": "gradle",
+    "name": "Gradle",
+    "icon": "gradle",
+    "devicon": "icons/devicon/gradle-original.svg",
+    "markers": ["build.gradle", "build.gradle.kts", "settings.gradle"],
+    "targets": ["build", ".gradle", "out"],
+    "priority": 9
+  },
+  {
+    "id": "spring",
+    "name": "Spring",
+    "icon": "spring",
+    "devicon": "icons/devicon/spring-original.svg",
+    "markers": ["pom.xml", "build.gradle"],
+    "targets": ["target", "build", ".gradle"],
+    "priority": 9
+  },
+  {
+    "id": "hibernate",
+    "name": "Hibernate",
+    "icon": "hibernate",
+    "devicon": "icons/devicon/hibernate-original.svg",
+    "markers": ["pom.xml", "build.gradle", "hibernate.cfg.xml"],
+    "targets": ["target", "build"],
+    "priority": 7
+  },
+  {
+    "id": "android",
+    "name": "Android",
+    "icon": "android",
+    "devicon": "icons/devicon/android-original.svg",
+    "markers": ["build.gradle", "settings.gradle", "AndroidManifest.xml"],
+    "targets": ["build", ".gradle", "app/build", "local.properties"],
+    "priority": 9
+  },
+  {
+    "id": "tomcat",
+    "name": "Tomcat",
+    "icon": "tomcat",
+    "devicon": "icons/devicon/tomcat-original.svg",
+    "markers": ["pom.xml"],
+    "targets": ["target", "webapps"],
+    "priority": 7
+  },
+  {
+    "id": "clojure",
+    "name": "Clojure",
+    "icon": "clojure",
+    "devicon": "icons/devicon/clojure-original.svg",
+    "markers": ["project.clj", "deps.edn"],
+    "targets": ["target", ".cpcache", ".lein-failures", ".lein-repl-history"],
+    "priority": 6
+  },
+  {
+    "id": "clojurescript",
+    "name": "ClojureScript",
+    "icon": "clojurescript",
+    "devicon": "icons/devicon/clojurescript-original.svg",
+    "markers": ["project.clj", "deps.edn", "shadow-cljs.edn"],
+    "targets": ["target", "out", "resources/public/js", ".shadow-cljs"],
+    "priority": 5
+  },
+  {
+    "id": "csharp",
+    "name": "C#",
+    "icon": "csharp",
+    "devicon": "icons/devicon/csharp-original.svg",
+    "markers": ["*.csproj", "*.sln"],
+    "targets": ["bin", "obj", "packages", ".vs"],
+    "priority": 10
+  },
+  {
+    "id": "cplusplus",
+    "name": "C++",
+    "icon": "cplusplus",
+    "devicon": "icons/devicon/cplusplus-original.svg",
+    "markers": ["CMakeLists.txt", "Makefile", "configure.ac"],
+    "targets": ["build", "cmake-build-*", "out", "Debug", "Release", "x64", "*.o", "*.obj", "*.exe"],
+    "priority": 9
+  },
+  {
+    "id": "cmake",
+    "name": "CMake",
+    "icon": "cmake",
+    "devicon": "icons/devicon/cmake-original.svg",
+    "markers": ["CMakeLists.txt"],
+    "targets": ["build", "cmake-build-*", "CMakeCache.txt", "CMakeFiles", "cmake_install.cmake"],
+    "priority": 8
+  },
+  {
+    "id": "dotnet",
+    "name": ".NET",
+    "icon": "dotnet",
+    "devicon": "icons/devicon/dot-net-original.svg",
+    "markers": ["*.csproj", "*.sln", "global.json"],
+    "targets": ["bin", "obj", "packages", ".vs", "TestResults", "artifacts"],
+    "priority": 10
+  },
+  {
+    "id": "go",
+    "name": "Go",
+    "icon": "go",
+    "devicon": "icons/devicon/go-original.svg",
+    "markers": ["go.mod", "go.sum"],
+    "targets": ["vendor", "bin", "dist", "*.test", "*.out"],
+    "priority": 10
+  },
+  {
+    "id": "rust",
+    "name": "Rust",
+    "icon": "rust",
+    "devicon": "icons/devicon/rust-original.svg",
+    "markers": ["Cargo.toml", "Cargo.lock"],
+    "targets": ["target", "Cargo.lock"],
+    "priority": 9
+  },
+  {
+    "id": "ruby",
+    "name": "Ruby",
+    "icon": "ruby",
+    "devicon": "icons/devicon/ruby-original.svg",
+    "markers": ["Gemfile", "*.gemspec"],
+    "targets": ["vendor", ".bundle", "pkg", "*.gem", "coverage", ".yardoc"],
+    "priority": 9
+  },
+  {
+    "id": "rails",
+    "name": "Ruby on Rails",
+    "icon": "rails",
+    "devicon": "icons/devicon/rails-plain-wordmark.svg",
+    "markers": ["Gemfile", "config/routes.rb"],
+    "targets": ["vendor", "tmp", "log", "public/assets", ".sass-cache", "coverage"],
+    "priority": 9
+  },
+  {
+    "id": "jekyll",
+    "name": "Jekyll",
+    "icon": "jekyll",
+    "devicon": "icons/devicon/jekyll-original.svg",
+    "markers": ["_config.yml", "Gemfile"],
+    "targets": ["_site", ".jekyll-cache", ".sass-cache", "vendor"],
+    "priority": 7
+  },
+  {
+    "id": "sinatra",
+    "name": "Sinatra",
+    "icon": "sinatra",
+    "devicon": "icons/devicon/sinatra-original.svg",
+    "markers": ["Gemfile", "config.ru"],
+    "targets": ["vendor"],
+    "priority": 6
+  },
+  {
+    "id": "php",
+    "name": "PHP",
+    "icon": "php",
+    "devicon": "icons/devicon/php-original.svg",
+    "markers": ["composer.json"],
+    "targets": ["vendor", "composer.lock"],
+    "priority": 9
+  },
+  {
+    "id": "laravel",
+    "name": "Laravel",
+    "icon": "laravel",
+    "devicon": "icons/devicon/laravel-original.svg",
+    "markers": ["artisan", "composer.json"],
+    "targets": ["vendor", "node_modules", "public/storage", "storage/framework/cache", "storage/framework/sessions", "storage/framework/views", "bootstrap/cache", "composer.lock"],
+    "priority": 9
+  },
+  {
+    "id": "symfony",
+    "name": "Symfony",
+    "icon": "symfony",
+    "devicon": "icons/devicon/symfony-original.svg",
+    "markers": ["bin/console", "composer.json", "symfony.lock"],
+    "targets": ["vendor", "var/cache", "var/log", "public/build"],
+    "priority": 8
+  },
+  {
+    "id": "composer",
+    "name": "Composer",
+    "icon": "composer",
+    "devicon": "icons/devicon/composer-original.svg",
+    "markers": ["composer.json"],
+    "targets": ["vendor", "composer.lock"],
+    "priority": 9
+  },
+  {
+    "id": "drupal",
+    "name": "Drupal",
+    "icon": "drupal",
+    "devicon": "icons/devicon/drupal-original.svg",
+    "markers": ["composer.json", "core/lib/Drupal.php"],
+    "targets": ["vendor", "sites/default/files"],
+    "priority": 7
+  },
+  {
+    "id": "wordpress",
+    "name": "WordPress",
+    "icon": "wordpress",
+    "devicon": "icons/devicon/wordpress-original.svg",
+    "markers": ["wp-config.php", "composer.json"],
+    "targets": ["vendor", "wp-content/uploads", "wp-content/cache"],
+    "priority": 8
+  },
+  {
+    "id": "cakephp",
+    "name": "CakePHP",
+    "icon": "cakephp",
+    "devicon": "icons/devicon/cakephp-original.svg",
+    "markers": ["composer.json", "bin/cake"],
+    "targets": ["vendor", "tmp", "logs"],
+    "priority": 6
+  },
+  {
+    "id": "yii",
+    "name": "Yii",
+    "icon": "yii",
+    "devicon": "icons/devicon/yii-original.svg",
+    "markers": ["composer.json", "yii"],
+    "targets": ["vendor", "runtime"],
+    "priority": 5
+  },
+  {
+    "id": "zend",
+    "name": "Zend",
+    "icon": "zend",
+    "devicon": "icons/devicon/zend-original.svg",
+    "markers": ["composer.json"],
+    "targets": ["vendor", "data/cache"],
+    "priority": 5
+  },
+  {
+    "id": "phalcon",
+    "name": "Phalcon",
+    "icon": "phalcon",
+    "devicon": "icons/devicon/phalcon-original.svg",
+    "markers": ["composer.json"],
+    "targets": ["vendor", "cache"],
+    "priority": 5
+  },
+  {
+    "id": "python",
+    "name": "Python",
+    "icon": "python",
+    "devicon": "icons/devicon/python-original.svg",
+    "markers": ["requirements.txt", "pyproject.toml", "setup.py", "setup.cfg", "Pipfile"],
+    "targets": ["__pycache__", "*.pyc", "*.pyo", "*.pyd", ".pytest_cache", ".mypy_cache", ".ruff_cache", ".coverage", "htmlcov", "dist", "build", "*.egg-info", ".eggs", ".venv", "venv", "env", "ENV"],
+    "priority": 10
+  },
+  {
+    "id": "django",
+    "name": "Django",
+    "icon": "django",
+    "devicon": "icons/devicon/django-plain.svg",
+    "markers": ["manage.py", "requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", "db.sqlite3", "staticfiles", "media", ".venv"],
+    "priority": 10
+  },
+  {
+    "id": "flask",
+    "name": "Flask",
+    "icon": "flask",
+    "devicon": "icons/devicon/flask-original.svg",
+    "markers": ["app.py", "wsgi.py", "requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", "instance", ".venv", "dist", "build"],
+    "priority": 9
+  },
+  {
+    "id": "fastapi",
+    "name": "FastAPI",
+    "icon": "fastapi",
+    "devicon": "icons/devicon/fastapi-original.svg",
+    "markers": ["main.py", "requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", ".venv", "__pypackages__"],
+    "priority": 9
+  },
+  {
+    "id": "tornado",
+    "name": "Tornado",
+    "icon": "tornado",
+    "devicon": "icons/devicon/tornado-original.svg",
+    "markers": ["requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", ".venv"],
+    "priority": 6
+  },
+  {
+    "id": "pyramid",
+    "name": "Pyramid",
+    "icon": "pyramid",
+    "devicon": "icons/devicon/pyramid-original.svg",
+    "markers": ["setup.py", "development.ini", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", "*.egg-info", ".venv"],
+    "priority": 5
+  },
+  {
+    "id": "sqlalchemy",
+    "name": "SQLAlchemy",
+    "icon": "sqlalchemy",
+    "devicon": "icons/devicon/sqlalchemy-original.svg",
+    "markers": ["requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", ".venv"],
+    "priority": 8
+  },
+  {
+    "id": "pytest",
+    "name": "pytest",
+    "icon": "pytest",
+    "devicon": "icons/devicon/pytest-original.svg",
+    "markers": ["pytest.ini", "pyproject.toml", "setup.cfg"],
+    "targets": [".pytest_cache", "__pycache__", ".coverage", "htmlcov", "*.pyc"],
+    "priority": 9
+  },
+  {
+    "id": "tox",
+    "name": "Tox",
+    "icon": "tox",
+    "devicon": "icons/devicon/tox-original.svg",
+    "markers": ["tox.ini", "pyproject.toml"],
+    "targets": [".tox", "*.pyc", "__pycache__"],
+    "priority": 6
+  },
+  {
+    "id": "jupyter",
+    "name": "Jupyter",
+    "icon": "jupyter",
+    "devicon": "icons/devicon/jupyter-original.svg",
+    "markers": ["*.ipynb", "requirements.txt"],
+    "targets": [".ipynb_checkpoints", "__pycache__", "*.pyc", ".venv"],
+    "priority": 8
+  },
+  {
+    "id": "anaconda",
+    "name": "Anaconda",
+    "icon": "anaconda",
+    "devicon": "icons/devicon/anaconda-original.svg",
+    "markers": ["environment.yml", "conda-lock.yml"],
+    "targets": ["__pycache__", "*.pyc", "envs"],
+    "priority": 7
+  },
+  {
+    "id": "poetry",
+    "name": "Poetry",
+    "icon": "poetry",
+    "devicon": "icons/devicon/poetry-original.svg",
+    "markers": ["pyproject.toml", "poetry.lock"],
+    "targets": [".venv", "dist", "__pycache__", "*.pyc"],
+    "priority": 8
+  },
+  {
+    "id": "pipenv",
+    "name": "Pipenv",
+    "icon": "pipenv",
+    "devicon": "icons/devicon/pipenv-original.svg",
+    "markers": ["Pipfile", "Pipfile.lock"],
+    "targets": [".venv", "__pycache__", "*.pyc"],
+    "priority": 7
+  },
+  {
+    "id": "pandas",
+    "name": "Pandas",
+    "icon": "pandas",
+    "devicon": "icons/devicon/pandas-original.svg",
+    "markers": ["requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", ".venv"],
+    "priority": 8
+  },
+  {
+    "id": "numpy",
+    "name": "NumPy",
+    "icon": "numpy",
+    "devicon": "icons/devicon/numpy-original.svg",
+    "markers": ["requirements.txt", "pyproject.toml", "setup.py"],
+    "targets": ["__pycache__", "*.pyc", "build", "dist", "*.egg-info", ".venv"],
+    "priority": 8
+  },
+  {
+    "id": "tensorflow",
+    "name": "TensorFlow",
+    "icon": "tensorflow",
+    "devicon": "icons/devicon/tensorflow-original.svg",
+    "markers": ["requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", "logs", "checkpoints", ".venv"],
+    "priority": 8
+  },
+  {
+    "id": "pytorch",
+    "name": "PyTorch",
+    "icon": "pytorch",
+    "devicon": "icons/devicon/pytorch-original.svg",
+    "markers": ["requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", "runs", "checkpoints", "__pycache__", ".venv"],
+    "priority": 8
+  },
+  {
+    "id": "keras",
+    "name": "Keras",
+    "icon": "keras",
+    "devicon": "icons/devicon/keras-original.svg",
+    "markers": ["requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", "logs", "checkpoints", ".venv"],
+    "priority": 7
+  },
+  {
+    "id": "scikitlearn",
+    "name": "scikit-learn",
+    "icon": "scikitlearn",
+    "devicon": "icons/devicon/scikitlearn-original.svg",
+    "markers": ["requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", "joblib", ".venv"],
+    "priority": 8
+  },
+  {
+    "id": "flutter",
+    "name": "Flutter",
+    "icon": "flutter",
+    "devicon": "icons/devicon/flutter-original.svg",
+    "markers": ["pubspec.yaml", "pubspec.lock"],
+    "targets": ["build", ".dart_tool", ".flutter-plugins", ".flutter-plugins-dependencies", ".packages", "ios/Pods", "android/.gradle"],
+    "priority": 9
+  },
+  {
+    "id": "dart",
+    "name": "Dart",
+    "icon": "dart",
+    "devicon": "icons/devicon/dart-original.svg",
+    "markers": ["pubspec.yaml", "pubspec.lock"],
+    "targets": [".dart_tool", "build", ".packages"],
+    "priority": 8
+  },
+  {
+    "id": "swift",
+    "name": "Swift",
+    "icon": "swift",
+    "devicon": "icons/devicon/swift-original.svg",
+    "markers": ["Package.swift", "*.xcodeproj"],
+    "targets": [".build", "build", ".swiftpm", "DerivedData", "*.xcworkspace/xcuserdata"],
+    "priority": 8
+  },
+  {
+    "id": "xcode",
+    "name": "Xcode",
+    "icon": "xcode",
+    "devicon": "icons/devicon/xcode-original.svg",
+    "markers": ["*.xcodeproj", "*.xcworkspace"],
+    "targets": ["DerivedData", "build", "*.xcworkspace/xcuserdata", "*.xcodeproj/xcuserdata"],
+    "priority": 8
+  },
+  {
+    "id": "cocoapods",
+    "name": "CocoaPods",
+    "icon": "cocoapods",
+    "devicon": "icons/devicon/cocoapods-original.svg",
+    "markers": ["Podfile", "Podfile.lock"],
+    "targets": ["Pods", "build", "DerivedData"],
+    "priority": 8
+  },
+  {
+    "id": "xamarin",
+    "name": "Xamarin",
+    "icon": "xamarin",
+    "devicon": "icons/devicon/xamarin-original.svg",
+    "markers": ["*.csproj", "*.sln"],
+    "targets": ["bin", "obj", "packages"],
+    "priority": 6
+  },
+  {
+    "id": "objectivec",
+    "name": "Objective-C",
+    "icon": "objectivec",
+    "devicon": "icons/devicon/objectivec-original.svg",
+    "markers": ["*.xcodeproj", "Podfile"],
+    "targets": ["build", "DerivedData", "xcuserdata"],
+    "priority": 7
+  },
+  {
+    "id": "elixir",
+    "name": "Elixir",
+    "icon": "elixir",
+    "devicon": "icons/devicon/elixir-original.svg",
+    "markers": ["mix.exs", "mix.lock"],
+    "targets": ["_build", "deps", ".elixir_ls"],
+    "priority": 7
+  },
+  {
+    "id": "phoenix",
+    "name": "Phoenix",
+    "icon": "phoenix",
+    "devicon": "icons/devicon/phoenix-original.svg",
+    "markers": ["mix.exs", "config/config.exs"],
+    "targets": ["_build", "deps", "assets/node_modules", ".elixir_ls"],
+    "priority": 7
+  },
+  {
+    "id": "erlang",
+    "name": "Erlang",
+    "icon": "erlang",
+    "devicon": "icons/devicon/erlang-original.svg",
+    "markers": ["rebar.config", "erlang.mk"],
+    "targets": ["_build", "deps", "ebin"],
+    "priority": 6
+  },
+  {
+    "id": "haskell",
+    "name": "Haskell",
+    "icon": "haskell",
+    "devicon": "icons/devicon/haskell-original.svg",
+    "markers": ["*.cabal", "stack.yaml", "package.yaml"],
+    "targets": [".stack-work", "dist", "dist-newstyle", "cabal.project.local"],
+    "priority": 6
+  },
+  {
+    "id": "ocaml",
+    "name": "OCaml",
+    "icon": "ocaml",
+    "devicon": "icons/devicon/ocaml-original.svg",
+    "markers": ["dune-project", "*.opam", "_oasis"],
+    "targets": ["_build", "*.byte", "*.native"],
+    "priority": 5
+  },
+  {
+    "id": "crystal",
+    "name": "Crystal",
+    "icon": "crystal",
+    "devicon": "icons/devicon/crystal-original.svg",
+    "markers": ["shard.yml", "shard.lock"],
+    "targets": ["lib", "bin", ".crystal"],
+    "priority": 5
+  },
+  {
+    "id": "lua",
+    "name": "Lua",
+    "icon": "lua",
+    "devicon": "icons/devicon/lua-original.svg",
+    "markers": ["*.rockspec", "luarocks.lock"],
+    "targets": ["rocks", ".luarocks"],
+    "priority": 5
+  },
+  {
+    "id": "perl",
+    "name": "Perl",
+    "icon": "perl",
+    "devicon": "icons/devicon/perl-original.svg",
+    "markers": ["Makefile.PL", "Build.PL", "cpanfile"],
+    "targets": ["blib", "_build", "local", "Makefile", "MYMETA.*"],
+    "priority": 5
+  },
+  {
+    "id": "julia",
+    "name": "Julia",
+    "icon": "julia",
+    "devicon": "icons/devicon/julia-original.svg",
+    "markers": ["Project.toml", "Manifest.toml"],
+    "targets": ["deps", "build", "*.jl.cov", "*.jl.*.cov"],
+    "priority": 6
+  },
+  {
+    "id": "r",
+    "name": "R",
+    "icon": "r",
+    "devicon": "icons/devicon/r-original.svg",
+    "markers": ["DESCRIPTION", "NAMESPACE"],
+    "targets": [".Rproj.user", "*.Rcheck", "vignettes/*.html", "vignettes/*.pdf"],
+    "priority": 6
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "icon": "docker",
+    "devicon": "icons/devicon/docker-original.svg",
+    "markers": ["Dockerfile", "docker-compose.yml", "docker-compose.yaml", ".dockerignore"],
+    "targets": [".dockerignore"],
+    "priority": 10
+  },
+  {
+    "id": "kubernetes",
+    "name": "Kubernetes",
+    "icon": "kubernetes",
+    "devicon": "icons/devicon/kubernetes-original.svg",
+    "markers": ["k8s/", "manifests/", "*.yaml", "helm/"],
+    "targets": [],
+    "priority": 9
+  },
+  {
+    "id": "terraform",
+    "name": "Terraform",
+    "icon": "terraform",
+    "devicon": "icons/devicon/terraform-original.svg",
+    "markers": ["*.tf", "*.tfvars"],
+    "targets": [".terraform", ".terraform.lock.hcl", "terraform.tfstate", "terraform.tfstate.*"],
+    "priority": 9
+  },
+  {
+    "id": "pulumi",
+    "name": "Pulumi",
+    "icon": "pulumi",
+    "devicon": "icons/devicon/pulumi-original.svg",
+    "markers": ["Pulumi.yaml", "Pulumi.*.yaml"],
+    "targets": ["node_modules", "__pycache__", ".pulumi"],
+    "priority": 7
+  },
+  {
+    "id": "ansible",
+    "name": "Ansible",
+    "icon": "ansible",
+    "devicon": "icons/devicon/ansible-original.svg",
+    "markers": ["ansible.cfg", "playbook.yml", "inventory"],
+    "targets": ["*.retry"],
+    "priority": 7
+  },
+  {
+    "id": "vagrant",
+    "name": "Vagrant",
+    "icon": "vagrant",
+    "devicon": "icons/devicon/vagrant-original.svg",
+    "markers": ["Vagrantfile"],
+    "targets": [".vagrant"],
+    "priority": 6
+  },
+  {
+    "id": "jenkins",
+    "name": "Jenkins",
+    "icon": "jenkins",
+    "devicon": "icons/devicon/jenkins-original.svg",
+    "markers": ["Jenkinsfile"],
+    "targets": ["target", "build"],
+    "priority": 8
+  },
+  {
+    "id": "githubactions",
+    "name": "GitHub Actions",
+    "icon": "githubactions",
+    "devicon": "icons/devicon/githubactions-original.svg",
+    "markers": [".github/workflows/*.yml", ".github/workflows/*.yaml"],
+    "targets": [],
+    "priority": 10
+  },
+  {
+    "id": "gitlab",
+    "name": "GitLab CI",
+    "icon": "gitlab",
+    "devicon": "icons/devicon/gitlab-original.svg",
+    "markers": [".gitlab-ci.yml"],
+    "targets": [],
+    "priority": 8
+  },
+  {
+    "id": "travis",
+    "name": "Travis CI",
+    "icon": "travis",
+    "devicon": "icons/devicon/travis-original.svg",
+    "markers": [".travis.yml"],
+    "targets": [],
+    "priority": 6
+  },
+  {
+    "id": "circleci",
+    "name": "CircleCI",
+    "icon": "circleci",
+    "devicon": "icons/devicon/circleci-original.svg",
+    "markers": [".circleci/config.yml"],
+    "targets": [],
+    "priority": 7
+  },
+  {
+    "id": "prometheus",
+    "name": "Prometheus",
+    "icon": "prometheus",
+    "devicon": "icons/devicon/prometheus-original.svg",
+    "markers": ["prometheus.yml"],
+    "targets": ["data"],
+    "priority": 7
+  },
+  {
+    "id": "sentry",
+    "name": "Sentry",
+    "icon": "sentry",
+    "devicon": "icons/devicon/sentry-original.svg",
+    "markers": ["sentry.properties", ".sentryclirc"],
+    "targets": [],
+    "priority": 7
+  },
+  {
+    "id": "selenium",
+    "name": "Selenium",
+    "icon": "selenium",
+    "devicon": "icons/devicon/selenium-original.svg",
+    "markers": ["selenium-server.jar", "*.side"],
+    "targets": ["screenshots", "downloads"],
+    "priority": 7
+  },
+  {
+    "id": "unity",
+    "name": "Unity",
+    "icon": "unity",
+    "devicon": "icons/devicon/unity-original.svg",
+    "markers": ["Assets/", "ProjectSettings/", "Packages/manifest.json"],
+    "targets": ["Library", "Temp", "Obj", "Build", "Builds", "Logs", "UserSettings", "MemoryCaptures", "Recordings"],
+    "priority": 8
+  },
+  {
+    "id": "unrealengine",
+    "name": "Unreal Engine",
+    "icon": "unrealengine",
+    "devicon": "icons/devicon/unrealengine-original.svg",
+    "markers": ["*.uproject"],
+    "targets": ["Binaries", "Build", "DerivedDataCache", "Intermediate", "Saved", ".vs"],
+    "priority": 8
+  },
+  {
+    "id": "godot",
+    "name": "Godot",
+    "icon": "godot",
+    "devicon": "icons/devicon/godot-original.svg",
+    "markers": ["project.godot", "*.godot"],
+    "targets": [".godot", "build", "export"],
+    "priority": 7
+  },
+  {
+    "id": "qt",
+    "name": "Qt",
+    "icon": "qt",
+    "devicon": "icons/devicon/qt-original.svg",
+    "markers": ["*.pro", "CMakeLists.txt", "*.qbs"],
+    "targets": ["build", "debug", "release", "Makefile", "*.o", "moc_*.cpp", "ui_*.h", "qrc_*.cpp"],
+    "priority": 7
+  },
+  {
+    "id": "processing",
+    "name": "Processing",
+    "icon": "processing",
+    "devicon": "icons/devicon/processing-original.svg",
+    "markers": ["*.pde"],
+    "targets": ["application.*"],
+    "priority": 5
+  },
+  {
+    "id": "hugo",
+    "name": "Hugo",
+    "icon": "hugo",
+    "devicon": "icons/devicon/hugo-original.svg",
+    "markers": ["hugo.toml", "hugo.yaml", "hugo.json", "config.toml"],
+    "targets": ["public", "resources", ".hugo_build.lock"],
+    "priority": 7
+  },
+  {
+    "id": "gatsby",
+    "name": "Gatsby",
+    "icon": "gatsby",
+    "devicon": "icons/devicon/gatsby-original.svg",
+    "markers": ["gatsby-config.js", "gatsby-config.ts", "package.json"],
+    "targets": ["node_modules", "public", ".cache"],
+    "priority": 7
+  },
+  {
+    "id": "gridsome",
+    "name": "Gridsome",
+    "icon": "gridsome",
+    "devicon": "icons/devicon/gridsome-original.svg",
+    "markers": ["gridsome.config.js", "package.json"],
+    "targets": ["node_modules", "dist", ".cache"],
+    "priority": 5
+  },
+  {
+    "id": "hexo",
+    "name": "Hexo",
+    "icon": "hexo",
+    "devicon": "icons/devicon/hexo-original.svg",
+    "markers": ["_config.yml", "package.json"],
+    "targets": ["node_modules", "public", "db.json"],
+    "priority": 5
+  },
+  {
+    "id": "eleventy",
+    "name": "Eleventy",
+    "icon": "eleventy",
+    "devicon": "icons/devicon/eleventy-original.svg",
+    "markers": [".eleventy.js", "eleventy.config.js"],
+    "targets": ["node_modules", "_site"],
+    "priority": 6
+  },
+  {
+    "id": "gitbook",
+    "name": "GitBook",
+    "icon": "gitbook",
+    "devicon": "icons/devicon/gitbook-original.svg",
+    "markers": ["book.json", "SUMMARY.md"],
+    "targets": ["node_modules", "_book"],
+    "priority": 5
+  },
+  {
+    "id": "latex",
+    "name": "LaTeX",
+    "icon": "latex",
+    "devicon": "icons/devicon/latex-original.svg",
+    "markers": ["*.tex", "*.latex"],
+    "targets": ["*.aux", "*.log", "*.out", "*.toc", "*.synctex.gz", "*.fls", "*.fdb_latexmk", "*.bbl", "*.blg"],
+    "priority": 6
+  },
+  {
+    "id": "nginx",
+    "name": "Nginx",
+    "icon": "nginx",
+    "devicon": "icons/devicon/nginx-original.svg",
+    "markers": ["nginx.conf"],
+    "targets": ["logs", "temp"],
+    "priority": 8
+  },
+  {
+    "id": "apache",
+    "name": "Apache",
+    "icon": "apache",
+    "devicon": "icons/devicon/apache-original.svg",
+    "markers": ["httpd.conf", ".htaccess"],
+    "targets": ["logs"],
+    "priority": 8
+  },
+  {
+    "id": "kafka",
+    "name": "Kafka",
+    "icon": "kafka",
+    "devicon": "icons/devicon/apachekafka-original.svg",
+    "markers": ["docker-compose.yml"],
+    "targets": ["logs"],
+    "priority": 7
+  },
+  {
+    "id": "rabbitmq",
+    "name": "RabbitMQ",
+    "icon": "rabbitmq",
+    "devicon": "icons/devicon/rabbitmq-original.svg",
+    "markers": ["docker-compose.yml"],
+    "targets": ["data"],
+    "priority": 7
+  },
+  {
+    "id": "hadoop",
+    "name": "Hadoop",
+    "icon": "hadoop",
+    "devicon": "icons/devicon/hadoop-original.svg",
+    "markers": ["pom.xml"],
+    "targets": ["target", "logs"],
+    "priority": 6
+  },
+  {
+    "id": "spark",
+    "name": "Spark",
+    "icon": "spark",
+    "devicon": "icons/devicon/apachespark-original.svg",
+    "markers": ["build.sbt", "pom.xml"],
+    "targets": ["target", "spark-warehouse"],
+    "priority": 6
+  },
+  {
+    "id": "cobol",
+    "name": "COBOL",
+    "icon": "cobol",
+    "devicon": "icons/devicon/cobol-original.svg",
+    "markers": ["*.cbl", "*.cob", "*.cpy"],
+    "targets": ["*.so", "*.dll", "bin"],
+    "priority": 4
+  },
+  {
+    "id": "fortran",
+    "name": "Fortran",
+    "icon": "fortran",
+    "devicon": "icons/devicon/fortran-original.svg",
+    "markers": ["*.f90", "*.f95", "*.f03", "Makefile"],
+    "targets": ["*.o", "*.mod", "*.smod", "a.out", "*.exe", "build"],
+    "priority": 5
+  },
+  {
+    "id": "zig",
+    "name": "Zig",
+    "icon": "zig",
+    "devicon": "icons/devicon/zig-original.svg",
+    "markers": ["build.zig"],
+    "targets": ["zig-cache", "zig-out", "build"],
+    "priority": 6
+  },
+  {
+    "id": "nim",
+    "name": "Nim",
+    "icon": "nim",
+    "devicon": "icons/devicon/nim-original.svg",
+    "markers": ["*.nimble"],
+    "targets": ["nimcache", "bin"],
+    "priority": 5
+  },
+  {
+    "id": "v",
+    "name": "V",
+    "icon": "v",
+    "devicon": "icons/devicon/v-original.svg",
+    "markers": ["v.mod"],
+    "targets": ["*.tmp.c", "*.so", "*.dll"],
+    "priority": 4
+  },
+  {
+    "id": "intellij",
+    "name": "IntelliJ IDEA",
+    "icon": "intellij",
+    "devicon": "icons/devicon/intellij-original.svg",
+    "markers": [".idea/"],
+    "targets": [".idea", "*.iml", "out"],
+    "priority": 9
+  },
+  {
+    "id": "webstorm",
+    "name": "WebStorm",
+    "icon": "webstorm",
+    "devicon": "icons/devicon/webstorm-original.svg",
+    "markers": [".idea/"],
+    "targets": [".idea", "*.iml"],
+    "priority": 8
+  },
+  {
+    "id": "phpstorm",
+    "name": "PhpStorm",
+    "icon": "phpstorm",
+    "devicon": "icons/devicon/phpstorm-original.svg",
+    "markers": [".idea/"],
+    "targets": [".idea", "*.iml"],
+    "priority": 7
+  },
+  {
+    "id": "pycharm",
+    "name": "PyCharm",
+    "icon": "pycharm",
+    "devicon": "icons/devicon/pycharm-original.svg",
+    "markers": [".idea/"],
+    "targets": [".idea", "*.iml", "__pycache__"],
+    "priority": 8
+  },
+  {
+    "id": "rider",
+    "name": "Rider",
+    "icon": "rider",
+    "devicon": "icons/devicon/rider-original.svg",
+    "markers": [".idea/"],
+    "targets": [".idea", "*.iml"],
+    "priority": 7
+  },
+  {
+    "id": "clion",
+    "name": "CLion",
+    "icon": "clion",
+    "devicon": "icons/devicon/clion-original.svg",
+    "markers": [".idea/"],
+    "targets": [".idea", "*.iml", "cmake-build-*"],
+    "priority": 6
+  },
+  {
+    "id": "visualstudio",
+    "name": "Visual Studio",
+    "icon": "visualstudio",
+    "devicon": "icons/devicon/visualstudio-original.svg",
+    "markers": ["*.sln", "*.vcxproj"],
+    "targets": [".vs", "Debug", "Release", "x64", "x86", "bin", "obj", "*.user"],
+    "priority": 9
+  },
+  {
+    "id": "eclipse",
+    "name": "Eclipse",
+    "icon": "eclipse",
+    "devicon": "icons/devicon/eclipse-original.svg",
+    "markers": [".project", ".classpath"],
+    "targets": ["bin", "target", ".settings"],
+    "priority": 7
+  },
+  {
+    "id": "netbeans",
+    "name": "NetBeans",
+    "icon": "netbeans",
+    "devicon": "icons/devicon/netbeans-original.svg",
+    "markers": ["nbproject/"],
+    "targets": ["build", "dist", "nbproject/private"],
+    "priority": 5
+  },
+  {
+    "id": "svn",
+    "name": "Subversion",
+    "icon": "svn",
+    "devicon": "icons/devicon/subversion-original.svg",
+    "markers": [".svn/"],
+    "targets": [".svn"],
+    "priority": 5
+  },
+  {
+    "id": "liquibase",
+    "name": "Liquibase",
+    "icon": "liquibase",
+    "devicon": "icons/devicon/liquibase-original.svg",
+    "markers": ["liquibase.properties", "changelog.xml", "changelog.yaml"],
+    "targets": [],
+    "priority": 5
+  },
+  {
+    "id": "ros",
+    "name": "ROS",
+    "icon": "ros",
+    "devicon": "icons/devicon/ros-original.svg",
+    "markers": ["package.xml", "CMakeLists.txt"],
+    "targets": ["build", "devel", "install", "logs", ".catkin_tools"],
+    "priority": 5
+  },
+  {
+    "id": "grails",
+    "name": "Grails",
+    "icon": "grails",
+    "devicon": "icons/devicon/grails-original.svg",
+    "markers": ["build.gradle", "grails-app/"],
+    "targets": ["build", ".gradle", "target"],
+    "priority": 5
+  },
+  {
+    "id": "dropwizard",
+    "name": "Dropwizard",
+    "icon": "dropwizard",
+    "devicon": "icons/devicon/dropwizard-original.svg",
+    "markers": ["pom.xml"],
+    "targets": ["target"],
+    "priority": 5
+  },
+  {
+    "id": "feathersjs",
+    "name": "Feathers",
+    "icon": "feathersjs",
+    "devicon": "icons/devicon/feathersjs-original.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "lib", "dist"],
+    "priority": 6
+  },
+  {
+    "id": "fastapi",
+    "name": "FastAPI",
+    "icon": "fastapi",
+    "devicon": "icons/devicon/fastapi-original.svg",
+    "markers": ["main.py", "app.py", "pyproject.toml", "requirements.txt"],
+    "targets": ["__pycache__", "*.pyc", ".venv", "__pypackages__"],
+    "priority": 9
+  },
+  {
+    "id": "django-rest",
+    "name": "Django REST Framework",
+    "icon": "django-rest",
+    "devicon": "icons/devicon/djangorest-original.svg",
+    "markers": ["manage.py", "settings.py"],
+    "targets": ["__pycache__", "*.pyc", "staticfiles", "media", ".venv"],
+    "priority": 8
+  },
+  {
+    "id": "pyqt",
+    "name": "PyQt",
+    "icon": "pyqt",
+    "devicon": "icons/devicon/qt-original.svg",
+    "markers": ["*.py", "requirements.txt"],
+    "targets": ["__pycache__", "*.pyc", "build", "dist", "*.spec", ".venv"],
+    "priority": 6
+  },
+  {
+    "id": "prolog",
+    "name": "Prolog",
+    "icon": "prolog",
+    "devicon": "icons/devicon/prolog-original.svg",
+    "markers": ["*.pl", "*.pro"],
+    "targets": ["*.o", "*.qlf"],
+    "priority": 4
+  }
+]

@@ -4,6 +4,7 @@
  */
 
 import { formatBytes } from "../lib/store.js";
+import { EmptyState } from "../ui/empty-state.js";
 
 function timeAgo(timestamp) {
   if (!timestamp) return "";
@@ -46,13 +47,11 @@ export function WorkspaceEmpty(props) {
       <div .spacer />
       <button .primary .sm #rescan><i .icon-refresh-cw /> Scan</button>
     </div>
-    <div .h-full>
-      <div .col .gap-2 .m-auto .text-center>
-        <i .icon-search .mx-auto style="font-size:28dip; size:28dip; line-height:28dip; color:color(fg-3);" />
-        <h3 .text-lg .medium>{hasProjects ? "No matches" : "No projects scanned yet"}</h3>
-        <p .fg-2 .text-sm>Click Scan to discover projects in this workspace.</p>
-      </div>
-    </div>
+    <EmptyState
+      icon="icon-search"
+      title={hasProjects ? "No matches" : "No projects scanned yet"}
+      message="Click Scan to discover projects in this workspace."
+    />
   </div>;
 }
 
@@ -66,25 +65,25 @@ export function WorkspaceView(props) {
   const rootName = rootLabel(selectedRoot);
 
   return <div .workspace>
-    <div .row .gap-3 .px-5 .py-3 .border-b>
-      <div .col>
+    <div .row .middle .gap-3 .px-5 .py-3 .border-b>
+      <div .col .middle>
         <h3 .text-lg .semibold .nowrap>{rootName}</h3>
         {!scanning &&
           <span .text-xs .fg-2 .nowrap>{projects.length} projects · {formatBytes(totalReclaimable)} reclaimable</span>
         }
       </div>
       <div .spacer />
-      <input|text(searchBox) .search .sm value={searchValue} novalue="Search..." style="width:180dip;" />
-      <select|dropdown(filterSelect) .sm value={filterValue} style="width:100dip;">
+      <input|text(searchBox) .search .sm .middle value={searchValue} novalue="Search..." style="width:180dip;" />
+      <select|dropdown(filterSelect) .sm .middle value={filterValue} style="width:100dip;">
         <option value="All">All</option>
         {(projectTypes || []).map(t => <option value={t.name} key={t.id}>{t.name}</option>)}
       </select>
-      <button .ghost .sm #rescan disabled={scanning} title="Rescan">
+      <button .ghost .sm .middle #rescan disabled={scanning} title="Rescan">
         <i .icon-refresh-cw class={scanning ? "spinning" : ""} />
       </button>
     </div>
     {scanning ? <ScanBar /> : []}
-    <table .project-table class={scanning ? "busy" : ""}>
+    <table .table class={scanning ? "busy" : ""}>
       <thead>
         <tr>
           <th .col-name>Project</th>
@@ -103,7 +102,10 @@ export function WorkspaceView(props) {
             </div>
           </td>
           <td .col-type>
-            <span .badge class={project.type.toLowerCase()}>{project.type}</span>
+            <span .badge class={project.typeId || project.type.toLowerCase()}>
+              {project.devicon ? <img .devicon src={project.devicon} /> : []}
+              {project.type}
+            </span>
           </td>
           <td .col-modified>
             <span .modified-text>{timeAgo(project.modifiedAt)}</span>

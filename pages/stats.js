@@ -89,7 +89,10 @@ export class StatsPage extends Element {
                     <div .list-item-name>{project.name}</div>
                     <div .list-item-path>{project.path}</div>
                   </div>
-                  <span .badge class={project.type.toLowerCase()}>{project.type}</span>
+                  <span .badge class={project.typeId || project.type.toLowerCase()}>
+                    {project.devicon ? <img .devicon src={project.devicon} /> : []}
+                    {project.type}
+                  </span>
                   <span .list-item-size>{formatBytes(project.size)}</span>
                 </div>)
               : <p .text-tertiary>Scan a workspace to see top consumers.</p>
