@@ -1,0 +1,13 @@
+{
+  "name": "RepoSweep",
+  "version": "1.0.0",
+  "description": "Workspace cleanup utility for developers",
+  "identifier": "com.reposweep.app",
+  "icon": "icon.svg",
+  "author": "Omar",
+  "license": "MIT",
+  "sciter": {
+    "sdk": "https://gitlab.com/sciter-engine/sciter-js-sdk",
+    "sdkDownload": "https://gitlab.com/sciter-engine/sciter-js-sdk/-/archive/main/sciter-js-sdk-main.zip"
+  }
+}

@@ -1,0 +1,112 @@
+name: Build RepoSweep
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  SCITER_SDK_URL: https://gitlab.com/sciter-engine/sciter-js-sdk/-/archive/main/sciter-js-sdk-main.zip
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Sciter SDK
+        run: |
+          curl -sL "$SCITER_SDK_URL" -o sdk.zip
+          unzip -q sdk.zip -d /tmp/sciter-sdk
+
+      - name: Build
+        env:
+          SCITER_SDK: /tmp/sciter-sdk
+        run: ./scripts/build.sh
+
+      - name: Create DMG
+        run: |
+          APP_NAME=$(python3 -c "import json; print(json.load(open('app.json'))['name'])")
+          VERSION=$(python3 -c "import json; print(json.load(open('app.json'))['version'])")
+          hdiutil create -volname "$APP_NAME" -srcfolder dist/macos -ov -format UDZO "dist/$APP_NAME-$VERSION-macos.dmg"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: dist/*.dmg
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Sciter SDK
+        run: |
+          curl -sL "$SCITER_SDK_URL" -o sdk.zip
+          unzip -q sdk.zip -d /tmp/sciter-sdk
+
+      - name: Build
+        env:
+          SCITER_SDK: /tmp/sciter-sdk
+        run: ./scripts/build.sh
+
+      - name: Archive
+        run: |
+          APP_NAME=$(python3 -c "import json; print(json.load(open('app.json'))['name'])")
+          VERSION=$(python3 -c "import json; print(json.load(open('app.json'))['version'])")
+          tar -czf "dist/$APP_NAME-$VERSION-linux-x64.tar.gz" -C dist/linux "$APP_NAME"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: dist/*.tar.gz
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Sciter SDK
+        shell: bash
+        run: |
+          curl -sL "$SCITER_SDK_URL" -o sdk.zip
+          unzip -q sdk.zip -d /tmp/sciter-sdk
+
+      - name: Build
+        shell: bash
+        env:
+          SCITER_SDK: /tmp/sciter-sdk
+        run: ./scripts/build.sh
+
+      - name: Archive
+        shell: bash
+        run: |
+          APP_NAME=$(python3 -c "import json; print(json.load(open('app.json'))['name'])")
+          VERSION=$(python3 -c "import json; print(json.load(open('app.json'))['version'])")
+          mv "dist/windows/$APP_NAME.exe" "dist/$APP_NAME-$VERSION-windows-x64.exe"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: dist/*.exe
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build-macos, build-linux, build-windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            *.dmg
+            *.tar.gz
+            *.exe
+          generate_release_notes: true

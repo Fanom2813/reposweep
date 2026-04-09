@@ -1,6 +1,9 @@
 /**
- * Stats Page
+ * Stats Page — workspace analytics, Notion-style.
+ * Functional component — no wrapper element, fills the panel.
  */
+
+import { EmptyState } from "../ui/empty-state.js";
 
 function formatBytes(value) {
   if (!value) return "0 B";
@@ -14,103 +17,93 @@ function formatBytes(value) {
   return `${size.toFixed(unit < 2 ? 0 : 1)} ${units[unit]}`;
 }
 
-export class StatsPage extends Element {
-  render(props) {
-    const stats = props?.stats || {};
-    const typeBreakdown = stats.typeBreakdown || [];
-    const monthlyReclaim = stats.monthlyReclaim || [];
-    const largestProjects = stats.largestProjects || [];
-    const recommendations = stats.recommendations || [];
+export function StatsPage(props) {
+  const stats = props?.stats || {};
+  const typeBreakdown = stats.typeBreakdown || [];
+  const largestProjects = stats.largestProjects || [];
+  const hasData = stats.totalProjectsScanned > 0;
 
-    return <div .page-scroll>
-      <div .p-6 style="width:*;">
-      <div .page-wide>
-        <div .col .gap-1 .mb-6>
-          <h1 .text-2xl .bold>Statistics</h1>
-          <p .fg-3 .text-sm>Workspace analytics and insights.</p>
-        </div>
-
-        <div .stats-row .mb-6>
-          <div .stat-box>
-            <div .stat-value>{formatBytes(stats.totalReclaimed || 0)}</div>
-            <div .stat-label>Total Reclaimed</div>
-          </div>
-          <div .stat-box>
-            <div .stat-value>{stats.totalProjectsScanned || 0}</div>
-            <div .stat-label>Projects Scanned</div>
-          </div>
-          <div .stat-box>
-            <div .stat-value>{stats.totalProjectsCleaned || 0}</div>
-            <div .stat-label>Projects Cleaned</div>
-          </div>
-          <div .stat-box>
-            <div .stat-value>{formatBytes(stats.currentlyReclaimable || 0)}</div>
-            <div .stat-label>Currently Reclaimable</div>
-          </div>
-        </div>
-
-        <section .stats-section>
-          <h2 .section-title>By Project Type</h2>
-          <div .type-breakdown>
-            {typeBreakdown.length > 0
-              ? typeBreakdown.map(type => <div .type-row key={type.name}>
-                  <div .type-bar-bg>
-                    <div .type-bar-fill style={`width: ${Math.max(type.percentage, 5)}%`} />
-                  </div>
-                  <div .type-info>
-                    <span .type-name>{type.name}</span>
-                    <span .text-tertiary .text-xs>{type.count} projects</span>
-                    <span .type-bytes>{formatBytes(type.reclaimable)}</span>
-                  </div>
-                </div>)
-              : <p .text-tertiary>Scan a workspace to see breakdown.</p>
-            }
-          </div>
-        </section>
-
-        {monthlyReclaim.length > 0 ? <section .stats-section>
-          <h2 .section-title>Monthly Trend</h2>
-          <div .chart-container>
-            {monthlyReclaim.map(month => <div .chart-bar key={month.label}>
-              <div .chart-bar-fill style={`height: ${Math.max(month.percentage * 1.2, 4)}dip`}
-                   title={`${month.label}: ${formatBytes(month.bytes)}`} />
-              <div .chart-bar-label>{month.label}</div>
-            </div>)}
-          </div>
-        </section> : []}
-
-        <section .stats-section>
-          <h2 .section-title>Top Space Consumers</h2>
-          <div .list>
-            {largestProjects.length > 0
-              ? largestProjects.map((project, index) => <div .list-item key={index}>
-                  <span .list-rank>#{index + 1}</span>
-                  <div .list-item-info>
-                    <div .list-item-name>{project.name}</div>
-                    <div .list-item-path>{project.path}</div>
-                  </div>
-                  <span .badge class={project.typeId || project.type.toLowerCase()}>
-                    {project.devicon ? <img .devicon src={project.devicon} /> : []}
-                    {project.type}
-                  </span>
-                  <span .list-item-size>{formatBytes(project.size)}</span>
-                </div>)
-              : <p .text-tertiary>Scan a workspace to see top consumers.</p>
-            }
-          </div>
-        </section>
-
-        {recommendations.length > 0 ? <section .stats-section>
-          <h2 .section-title>Recommendations</h2>
-          <div .recommendations>
-            {recommendations.map((rec, index) => <div .recommendation key={index}>
-              <div .recommendation-title>{rec.title}</div>
-              <div .recommendation-desc>{rec.description}</div>
-            </div>)}
-          </div>
-        </section> : []}
+  if (!hasData) {
+    return <div .workspace>
+      <div .row .middle .gap-3 .px-5 .py-3 .border-b>
+        <h3 .text-lg .semibold>Statistics</h3>
       </div>
-      </div>
+      <EmptyState
+        icon="icon-bar-chart-2"
+        title="No data yet"
+        message="Scan a workspace to see statistics."
+      />
     </div>;
   }
+
+  return <div .workspace>
+    <div .row .middle .gap-3 .px-5 .py-3 .border-b>
+      <div .col>
+        <h3 .text-lg .semibold>Statistics</h3>
+        <span .text-xs .fg-2>Workspace analytics and insights</span>
+      </div>
+    </div>
+
+    <div .stats-body>
+      {/* Summary cards */}
+      <div .stats-row>
+        <div .stat-box>
+          <div .stat-value>{formatBytes(stats.currentlyReclaimable || 0)}</div>
+          <div .stat-label>Reclaimable</div>
+        </div>
+        <div .stat-box>
+          <div .stat-value>{stats.totalProjectsScanned || 0}</div>
+          <div .stat-label>Projects</div>
+        </div>
+        <div .stat-box>
+          <div .stat-value>{formatBytes(stats.totalReclaimed || 0)}</div>
+          <div .stat-label>Total Reclaimed</div>
+        </div>
+        <div .stat-box>
+          <div .stat-value>{stats.totalProjectsCleaned || 0}</div>
+          <div .stat-label>Cleanups</div>
+        </div>
+      </div>
+
+      {/* Type breakdown */}
+      {typeBreakdown.length > 0 &&
+        <div .stats-section>
+          <div .section-title>By Project Type</div>
+          <div .col .gap-2>
+            {typeBreakdown.map(type => <div .row .middle .gap-3 key={type.name}>
+              <div .row .middle .gap-2 style="width:100dip;">
+                <span .text-sm .semibold>{type.name}</span>
+              </div>
+              <div .bar-track style="width:*;">
+                <div .bar-fill style={`width:${Math.max(type.percentage, 2)}%`} />
+              </div>
+              <span .text-xs .fg-2 .nowrap style="width:60dip; text-align:right;">{type.count} proj</span>
+              <span .text-xs .semibold .nowrap style="width:70dip; text-align:right;">{formatBytes(type.reclaimable)}</span>
+            </div>)}
+          </div>
+        </div>
+      }
+
+      {/* Top consumers */}
+      {largestProjects.length > 0 &&
+        <div .stats-section>
+          <div .section-title>Top Space Consumers</div>
+          <div .col>
+            {largestProjects.map((project, index) => <div .row .middle .gap-3 .py-2 .border-b key={index}>
+              <span .fg-3 .text-xs .semibold style="width:20dip;">{index + 1}</span>
+              <div .col .w-full style="overflow-x:hidden;">
+                <span .text-sm .semibold style="overflow-x:hidden; text-overflow:ellipsis;">{project.name}</span>
+                <span .text-xs .fg-3 .font-mono style="overflow-x:hidden; text-overflow:ellipsis;">{project.path}</span>
+              </div>
+              <span .badge class={project.typeId || project.type.toLowerCase()}>
+                {project.devicon ? <img .devicon src={project.devicon} /> : []}
+                {project.type}
+              </span>
+              <span .size-text .nowrap style="width:70dip; text-align:right;">{formatBytes(project.size)}</span>
+            </div>)}
+          </div>
+        </div>
+      }
+    </div>
+  </div>;
 }

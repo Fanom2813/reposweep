@@ -184,6 +184,15 @@ tr.stale > td:first-child {
 }
 
 /* --- Stats --- */
+.stats-body {
+  size: *;
+  flow: vertical;
+  padding: length(sp-4) length(sp-5);
+  overflow-y: scroll-indicator;
+  vertical-scrollbar: scroll-v;
+  border-spacing: length(sp-5);
+}
+
 .stats-row {
   flow: horizontal;
   border-spacing: length(sp-3);
@@ -191,7 +200,7 @@ tr.stale > td:first-child {
 
 .stat-box {
   flow: vertical;
-  padding: length(sp-4);
+  padding: length(sp-3) length(sp-4);
   background: color(bg-1);
   border: 1dip solid color(line);
   border-radius: length(r-md);
@@ -199,7 +208,7 @@ tr.stale > td:first-child {
 }
 
 .stat-value {
-  font-size: length(text-2xl);
+  font-size: length(text-xl);
   font-weight: 700;
   color: color(fg);
 }
@@ -210,16 +219,18 @@ tr.stale > td:first-child {
   margin-top: length(sp-1);
 }
 
-.empty-state {
+.stats-section {
   flow: vertical;
-  padding: length(sp-8);
-  text-align: center;
-  color: color(fg-3);
+  border-spacing: length(sp-3);
 }
 
-.empty-state > h3 { font-size: length(text-lg); font-weight: 500; margin-bottom: length(sp-2); }
-.empty-state > p  { font-size: length(text-sm); }
+.section-title {
+  font-size: length(text-xs);
+  font-weight: 500;
+  color: color(fg-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
 
-/* Type breakdown bar */
-.bar-track { width: 120dip; height: 6dip; background: color(bg-2); border-radius: 9999px; }
+.bar-track { height: 6dip; background: color(bg-2); border-radius: 9999px; }
 .bar-fill  { height: *; background: color(accent); border-radius: 9999px; }
