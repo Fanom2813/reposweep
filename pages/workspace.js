@@ -57,8 +57,8 @@ export function WorkspaceView(props) {
       <h3 .text-lg .semibold .nowrap>{rootName}</h3>
       <span .text-xs .fg-3 .nowrap>{projects.length} projects · {formatBytes(totalReclaimable)} reclaimable</span>
       <div .spacer />
-      <input|text .search .sm searchBox value={state.search} novalue="Search..." style="width:180dip;" />
-      <select|list .sm filterSelect value={state.filter} style="width:100dip;">
+      <input|text(searchBox) .search .sm value={state.search} novalue="Search..." style="width:180dip;" />
+      <select|dropdown(filterSelect) .sm value={state.filter} style="width:100dip;">
         <option value="All">All</option>
         {(projectTypes || []).map(t => <option value={t.name} key={t.id}>{t.name}</option>)}
       </select>

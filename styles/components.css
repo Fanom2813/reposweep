@@ -19,8 +19,8 @@ button {
   vertical-align: middle;
   border-spacing: length(sp-2);
   padding: 0 12dip;
-  height: 32dip;
-  line-height: 30dip;
+  height: 28dip;
+  line-height: 26dip;
   border: 1dip solid color(line);
   border-radius: length(r-md);
   background: color(bg-0);
@@ -32,7 +32,7 @@ button {
   transition: background 80ms ease;
 }
 
-button [class^="icon-"] { line-height: 30dip; height: 30dip; }
+button [class^="icon-"] { line-height: 26dip; height: 26dip; }
 button:hover            { background: color(bg-hover); }
 button:active           { background: color(bg-active); }
 button:disabled         { opacity: 0.4; cursor: not-allowed; }
@@ -56,14 +56,14 @@ button.danger             { background: transparent; border-color: color(red); c
 button.danger:hover       { background: color(red-soft); }
 
 /* Sizes */
-button.xs { padding: 0 8dip; height: 24dip; line-height: 22dip; font-size: length(text-xs); }
-button.xs [class^="icon-"] { line-height: 22dip; height: 22dip; }
+button.xs { padding: 0 6dip; height: 22dip; line-height: 20dip; font-size: length(text-xs); }
+button.xs [class^="icon-"] { line-height: 20dip; height: 20dip; }
 
-button.sm { padding: 0 10dip; height: 28dip; line-height: 26dip; font-size: length(text-xs); }
-button.sm [class^="icon-"] { line-height: 26dip; height: 26dip; }
+button.sm { padding: 0 8dip; height: 24dip; line-height: 22dip; font-size: length(text-xs); }
+button.sm [class^="icon-"] { line-height: 22dip; height: 22dip; }
 
-button.lg { padding: 0 20dip; height: 40dip; line-height: 38dip; font-size: length(text-base); }
-button.lg [class^="icon-"] { line-height: 38dip; height: 38dip; }
+button.lg { padding: 0 16dip; height: 32dip; line-height: 30dip; font-size: length(text-base); }
+button.lg [class^="icon-"] { line-height: 30dip; height: 30dip; }
 
 /* ============================================
    INPUTS
@@ -72,9 +72,9 @@ button.lg [class^="icon-"] { line-height: 38dip; height: 38dip; }
 input[type="text"] {
   appearance: none;
   display: inline-block;
-  padding: 0 10dip;
-  height: 32dip;
-  line-height: 30dip;
+  padding: 0 8dip;
+  height: 28dip;
+  line-height: 26dip;
   border: 1dip solid color(line);
   border-radius: length(r-md);
   background: color(bg-0);
@@ -87,7 +87,42 @@ input[type="text"] {
 input:focus       { outline: none; border-color: color(accent); }
 input:disabled    { background: color(bg-2); color: color(fg-4); cursor: not-allowed; }
 input:empty       { color: color(fg-4); }
-input.sm          { height: 28dip; line-height: 26dip; font-size: length(text-xs); }
+input.sm          { height: 24dip; line-height: 22dip; font-size: length(text-xs); }
+
+/* Integer/Number input */
+input[type="integer"],
+input[type="number"] {
+  border: 1dip solid color(line);
+  border-radius: length(r-md);
+  background: color(bg-0);
+  color: color(fg);
+  font-size: length(text-sm);
+  height: 28dip;
+  padding: 0;
+}
+
+input[type="integer"]:focus,
+input[type="number"]:focus { border-color: color(accent); }
+
+input[type="integer"] > caption,
+input[type="number"] > caption {
+  padding: 0 6dip;
+  line-height: 26dip;
+}
+
+input[type="integer"] > button,
+input[type="number"] > button {
+  background: transparent;
+  border: none;
+  border-left: 1dip solid color(line);
+  width: 22dip;
+  cursor: pointer;
+}
+
+input[type="integer"] > button:hover,
+input[type="number"] > button:hover {
+  background: color(bg-hover);
+}
 
 .search {
   padding-left: 32dip;
@@ -118,28 +153,26 @@ textarea:focus { outline: none; border-color: color(accent); }
 textarea:empty { color: color(fg-4); }
 
 select {
-  appearance: none;
   display: inline-block;
-  padding: 0 28dip 0 10dip;
-  height: 32dip;
-  line-height: 30dip;
+  height: 28dip;
   border: 1dip solid color(line);
   border-radius: length(r-md);
   background: color(bg-0);
   color: color(fg);
   font-size: length(text-sm);
   cursor: pointer;
-  foreground-image: url("path:M6 9 L12 15 L18 9");
-  foreground-size: 10dip;
-  foreground-repeat: no-repeat;
-  foreground-position: right 8dip top 50%;
-  stroke: color(fg-3);
-  stroke-width: 2dip;
-  fill: none;
+  padding: 0;
+}
+
+select > caption {
+  padding: 0 8dip;
+  height: *;
+  line-height: 26dip;
 }
 
 select:focus { outline: none; border-color: color(accent); }
-select.sm    { height: 28dip; line-height: 26dip; font-size: length(text-xs); }
+select.sm    { height: 24dip; font-size: length(text-xs); }
+select.sm > caption { line-height: 22dip; }
 
 input[type="checkbox"] {
   appearance: none;

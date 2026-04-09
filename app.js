@@ -1,5 +1,8 @@
 /**
  * App — UI shell only. All business logic lives in store.js.
+ *
+ * Optimization: sidebar and titlebar are marked non-reactive.
+ * Page navigation patches only the content area.
  */
 
 import { Store, formatBytes } from "lib/store.js";
@@ -21,25 +24,60 @@ export class Application extends Element {
     { id: "settings", label: "Settings",   icon: "icon-settings" },
   ];
 
-  async componentDidMount() {
-    // Store notifies UI via post() with dedup
+  constructor() {
+    super();
     this.store = new Store(() => {
-      this.post(() => this.componentUpdate());
+      this.post(() => this.updateContent());
     });
-    await this.store.init();
+    this.store.init();
+  }
+
+  componentDidMount() {
+    // Mark static parts as non-reactive — they won't re-render on componentUpdate
+    const header = this.$("window-header");
+    if (header) header.state.reactive = false;
 
     if (this.store.selectedRoot && this.store.settings.autoScan) {
-      this.store.scan();
+      requestAnimationFrame(() => this.store.scan());
     }
+  }
+
+  /**
+   * Only patch the content area — not the entire tree.
+   */
+  updateContent() {
+    const content = this.$("div.app-content");
+    if (content) {
+      content.patch(this.renderPage(this.currentPage, this.store));
+    }
+  }
+
+  /**
+   * Update sidebar separately when needed (root changes, page nav).
+   */
+  updateSidebar() {
+    const sidebar = this.$("aside.sidebar");
+    if (sidebar) {
+      sidebar.componentUpdate({
+        roots: this.store.roots,
+        selectedRoot: this.store.selectedRoot,
+        navItems: this.navItems,
+        currentPage: this.currentPage,
+      });
+    }
+  }
+
+  /**
+   * Navigate to page — updates sidebar highlight + content area.
+   */
+  navigateTo(page) {
+    this.currentPage = page;
+    this.updateSidebar();
+    this.updateContent();
   }
 
   render() {
     const s = this.store;
-    if (!s) return <div .app-shell />;
-
-    const page = this.currentPage;
-    const projects = s.getVisibleProjects();
-    const hasRoots = s.roots.length > 0;
 
     return <div .app-shell>
       <window-header>
@@ -65,52 +103,127 @@ export class Application extends Element {
           roots={s.roots}
           selectedRoot={s.selectedRoot}
           navItems={this.navItems}
-          currentPage={page}
+          currentPage={this.currentPage}
         /> : []}
         <div .app-content>
-          {this.renderPage(page, s, projects, hasRoots)}
+          {this.renderPage(this.currentPage, s)}
         </div>
       </div>
     </div>;
   }
 
-  renderPage(page, s, projects, hasRoots) {
-    if (page === "workspace") {
-      if (!hasRoots) return <Onboarding />;
-      if (projects.length === 0 && !s.scanning && !s.search) {
-        const name = s.selectedRoot.split("/").pop() || s.selectedRoot;
-        return <WorkspaceEmpty rootName={name} hasProjects={s.projects.length > 0} />;
-      }
-      return <WorkspaceView state={s} projects={projects} projectTypes={s.getProjectTypes()} />;
-    }
-    if (page === "stats")    return <StatsPage stats={s.getStats()} />;
-    if (page === "history")  return <HistoryPage history={s.history} />;
+  renderPage(page, s) {
     if (page === "settings") return <SettingsPage settings={s.settings} />;
-    return <Onboarding />;
+    if (page === "history")  return <HistoryPage history={s.history} />;
+    if (page === "stats")    return <StatsPage stats={s.getStats()} />;
+
+    if (s.roots.length === 0) return <Onboarding />;
+    const projects = s.getVisibleProjects();
+    if (projects.length === 0 && !s.scanning && !s.search) {
+      const name = s.selectedRoot.split("/").pop() || s.selectedRoot;
+      return <WorkspaceEmpty rootName={name} hasProjects={s.projects.length > 0} />;
+    }
+    return <WorkspaceView state={s} projects={projects} projectTypes={s.getProjectTypes()} />;
   }
 
-  // ===== Event handlers — thin wiring between UI events and store =====
+  // ===== Sidebar events =====
 
-  // Sidebar
-  ["on sidebar-navigate"](evt)    { this.componentUpdate({ currentPage: evt.data.page }); return true; }
-  ["on sidebar-select-root"](evt) { this.store.selectRoot(evt.data.root); this.store.scan(); this.componentUpdate({ currentPage: "workspace" }); return true; }
-  ["on sidebar-add-root"]()       { const p = this.store.selectFolder(); if (p) { this.store.addRoot(p); this.store.scan(); this.componentUpdate({ currentPage: "workspace" }); } return true; }
-  ["on sidebar-remove-root"](evt) { this.store.removeRoot(evt.data.root); if (this.store.selectedRoot) this.store.scan(); return true; }
+  ["on sidebar-navigate"](evt) {
+    this.navigateTo(evt.data.page);
+    return true;
+  }
 
-  // Titlebar
-  ["on click at button#toggle-sidebar"]() { this.componentUpdate({ sidebarVisible: !this.sidebarVisible }); return true; }
+  ["on sidebar-select-root"](evt) {
+    this.store.selectRoot(evt.data.root);
+    this.navigateTo("workspace");
+    this.store.scan();
+    return true;
+  }
 
-  // Onboarding
-  ["on click at button#auto-detect"]() { this.store.suggestRoots(); this.componentUpdate({ currentPage: "workspace" }); if (this.store.selectedRoot) this.store.scan(); return true; }
-  ["on click at button#add-workspace"]() { const p = this.store.selectFolder(); if (p) { this.store.addRoot(p); this.store.scan(); this.componentUpdate({ currentPage: "workspace" }); } return true; }
+  ["on sidebar-add-root"]() {
+    const p = this.store.selectFolder();
+    if (p) {
+      this.store.addRoot(p);
+      this.navigateTo("workspace");
+      this.store.scan();
+    }
+    return true;
+  }
 
-  // Workspace
+  ["on sidebar-remove-root"](evt) {
+    this.store.removeRoot(evt.data.root);
+    this.updateSidebar();
+    if (this.store.selectedRoot) this.store.scan();
+    else this.updateContent();
+    return true;
+  }
+
+  // ===== Titlebar =====
+
+  ["on click at button#toggle-sidebar"]() {
+    this.sidebarVisible = !this.sidebarVisible;
+    this.componentUpdate(); // Full re-render needed for sidebar show/hide
+    return true;
+  }
+
+  // ===== Onboarding =====
+
+  ["on click at button#auto-detect"]() {
+    this.store.suggestRoots();
+    this.navigateTo("workspace");
+    if (this.store.selectedRoot) this.store.scan();
+    return true;
+  }
+
+  ["on click at button#add-workspace"]() {
+    const p = this.store.selectFolder();
+    if (p) {
+      this.store.addRoot(p);
+      this.navigateTo("workspace");
+      this.store.scan();
+    }
+    return true;
+  }
+
+  // ===== Settings =====
+
+  ["on change at select(themeSelect)"](evt, el) {
+    this.store.setSetting("theme", el.value);
+    this.store.applyTheme();
+    return true;
+  }
+
+  ["on change at input(settingToggle)"](evt, el) {
+    this.store.setSetting(el.attributes["data-key"], el.value);
+    return true;
+  }
+
+  ["on change at input(settingNumber)"](evt, el) {
+    this.store.setSetting(el.attributes["data-key"], el.value);
+    return true;
+  }
+
+  ["on change at textarea(settingExclusions)"](evt, el) {
+    const lines = (el.value || "").split("\n").map(s => s.trim()).filter(Boolean);
+    this.store.setSetting("exclusions", lines);
+    return true;
+  }
+
+  ["on click at button#reset-settings"]() {
+    this.store.resetSettings();
+    this.store.applyTheme();
+    return true;
+  }
+
+  // ===== Workspace =====
+
   ["on click at button#rescan"]() { this.store.scan(); return true; }
   ["on change at select(filterSelect)"](evt, el) { this.store.setFilter(el.value); return true; }
   ["on change at input(searchBox)"](evt, el) { this.store.setSearch(el.value); return true; }
   ["on click at button[data-open]"](evt, el) { this.store.openFolder(el.attributes["data-open"]); return true; }
 
-  // Clean
+  // ===== Clean =====
+
   ["on click at button[data-id]"](evt, el) {
     const id = el.attributes["data-id"];
     const project = this.store.projects.find(p => p.id === id);
