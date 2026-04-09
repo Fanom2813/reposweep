@@ -175,8 +175,7 @@ window-button[role="window-close"]:hover { background: rgb(232,17,35); stroke: #
   text-decoration: none;
 }
 
-.si[state-current],
-.si[state-active] {
+.si:current {
   background: color(bg-active);
   color: color(fg);
   font-weight: 500;
@@ -191,8 +190,7 @@ window-button[role="window-close"]:hover { background: rgb(232,17,35); stroke: #
   height: 20dip;
 }
 
-.si[state-current] [class^="icon-"],
-.si[state-active] [class^="icon-"] {
+.si:current [class^="icon-"] {
   opacity: 1;
 }
 

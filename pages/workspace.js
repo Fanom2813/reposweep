@@ -1,21 +1,11 @@
 /**
- * Workspace Page - project list
+ * Workspace views — project list, empty state, toolbar.
  */
 
-function formatBytes(value) {
-  if (!value) return "0 B";
-  const units = ["B", "KB", "MB", "GB", "TB"];
-  let size = value;
-  let unit = 0;
-  while (size >= 1024 && unit < units.length - 1) {
-    size /= 1024;
-    unit++;
-  }
-  return `${size.toFixed(unit < 2 ? 0 : 1)} ${units[unit]}`;
-}
+import { formatBytes } from "../scanner.js";
 
 function timeAgo(timestamp) {
-  if (!timestamp) return "Unknown";
+  if (!timestamp) return "";
   const seconds = Math.floor(Date.now() / 1000 - timestamp);
   if (seconds < 60) return "Just now";
   const minutes = Math.floor(seconds / 60);
@@ -24,81 +14,79 @@ function timeAgo(timestamp) {
   if (hours < 24) return `${hours}h ago`;
   const days = Math.floor(hours / 24);
   if (days < 30) return `${days}d ago`;
-  const months = Math.floor(days / 30);
-  return `${months}mo ago`;
+  return `${Math.floor(days / 30)}mo ago`;
 }
 
-export class WorkspacePage extends Element {
-  render(props) {
-    const state = props?.state || {};
-    const projects = props?.projects || [];
-    const totalReclaimable = projects.reduce((s, p) => s + (p.reclaimableBytes || 0), 0);
-    const rootName = state.selectedRoot ? state.selectedRoot.split("/").pop() || state.selectedRoot : "Workspace";
+function rootLabel(path) {
+  if (!path) return "";
+  const parts = path.split("/");
+  return parts[parts.length - 1] || parts[parts.length - 2] || path;
+}
 
-    return <div .workspace>
-      <div .workspace-header>
-        <div .workspace-header-top>
-          <h1>{rootName}</h1>
-          <button .ghost .sm #change-root>Change</button>
-          <button .primary .sm #rescan disabled={!state.selectedRoot || state.scanning}>
-            {state.scanning ? "Scanning..." : "Rescan"}
-          </button>
+/**
+ * Empty workspace — root selected but no projects scanned yet.
+ */
+export function WorkspaceEmpty(props) {
+  const { rootName, hasProjects } = props;
+  return <div .workspace>
+    <div .row .gap-3 .px-5 .py-3 .border-b>
+      <h3 .text-lg .semibold .nowrap>{rootName}</h3>
+      <div .spacer />
+      <button .primary .sm #rescan><i .icon-refresh-cw /> Scan</button>
+    </div>
+    <div .h-full>
+      <div .col .gap-2 .m-auto .text-center>
+        <i .icon-search .mx-auto style="font-size:28dip; size:28dip; line-height:28dip; color:color(fg-3);" />
+        <h3 .text-lg .medium>{hasProjects ? "No matches" : "No projects scanned yet"}</h3>
+        <p .fg-2 .text-sm>Click Scan to discover projects in this workspace.</p>
+      </div>
+    </div>
+  </div>;
+}
+
+/**
+ * Workspace view — toolbar + scrollable project list.
+ */
+export function WorkspaceView(props) {
+  const { state, projects } = props;
+  const totalReclaimable = projects.reduce((sum, p) => sum + (p.reclaimableBytes || 0), 0);
+  const rootName = rootLabel(state.selectedRoot);
+
+  return <div .workspace>
+    <div .row .gap-3 .px-5 .py-3 .border-b>
+      <h3 .text-lg .semibold .nowrap>{rootName}</h3>
+      <span .text-xs .fg-3 .nowrap>{projects.length} projects · {formatBytes(totalReclaimable)} reclaimable</span>
+      <div .spacer />
+      <input|text .search .sm searchBox value={state.search} novalue="Search..." style="width:180dip;" />
+      <select|list .sm filterSelect value={state.filter} style="width:100dip;">
+        <option value="All">All</option>
+        <option value="Node">Node</option>
+        <option value="Flutter">Flutter</option>
+        <option value="Rust">Rust</option>
+        <option value="Python">Python</option>
+        <option value="Git">Git</option>
+        <option value="Unknown">Unknown</option>
+      </select>
+      <button .ghost .sm #rescan disabled={state.scanning} title="Rescan"><i .icon-refresh-cw /></button>
+    </div>
+    <div .project-list>
+      {projects.map(project => <div .project-row .row .gap-3 .px-5 .py-2 .border-b key={project.id}>
+        <div .col .gap-1 .w-full style="min-width:200dip;">
+          <span .text-sm .medium>{project.name}</span>
+          <span .font-mono .text-xs .fg-3 .truncate>{project.path}</span>
         </div>
-        <div .workspace-meta>
-          <span .meta-item>
-            <span .meta-label>Path</span>
-            <span .meta-value .mono>{state.selectedRoot || "None"}</span>
-          </span>
-          <span .meta-item>
-            <span .meta-label>Projects</span>
-            <span .meta-value>{projects.length}</span>
-          </span>
-          <span .meta-item>
-            <span .meta-label>Reclaimable</span>
-            <span .meta-value .text-accent>{formatBytes(totalReclaimable)}</span>
-          </span>
+        <div .row .gap-2>
+          <span .badge class={project.type.toLowerCase()}>{project.type}</span>
+          <span .fg-3 .text-xs>{timeAgo(project.modifiedAt)}</span>
         </div>
-      </div>
-
-      <div .filter-bar>
-        <input|text .search searchBox value={state.search} novalue="Search projects..." />
-        <select|list .sm filterSelect value={state.filter}>
-          <option value="All">All Types</option>
-          <option value="Node">Node</option>
-          <option value="Flutter">Flutter</option>
-          <option value="Rust">Rust</option>
-          <option value="Python">Python</option>
-          <option value="Git">Git</option>
-          <option value="Unknown">Unknown</option>
-        </select>
-      </div>
-
-      <div .project-list>
-        {projects.length > 0
-          ? projects.map(project => <div .project-item key={project.id}>
-              <div .project-info>
-                <div .project-name>{project.name}</div>
-                <div .project-path>{project.path}</div>
-                <div .project-meta>
-                  <span .badge class={project.type.toLowerCase()}>{project.type}</span>
-                  <span .text-tertiary .text-xs>{timeAgo(project.modifiedAt)}</span>
-                  {project.cleanupTargets?.length > 0
-                    ? <span .text-tertiary .text-xs>{project.cleanupTargets.length} targets</span>
-                    : []}
-                </div>
-              </div>
-              <div .project-size>{formatBytes(project.reclaimableBytes)}</div>
-              <div .project-actions>
-                <button .primary .sm data-id={project.id} disabled={!project.cleanupTargets?.length}>Clean</button>
-                <button .ghost .sm data-open={project.path}>Open</button>
-              </div>
-            </div>)
-          : <div .workspace-empty>
-              <h2>No projects found</h2>
-              <p>{state.search ? "Try adjusting your search or filters." : "Scan a workspace to discover your projects."}</p>
-            </div>
-        }
-      </div>
-    </div>;
-  }
+        <span .font-mono .text-sm .semibold .fg-grn .nowrap style="width:90dip; text-align:right;">
+          {formatBytes(project.reclaimableBytes)}
+        </span>
+        <div .actions .row .gap-1>
+          <button .primary .sm data-id={project.id} disabled={!project.cleanupTargets?.length}>Clean</button>
+          <button .ghost .sm data-open={project.path} title="Open"><i .icon-external-link /></button>
+        </div>
+      </div>)}
+    </div>
+  </div>;
 }
