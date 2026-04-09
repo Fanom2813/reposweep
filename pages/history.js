@@ -25,11 +25,12 @@ export class HistoryPage extends Element {
     const history = props?.history || [];
     const totalCleaned = history.reduce((sum, e) => sum + (e.bytesReclaimed || 0), 0);
 
-    return <div .page-scroll .p-6>
+    return <div .page-scroll>
+      <div .p-6 style="width:*;">
       <div .page-wide>
-        <div .page-header>
-          <h1>History</h1>
-          <p .text-secondary>Track your cleanup activity over time.</p>
+        <div .col .gap-1 .mb-6>
+          <h1 .text-2xl .bold>History</h1>
+          <p .fg-3 .text-sm>Track your cleanup activity over time.</p>
         </div>
 
         <div .stats-row .mb-6>
@@ -82,6 +83,7 @@ export class HistoryPage extends Element {
               <p>Clean some projects and they will appear here.</p>
             </div>
         }
+      </div>
       </div>
     </div>;
   }

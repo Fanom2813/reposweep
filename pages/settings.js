@@ -9,8 +9,8 @@ export class SettingsPage extends Element {
   render(props) {
     const settings = props?.settings || {};
 
-    return <div .page-scroll .p-6>
-      <div style="max-width:640dip;">
+    return <div .page-scroll>
+      <div .p-6 style="width:*;">
 
         <div .col .gap-1 .mb-6>
           <h1 .text-2xl .bold>Settings</h1>
@@ -89,9 +89,11 @@ export class SettingsPage extends Element {
           </div>
         </Section>
 
-        <div .row .gap-3 .py-4 .mt-2>
-          <button .ghost #reset-settings><i .icon-refresh-cw /> Reset to defaults</button>
-        </div>
+        <Section title="Data">
+          <Row label="Reset Settings" desc="Restore all settings to their default values">
+            <button .ghost .sm #reset-settings>Reset</button>
+          </Row>
+        </Section>
 
       </div>
     </div>;

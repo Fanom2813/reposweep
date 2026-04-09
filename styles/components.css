@@ -81,49 +81,60 @@ input[type="text"] {
   color: color(fg);
   font-size: length(text-sm);
   width: *;
-  transition: border-color 80ms ease;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 
-input:focus       { outline: none; border-color: color(accent); }
-input:disabled    { background: color(bg-2); color: color(fg-4); cursor: not-allowed; }
-input:empty       { color: color(fg-4); }
-input.sm          { height: 24dip; line-height: 22dip; font-size: length(text-xs); }
+input[type="text"]:hover       { border-color: color(line-strong); }
+input[type="text"]:focus       { outline: none; border-color: color(accent); box-shadow: 0 0 0 2dip color(accent-soft); }
+input[type="text"]:disabled    { background: color(bg-2); color: color(fg-4); cursor: not-allowed; }
+input[type="text"]:empty       { color: color(fg-4); }
+input[type="text"].sm          { height: 24dip; line-height: 22dip; font-size: length(text-xs); }
 
-/* Integer/Number input */
+/* Integer/Number — same look as text input */
 input[type="integer"],
 input[type="number"] {
-  border: 1dip solid color(line);
+  appearance: none;
+  display: block;
+  border: 1dip solid color(line-strong);
   border-radius: length(r-md);
   background: color(bg-0);
   color: color(fg);
   font-size: length(text-sm);
   height: 28dip;
   padding: 0;
+  overflow: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 
+input[type="integer"]:hover,
+input[type="number"]:hover     { border-color: color(line-strong); }
 input[type="integer"]:focus,
-input[type="number"]:focus { border-color: color(accent); }
+input[type="number"]:focus     { outline: none; border-color: color(accent); box-shadow: 0 0 0 2dip color(accent-soft); }
+input[type="integer"]:disabled,
+input[type="number"]:disabled  { background: color(bg-2); color: color(fg-4); cursor: not-allowed; }
+input[type="integer"]:empty,
+input[type="number"]:empty     { color: color(fg-4); }
 
 input[type="integer"] > caption,
-input[type="number"] > caption {
-  padding: 0 6dip;
-  line-height: 26dip;
-}
+input[type="number"] > caption { width: *; height: *; padding: 0 8dip; line-height: 26dip; }
 
 input[type="integer"] > button,
-input[type="number"] > button {
+input[type="number"] > button  {
+  appearance: none;
+  display: block;
   background: transparent;
   border: none;
-  border-left: 1dip solid color(line);
-  width: 22dip;
+  width: 1.2em;
+  height: *;
   cursor: pointer;
+  color: color(fg-3);
+  font-size: length(text-xs);
 }
 
 input[type="integer"] > button:hover,
-input[type="number"] > button:hover {
-  background: color(bg-hover);
-}
+input[type="number"] > button:hover { background: color(bg-hover); color: color(fg); }
 
+/* Search input */
 .search {
   padding-left: 32dip;
   background-image: url("path:M11 19 C6 19 2 15 2 10 C2 5 6 1 11 1 C16 1 20 5 20 10 C20 15 16 19 11 19 Z M18 18 L24 24");
@@ -135,6 +146,7 @@ input[type="number"] > button:hover {
   fill: none;
 }
 
+/* Textarea */
 textarea {
   appearance: none;
   display: block;
@@ -147,12 +159,16 @@ textarea {
   line-height: 1.5;
   min-height: 80dip;
   width: *;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 
-textarea:focus { outline: none; border-color: color(accent); }
+textarea:hover { border-color: color(line-strong); }
+textarea:focus { outline: none; border-color: color(accent); box-shadow: 0 0 0 2dip color(accent-soft); }
 textarea:empty { color: color(fg-4); }
 
+/* Select/Dropdown */
 select {
+  appearance: none;
   display: inline-block;
   height: 28dip;
   border: 1dip solid color(line);
@@ -162,6 +178,7 @@ select {
   font-size: length(text-sm);
   cursor: pointer;
   padding: 0;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 
 select > caption {
@@ -170,10 +187,48 @@ select > caption {
   line-height: 26dip;
 }
 
-select:focus { outline: none; border-color: color(accent); }
-select.sm    { height: 24dip; font-size: length(text-xs); }
-select.sm > caption { line-height: 22dip; }
+select > button {
+  background: transparent;
+  border: none;
+  border-left: 1dip solid color(line);
+  width: 20dip;
+  height: *;
+  cursor: pointer;
+  padding: 0;
+  color: color(fg-3);
+}
 
+select > button:hover { background: color(bg-hover); }
+select:hover          { border-color: color(line-strong); }
+select:focus          { outline: none; border-color: color(accent); box-shadow: 0 0 0 2dip color(accent-soft); }
+select.sm             { height: 24dip; font-size: length(text-xs); }
+select.sm > caption   { line-height: 22dip; }
+
+/* Select popup */
+select > popup {
+  border: 1dip solid color(line-strong);
+  border-radius: length(r-md);
+  background: color(bg-0);
+  padding: 4dip 0;
+  box-shadow: 0 4dip 12dip rgba(0,0,0,0.08);
+}
+
+select > popup option {
+  padding: 4dip 12dip;
+  font-size: length(text-sm);
+  cursor: pointer;
+}
+
+select > popup option:current {
+  background: color(accent-soft);
+  color: color(accent);
+}
+
+select > popup option:hover {
+  background: color(bg-hover);
+}
+
+/* Checkbox — Notion-style */
 input[type="checkbox"] {
   appearance: none;
   width: 16dip; height: 16dip; padding: 0;
@@ -182,16 +237,20 @@ input[type="checkbox"] {
   background: color(bg-0);
   cursor: pointer;
   vertical-align: middle;
+  transition: border-color 120ms ease, background-color 120ms ease;
 }
 
-input[type="checkbox"]:hover   { border-color: color(accent); }
+input[type="checkbox"]:hover   { border-color: color(accent); background: color(accent-soft); }
 input[type="checkbox"]:checked {
   background: color(accent); border-color: color(accent);
   foreground-image: url("path:M4 8 L7 11 L13 4");
   foreground-size: 12dip; foreground-repeat: no-repeat; foreground-position: 50% 50%;
-  stroke: white; stroke-width: 2dip; fill: none;
+  stroke: color(fg-inv); stroke-width: 2dip; fill: none;
 }
+input[type="checkbox"]:checked:hover { background: color(accent-hover); border-color: color(accent-hover); }
+input[type="checkbox"]:disabled { opacity: 0.4; cursor: not-allowed; }
 
+/* Radio — Notion-style */
 input[type="radio"] {
   appearance: none;
   width: 16dip; height: 16dip; padding: 0;
@@ -200,13 +259,19 @@ input[type="radio"] {
   background: color(bg-0);
   cursor: pointer;
   vertical-align: middle;
+  transition: border-color 120ms ease, background-color 120ms ease;
 }
 
+input[type="radio"]:hover { border-color: color(accent); background: color(accent-soft); }
+
 input[type="radio"]:checked {
-  background: color(accent); border-color: color(accent);
+  background: color(accent);
+  border-color: color(accent);
   foreground-image: url("path:M5 5 A3 3 0 0 0 5 11 A3 3 0 0 0 11 11 A3 3 0 0 0 11 5 A3 3 0 0 0 5 5");
-  foreground-size: 8dip; foreground-repeat: no-repeat; foreground-position: 50% 50%;
-  fill: white;
+  foreground-size: 8dip;
+  foreground-repeat: no-repeat;
+  foreground-position: 50% 50%;
+  fill: color(fg-inv);
 }
 
 /* ============================================

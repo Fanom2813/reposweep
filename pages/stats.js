@@ -22,11 +22,12 @@ export class StatsPage extends Element {
     const largestProjects = stats.largestProjects || [];
     const recommendations = stats.recommendations || [];
 
-    return <div .page-scroll .p-6>
+    return <div .page-scroll>
+      <div .p-6 style="width:*;">
       <div .page-wide>
-        <div .page-header>
-          <h1>Statistics</h1>
-          <p .text-secondary>Workspace analytics and insights.</p>
+        <div .col .gap-1 .mb-6>
+          <h1 .text-2xl .bold>Statistics</h1>
+          <p .fg-3 .text-sm>Workspace analytics and insights.</p>
         </div>
 
         <div .stats-row .mb-6>
@@ -105,6 +106,7 @@ export class StatsPage extends Element {
             </div>)}
           </div>
         </section> : []}
+      </div>
       </div>
     </div>;
   }
