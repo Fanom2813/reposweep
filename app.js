@@ -26,10 +26,12 @@ export class Application extends Element {
 
   constructor() {
     super();
+    const t0 = Date.now();
     this.store = new Store(() => {
       this.post(() => this.updateContent());
     });
     this.store.init();
+    console.log(`[app] Store constructed + init in ${Date.now() - t0}ms`);
   }
 
   componentDidMount() {
@@ -46,9 +48,16 @@ export class Application extends Element {
    * Only patch the content area — not the entire tree.
    */
   updateContent() {
+    const t0 = Date.now();
     const content = this.$("div.app-content");
     if (content) {
-      content.patch(this.renderPage(this.currentPage, this.store));
+      const vdom = this.renderPage(this.currentPage, this.store);
+      console.log(`[app] renderPage built in ${Date.now() - t0}ms`);
+      content.patch(vdom);
+      console.log(`[app] patch completed in ${Date.now() - t0}ms`);
+      requestAnimationFrame(() => {
+        console.log(`[app] frame painted after patch — total ${Date.now() - t0}ms`);
+      });
     }
   }
 
@@ -71,6 +80,7 @@ export class Application extends Element {
    * Navigate to page — updates sidebar highlight + content area.
    */
   navigateTo(page) {
+    console.log(`[app] navigateTo('${page}')`);
     this.currentPage = page;
     this.updateSidebar();
     this.updateContent();
