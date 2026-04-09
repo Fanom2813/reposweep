@@ -6,12 +6,7 @@
  */
 
 export class SettingsPage extends Element {
-  componentDidMount() {
-    console.log(`[settings-page] componentDidMount — ${Date.now()}ms`);
-  }
-
   render(props) {
-    console.log(`[settings-page] render — settings arrived: ${JSON.stringify(props?.settings ? "present" : "missing")}`);
     const settings = props?.settings || {};
 
     return <div .page-scroll .p-6>
@@ -34,10 +29,10 @@ export class SettingsPage extends Element {
 
         <Section title="Safety">
           <Row label="Move to Trash" desc="Use system trash instead of permanent deletion">
-            <input|checkbox(settingToggle) data-key="useTrash" :checked={settings.useTrash ?? true} />
+            <input|checkbox(settingToggle) data-key="useTrash" state-checked={settings.useTrash ?? true} />
           </Row>
           <Row label="Dry Run Preview" desc="Always show preview before cleaning">
-            <input|checkbox(settingToggle) data-key="dryRunDefault" :checked={settings.dryRunDefault || false} />
+            <input|checkbox(settingToggle) data-key="dryRunDefault" state-checked={settings.dryRunDefault || false} />
           </Row>
           <Row label="Confirmation Threshold" desc="Require confirmation above this size (MB)">
             <input|integer(settingNumber) data-key="confirmThreshold" state-value={settings.confirmThreshold || 100} min="0" step="10" style="width:72dip;" />
@@ -46,10 +41,10 @@ export class SettingsPage extends Element {
 
         <Section title="Scanning">
           <Row label="Auto-scan on launch" desc="Scan workspace automatically when app opens">
-            <input|checkbox(settingToggle) data-key="autoScan" :checked={settings.autoScan ?? true} />
+            <input|checkbox(settingToggle) data-key="autoScan" state-checked={settings.autoScan ?? true} />
           </Row>
           <Row label="Deep Scan" desc="Scan subdirectories for nested projects">
-            <input|checkbox(settingToggle) data-key="deepScan" :checked={settings.deepScan || false} />
+            <input|checkbox(settingToggle) data-key="deepScan" state-checked={settings.deepScan || false} />
           </Row>
           <Row label="Scan Depth" desc="Maximum directory depth (1-5)">
             <input|integer(settingNumber) data-key="scanDepth" state-value={settings.scanDepth || 2} min="1" max="5" style="width:56dip;" />

@@ -1,8 +1,8 @@
 /**
  * App — UI shell only. All business logic lives in store.js.
  *
- * Optimization: sidebar and titlebar are marked non-reactive.
- * Page navigation patches only the content area.
+ * Navigation uses componentUpdate() — the correct Sciter pattern.
+ * Page components use key to ensure proper reconciliation.
  */
 
 import { Store, formatBytes } from "lib/store.js";
@@ -26,16 +26,13 @@ export class Application extends Element {
 
   constructor() {
     super();
-    const t0 = Date.now();
     this.store = new Store(() => {
-      this.post(() => this.updateContent());
+      this.componentUpdate();
     });
     this.store.init();
-    console.log(`[app] Store constructed + init in ${Date.now() - t0}ms`);
   }
 
   componentDidMount() {
-    // Mark static parts as non-reactive — they won't re-render on componentUpdate
     const header = this.$("window-header");
     if (header) header.state.reactive = false;
 
@@ -44,46 +41,9 @@ export class Application extends Element {
     }
   }
 
-  /**
-   * Only patch the content area — not the entire tree.
-   */
-  updateContent() {
-    const t0 = Date.now();
-    const content = this.$("div.app-content");
-    if (content) {
-      const vdom = this.renderPage(this.currentPage, this.store);
-      console.log(`[app] renderPage built in ${Date.now() - t0}ms`);
-      content.patch(vdom);
-      console.log(`[app] patch completed in ${Date.now() - t0}ms`);
-      requestAnimationFrame(() => {
-        console.log(`[app] frame painted after patch — total ${Date.now() - t0}ms`);
-      });
-    }
-  }
-
-  /**
-   * Update sidebar separately when needed (root changes, page nav).
-   */
-  updateSidebar() {
-    const sidebar = this.$("aside.sidebar");
-    if (sidebar) {
-      sidebar.componentUpdate({
-        roots: this.store.roots,
-        selectedRoot: this.store.selectedRoot,
-        navItems: this.navItems,
-        currentPage: this.currentPage,
-      });
-    }
-  }
-
-  /**
-   * Navigate to page — updates sidebar highlight + content area.
-   */
   navigateTo(page) {
-    console.log(`[app] navigateTo('${page}')`);
     this.currentPage = page;
-    this.updateSidebar();
-    this.updateContent();
+    this.componentUpdate();
   }
 
   render() {
@@ -115,7 +75,7 @@ export class Application extends Element {
           navItems={this.navItems}
           currentPage={this.currentPage}
         /> : []}
-        <div .app-content>
+        <div .app-content key={this.currentPage}>
           {this.renderPage(this.currentPage, s)}
         </div>
       </div>
@@ -123,17 +83,17 @@ export class Application extends Element {
   }
 
   renderPage(page, s) {
-    if (page === "settings") return <SettingsPage settings={s.settings} />;
-    if (page === "history")  return <HistoryPage history={s.history} />;
-    if (page === "stats")    return <StatsPage stats={s.getStats()} />;
+    if (page === "settings") return <SettingsPage key="settings" settings={s.settings} />;
+    if (page === "history")  return <HistoryPage key="history" history={s.history} />;
+    if (page === "stats")    return <StatsPage key="stats" stats={s.getStats()} />;
 
-    if (s.roots.length === 0) return <Onboarding />;
+    if (s.roots.length === 0) return <Onboarding key="onboarding" />;
     const projects = s.getVisibleProjects();
     if (projects.length === 0 && !s.scanning && !s.search) {
       const name = s.selectedRoot.split("/").pop() || s.selectedRoot;
-      return <WorkspaceEmpty rootName={name} hasProjects={s.projects.length > 0} />;
+      return <WorkspaceEmpty key="empty" rootName={name} hasProjects={s.projects.length > 0} />;
     }
-    return <WorkspaceView state={s} projects={projects} projectTypes={s.getProjectTypes()} />;
+    return <WorkspaceView key="workspace" state={s} projects={projects} projectTypes={s.getProjectTypes()} />;
   }
 
   // ===== Sidebar events =====
@@ -162,9 +122,8 @@ export class Application extends Element {
 
   ["on sidebar-remove-root"](evt) {
     this.store.removeRoot(evt.data.root);
-    this.updateSidebar();
     if (this.store.selectedRoot) this.store.scan();
-    else this.updateContent();
+    else this.componentUpdate();
     return true;
   }
 
@@ -172,7 +131,7 @@ export class Application extends Element {
 
   ["on click at button#toggle-sidebar"]() {
     this.sidebarVisible = !this.sidebarVisible;
-    this.componentUpdate(); // Full re-render needed for sidebar show/hide
+    this.componentUpdate();
     return true;
   }
 
