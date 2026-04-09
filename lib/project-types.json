@@ -1,0 +1,98 @@
+[
+  {
+    "id": "node",
+    "name": "Node",
+    "icon": "icon-package",
+    "markers": ["package.json"],
+    "targets": ["node_modules", ".next", ".nuxt", ".turbo", ".cache", "dist", "build", ".parcel-cache", ".vite"],
+    "priority": 10
+  },
+  {
+    "id": "flutter",
+    "name": "Flutter",
+    "icon": "icon-smartphone",
+    "markers": ["pubspec.yaml"],
+    "targets": [".dart_tool", "build", ".flutter-plugins-dependencies"],
+    "priority": 10
+  },
+  {
+    "id": "rust",
+    "name": "Rust",
+    "icon": "icon-cpu",
+    "markers": ["Cargo.toml"],
+    "targets": ["target"],
+    "priority": 10
+  },
+  {
+    "id": "python",
+    "name": "Python",
+    "icon": "icon-terminal",
+    "markers": ["pyproject.toml", "requirements.txt", "setup.py", "Pipfile"],
+    "targets": ["__pycache__", ".venv", "venv", ".tox", ".mypy_cache", ".pytest_cache", "dist", "build", "*.egg-info"],
+    "priority": 9
+  },
+  {
+    "id": "go",
+    "name": "Go",
+    "icon": "icon-box",
+    "markers": ["go.mod"],
+    "targets": ["vendor"],
+    "priority": 10
+  },
+  {
+    "id": "dotnet",
+    "name": ".NET",
+    "icon": "icon-layers",
+    "markers": ["*.csproj", "*.sln", "*.fsproj"],
+    "targets": ["bin", "obj", ".vs", "packages"],
+    "priority": 9
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "icon": "icon-coffee",
+    "markers": ["pom.xml", "build.gradle", "build.gradle.kts"],
+    "targets": ["target", "build", ".gradle", ".mvn"],
+    "priority": 9
+  },
+  {
+    "id": "ruby",
+    "name": "Ruby",
+    "icon": "icon-gem",
+    "markers": ["Gemfile"],
+    "targets": ["vendor/bundle", ".bundle", "tmp"],
+    "priority": 8
+  },
+  {
+    "id": "php",
+    "name": "PHP",
+    "icon": "icon-code",
+    "markers": ["composer.json"],
+    "targets": ["vendor", ".phpunit.cache"],
+    "priority": 8
+  },
+  {
+    "id": "swift",
+    "name": "Swift",
+    "icon": "icon-zap",
+    "markers": ["Package.swift", "*.xcodeproj"],
+    "targets": [".build", "DerivedData", ".swiftpm"],
+    "priority": 9
+  },
+  {
+    "id": "elixir",
+    "name": "Elixir",
+    "icon": "icon-droplet",
+    "markers": ["mix.exs"],
+    "targets": ["_build", "deps", ".elixir_ls"],
+    "priority": 8
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "icon": "icon-git-branch",
+    "markers": [".git"],
+    "targets": [],
+    "priority": 1
+  }
+]

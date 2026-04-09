@@ -25,7 +25,7 @@ export class HistoryPage extends Element {
     const history = props?.history || [];
     const totalCleaned = history.reduce((sum, e) => sum + (e.bytesReclaimed || 0), 0);
 
-    return <div .page-scroll>
+    return <div .page-scroll .p-6>
       <div .page-wide>
         <div .page-header>
           <h1>History</h1>

@@ -22,7 +22,7 @@ export class StatsPage extends Element {
     const largestProjects = stats.largestProjects || [];
     const recommendations = stats.recommendations || [];
 
-    return <div .page-scroll>
+    return <div .page-scroll .p-6>
       <div .page-wide>
         <div .page-header>
           <h1>Statistics</h1>

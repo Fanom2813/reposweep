@@ -2,7 +2,7 @@
  * Workspace views — project list, empty state, toolbar.
  */
 
-import { formatBytes } from "../scanner.js";
+import { formatBytes } from "../lib/scanner.js";
 
 function timeAgo(timestamp) {
   if (!timestamp) return "";
@@ -48,7 +48,7 @@ export function WorkspaceEmpty(props) {
  * Workspace view — toolbar + scrollable project list.
  */
 export function WorkspaceView(props) {
-  const { state, projects } = props;
+  const { state, projects, projectTypes } = props;
   const totalReclaimable = projects.reduce((sum, p) => sum + (p.reclaimableBytes || 0), 0);
   const rootName = rootLabel(state.selectedRoot);
 
@@ -60,12 +60,7 @@ export function WorkspaceView(props) {
       <input|text .search .sm searchBox value={state.search} novalue="Search..." style="width:180dip;" />
       <select|list .sm filterSelect value={state.filter} style="width:100dip;">
         <option value="All">All</option>
-        <option value="Node">Node</option>
-        <option value="Flutter">Flutter</option>
-        <option value="Rust">Rust</option>
-        <option value="Python">Python</option>
-        <option value="Git">Git</option>
-        <option value="Unknown">Unknown</option>
+        {(projectTypes || []).map(t => <option value={t.name} key={t.id}>{t.name}</option>)}
       </select>
       <button .ghost .sm #rescan disabled={state.scanning} title="Rescan"><i .icon-refresh-cw /></button>
     </div>
