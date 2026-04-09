@@ -1,6 +1,7 @@
 /**
- * Notion-Inspired Chrome & Navigation
- * Sciter native color()/length() syntax.
+ * RepoSweep Chrome
+ * Window frame, app layout, sidebar structure.
+ * Items inside sidebar are styled with utilities in JSX.
  */
 
 @import url(tokens.css);
@@ -17,7 +18,7 @@ window-header {
   min-height: 44dip;
   flow: horizontal;
   background: color(bg-sidebar);
-  border-bottom: 1dip solid color(border-default);
+  border-bottom: 1dip solid color(line);
   vertical-align: middle;
 }
 
@@ -27,307 +28,91 @@ window-header > window-caption {
   height: *;
   flow: horizontal;
   vertical-align: middle;
-  padding: 0 length(space-3);
+  padding: 0 length(sp-3);
   line-height: window-caption-height;
 }
 
-/* Titlebar layout - left / center / right */
+/* ============================================
+   TITLEBAR LAYOUT
+   ============================================ */
+
 .titlebar-left {
   flow: horizontal;
   vertical-align: middle;
-  border-spacing: length(space-2);
-  width: length(sidebar-width);
+  border-spacing: length(sp-2);
+  width: length(sidebar-w);
 }
 
-.titlebar-center {
-  width: *;
-  text-align: center;
-}
+.titlebar-center { width: *; }
 
 .titlebar-right {
   flow: horizontal;
   vertical-align: middle;
-  border-spacing: length(space-3);
+  border-spacing: length(sp-3);
   width: max-content;
 }
 
-/* Titlebar button (hamburger etc) */
 .titlebar-btn {
   display: inline-block;
-  width: 28dip;
-  height: 28dip;
+  size: 28dip;
   padding: 0;
   border: none;
   background: transparent;
-  border-radius: length(radius-md);
-  color: color(text-tertiary);
+  border-radius: length(r-md);
+  color: color(fg-3);
   cursor: pointer;
   vertical-align: middle;
   text-align: center;
   line-height: 28dip;
 }
 
-.titlebar-btn [class^="icon-"] {
-  line-height: 28dip;
-  height: 28dip;
-}
+.titlebar-btn:hover { background: color(bg-hover); color: color(fg); }
+.titlebar-btn [class^="icon-"] { line-height: 28dip; height: 28dip; }
 
-.titlebar-btn:hover {
-  background: color(bg-hover);
-  color: color(text-color);
-}
-
-.titlebar-btn svg {
-  size: 16dip;
-  vertical-align: middle;
-}
-
-.titlebar-icon {
-  size: 18dip;
-  vertical-align: middle;
-}
-
-.titlebar-name {
-  font-size: length(text-sm);
-  font-weight: 600;
-  color: color(text-color);
-}
-
-.titlebar-route {
-  font-size: length(text-xs);
-  color: color(text-tertiary);
-  font-weight: 500;
-}
-
-.titlebar-stat {
-  font-size: length(text-xs);
-  font-family: @FONT_MONO;
-  color: color(success);
-  font-weight: 500;
-  padding-right: length(space-2);
-}
+.titlebar-icon  { size: 18dip; vertical-align: middle; }
+.titlebar-name  { font-size: length(text-sm); font-weight: 600; color: color(fg); }
+.titlebar-stat  { font-size: length(text-xs); font-family: @FONT_MONO; color: color(green); font-weight: 500; padding-right: length(sp-2); }
 
 /* ============================================
-   SIDEBAR
+   WINDOW FRAME & CONTROLS (SDK pattern)
    ============================================ */
 
-.sidebar {
-  width: length(sidebar-width);
-  height: *;
-  background: color(bg-sidebar);
-  border-right: 1dip solid color(border-default);
-  flow: vertical;
-  overflow: hidden;
-}
+html[window-frame="extended"] { border: window-frame-width solid transparent; }
+html[window-frame="extended"]:owns-focus { border-color: morph(color(accent), opacity:40%); }
+html[window-frame="extended"][window-state="maximized"] { border-color: transparent; }
 
-.sidebar-header {
-  padding: length(space-3) length(space-3) length(space-2);
-  flow: horizontal;
-  vertical-align: middle;
-  border-spacing: length(space-2);
-}
-
-.sidebar-brand {
-  flow: horizontal;
-  vertical-align: middle;
-  border-spacing: length(space-2);
-  padding: length(space-1) 6dip;
-  border-radius: length(radius-md);
-  cursor: pointer;
-  width: *;
-}
-
-.sidebar-brand:hover {
-  background: color(bg-hover);
-}
-
-.brand-icon {
-  size: 20dip;
-}
-
-.brand-name {
-  font-size: length(text-sm);
-  font-weight: 600;
-  color: color(text-color);
-}
-
-/* Nav sections */
-.sidebar-nav {
-  height: *;
-  flow: vertical;
-  padding: length(space-1) length(space-2);
-  overflow-y: scroll-indicator;
-  vertical-scrollbar: notion-v-scrollbar;
-}
-
-.nav-section {
-  flow: vertical;
-  border-spacing: 1dip;
-  margin-bottom: length(space-3);
-}
-
-.nav-section-label {
-  padding: 6dip length(space-2);
-  font-size: length(text-xs);
-  font-weight: 500;
-  color: color(text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-/* Nav items */
-.nav-item {
-  display: block;
-  flow: horizontal;
-  border-spacing: length(space-2);
-  padding: 5dip length(space-2);
-  color: color(text-secondary);
-  font-size: length(text-base);
-  line-height: 20dip;
-  cursor: pointer;
-  border-radius: length(radius-md);
-  vertical-align: middle;
-  transition: background 80ms ease;
-  text-decoration: none;
-}
-
-.nav-item:hover {
-  background: color(bg-hover);
-  color: color(text-color);
-  text-decoration: none;
-}
-
-.nav-item[state-current] {
-  background: color(bg-active);
-  color: color(text-color);
-  font-weight: 500;
-}
-
-.nav-item [class^="icon-"] {
-  opacity: 0.6;
-  line-height: 20dip;
-  height: 20dip;
-}
-
-.nav-item[state-current] [class^="icon-"] {
-  opacity: 1;
-}
-
-.nav-label {
-  width: *;
-}
-
-.nav-count {
-  font-size: length(text-xs);
-  color: color(text-tertiary);
-  background: color(bg-tertiary);
-  padding: 1dip 6dip;
-  border-radius: 9999px;
-  font-weight: 500;
-}
-
-/* Sidebar footer */
-.sidebar-footer {
-  padding: length(space-3);
-  border-top: 1dip solid color(border-default);
-}
-
-.footer-label {
-  font-size: length(text-xs);
-  color: color(text-tertiary);
-}
-
-.footer-value {
-  font-size: length(text-base);
-  font-weight: 600;
-  color: color(success);
-}
-
-/* ============================================
-   WINDOW FRAME & CONTROLS
-   (following SDK window-decoration.css pattern)
-   ============================================ */
-
-html[window-frame="extended"] {
-  border: window-frame-width solid transparent;
-}
-
-html[window-frame="extended"]:owns-focus {
-  border-color: morph(color(accent), opacity:40%);
-}
-
-html[window-frame="extended"][window-state="maximized"] {
-  border-color: transparent;
-}
-
-/* Window buttons container */
 window-header > window-buttons {
-  display: block;
-  flow: horizontal;
-  width: max-content;
-  height: *;
+  display: block; flow: horizontal; width: max-content; height: *;
 }
 
-/* Window button - using SDK pattern with window-button tag */
 window-header > window-buttons > window-button {
-  behavior: clickable;
-  display: block;
-  height: *;
-  width: window-button-width;
-  foreground-size: 11dip;
-  foreground-repeat: no-repeat;
-  foreground-position: 50% 50%;
-  stroke: color(text-secondary);
-  stroke-width: 1dip;
-  fill: none;
+  behavior: clickable; display: block; height: *; width: window-button-width;
+  foreground-size: 11dip; foreground-repeat: no-repeat; foreground-position: 50% 50%;
+  stroke: color(fg-2); stroke-width: 1dip; fill: none;
   transition: background-color linear 100ms;
 }
 
-window-header > window-buttons > window-button:hover {
-  background: rgba(0, 0, 0, 0.08);
-}
-
-window-button[role="window-minimize"] {
-  foreground-image: url(path:M0 0 M0 5 H10 M10 10);
-}
-
-window-button[role="window-maximize"] {
-  foreground-image: url(path:M0 0 H10 V10 H0 Z);
-}
-
-html[window-state="maximized"] window-button[role="window-maximize"] {
-  foreground-image: url(path:M0 2 h8 v8 h-8 Z M2 2 v-2 h8 v8 h-2);
-}
-
-window-button[role="window-close"] {
-  stroke-width: 1.44dip;
-  foreground-image: url(path:M0 0 L10 10 M10 0 L0 10);
-}
-
-window-button[role="window-close"]:hover {
-  background: rgb(232, 17, 35);
-  stroke: #fff;
-}
+window-header > window-buttons > window-button:hover { background: rgba(0,0,0,0.08); }
+window-button[role="window-minimize"] { foreground-image: url(path:M0 0 M0 5 H10 M10 10); }
+window-button[role="window-maximize"] { foreground-image: url(path:M0 0 H10 V10 H0 Z); }
+html[window-state="maximized"] window-button[role="window-maximize"] { foreground-image: url(path:M0 2 h8 v8 h-8 Z M2 2 v-2 h8 v8 h-2); }
+window-button[role="window-close"] { stroke-width: 1.44dip; foreground-image: url(path:M0 0 L10 10 M10 0 L0 10); }
+window-button[role="window-close"]:hover { background: rgb(232,17,35); stroke: #fff; }
 
 @media platform == "OSX" {
-  window-header > window-buttons {
-    display: none;
-  }
-  window-header > window-caption {
-    text-align: center;
-    margin-left: 80dip;
-  }
+  window-header > window-buttons { display: none; }
+  window-header > window-caption { text-align: center; margin-left: 80dip; }
 }
 
 /* ============================================
-   APP LAYOUT
+   APP SHELL
    ============================================ */
 
 .app-shell {
   size: *;
   flow: vertical;
   overflow: hidden;
-  background: color(bg-primary);
+  background: color(bg-0);
 }
 
 .app-body {
@@ -337,16 +122,101 @@ window-button[role="window-close"]:hover {
 }
 
 .app-content {
-  width: *;
+  size: *;
   flow: vertical;
   overflow: hidden;
-  background: color(bg-primary);
+  background: color(bg-0);
 }
 
-/* Scrollbar for main areas */
-.sidebar-nav,
-.app-content,
-.page-scroll {
-  vertical-scrollbar: notion-v-scrollbar;
-  horizontal-scrollbar: notion-h-scrollbar;
+/* ============================================
+   SIDEBAR STRUCTURE
+   Only the container. Items use shared .si class.
+   ============================================ */
+
+.sidebar {
+  width: length(sidebar-w);
+  height: *;
+  background: color(bg-sidebar);
+  border-right: 1dip solid color(line);
+  flow: vertical;
+  overflow: hidden;
+}
+
+.sidebar-divider {
+  height: 1dip;
+  background: color(line);
+  margin: length(sp-1) length(sp-3);
+}
+
+/*
+ * .si — Sidebar Item. The ONE shared pattern for all clickable sidebar rows.
+ * Use on: nav links, workspace roots, add-workspace button.
+ */
+.si {
+  display: block;
+  flow: horizontal;
+  border-spacing: length(sp-2);
+  padding: 6dip length(sp-2);
+  color: color(fg-2);
+  font-size: length(text-sm);
+  line-height: 20dip;
+  cursor: pointer;
+  border-radius: length(r-md);
+  vertical-align: middle;
+  transition: background 80ms ease;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+}
+
+.si:hover {
+  background: color(bg-hover);
+  color: color(fg);
+  text-decoration: none;
+}
+
+.si[state-current],
+.si[state-active] {
+  background: color(bg-active);
+  color: color(fg);
+  font-weight: 500;
+}
+
+.si.muted { color: color(fg-3); }
+
+/* Icons in sidebar items */
+.si [class^="icon-"] {
+  opacity: 0.5;
+  line-height: 20dip;
+  height: 20dip;
+}
+
+.si[state-current] [class^="icon-"],
+.si[state-active] [class^="icon-"] {
+  opacity: 1;
+}
+
+/* Inline remove button on sidebar items */
+.si-remove {
+  display: inline-block;
+  size: 20dip;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: color(fg-3);
+  border-radius: length(r-sm);
+  opacity: 0;
+  cursor: pointer;
+  text-align: center;
+  line-height: 20dip;
+}
+
+.si:hover .si-remove { opacity: 1; }
+.si-remove:hover { background: color(bg-active); color: color(red); }
+.si-remove [class^="icon-"] { font-size: 12dip; size: 12dip; line-height: 20dip; height: 20dip; }
+
+/* Scrollbars on scrollable areas */
+.scroll-y {
+  vertical-scrollbar: scroll-v;
+  horizontal-scrollbar: scroll-h;
 }

@@ -1,36 +1,30 @@
 /**
  * Repo Sweep - Main Application
  *
- * Notion-inspired layout with sidebar navigation.
- * Based on samples.reactor/routing pattern - App handles routing directly.
+ * Desktop utility for cleaning workspace caches.
+ * Opens directly to workspace — no landing page.
  */
 
 import * as env from "@env";
 import * as Settings from "settings.js";
 import { scanRoot, scanLikelyRoots, findCleanupTargets, formatBytes, removeTree } from "scanner.js";
-import {
-  HomePage,
-  WorkspacePage,
-  SettingsPage,
-  HistoryPage,
-  StatsPage,
-  ProjectDetailPage,
-} from "pages/index.js";
+import { SettingsPage } from "pages/settings.js";
+import { HistoryPage } from "pages/history.js";
+import { StatsPage } from "pages/stats.js";
 
 /**
- * Application State Manager
+ * Application State
  */
 class AppState {
   constructor(savedState = {}) {
     savedState = savedState || {};
     this.roots = savedState.roots || [];
     this.recentRoots = savedState.recentRoots || [];
-    this.selectedRoot = savedState.selectedRoot || this.roots[0] || this.recentRoots[0] || "";
+    this.selectedRoot = savedState.selectedRoot || this.roots[0] || "";
     this.projects = [];
     this.scanning = false;
     this.search = "";
     this.filter = "All";
-    this.lastScanSummary = "";
     this.settings = savedState.settings || {
       theme: "system",
       useTrash: true,
@@ -40,6 +34,7 @@ class AppState {
       scanDepth: 2,
       staleDays: 30,
       exclusions: [".env", ".env.local", "secrets"],
+      autoScan: true,
     };
     this.history = savedState.history || [];
   }
@@ -54,22 +49,12 @@ class AppState {
     });
   }
 
-  getRootChoices() {
-    const merged = [...this.roots];
-    for (const root of this.recentRoots) {
-      if (!merged.includes(root)) merged.push(root);
-    }
-    return merged;
-  }
-
   addRoot(path) {
     if (!path) return;
-    const roots = this.roots.includes(path)
-      ? this.roots
-      : [...this.roots, path];
-    const recentRoots = [path, ...this.recentRoots.filter(r => r !== path)].slice(0, 8);
-    this.roots = roots;
-    this.recentRoots = recentRoots;
+    if (!this.roots.includes(path)) {
+      this.roots = [...this.roots, path];
+    }
+    this.recentRoots = [path, ...this.recentRoots.filter(r => r !== path)].slice(0, 8);
     this.selectedRoot = path;
     this.persist();
   }
@@ -87,7 +72,6 @@ class AppState {
     this.scanning = true;
     this.projects = scanRoot(this.selectedRoot);
     this.scanning = false;
-    this.lastScanSummary = `${this.projects.length} project(s) found`;
   }
 
   suggestRoots() {
@@ -115,71 +99,50 @@ class AppState {
   }
 
   addToHistory(entry) {
-    this.history.unshift({
-      ...entry,
-      timestamp: Date.now() / 1000,
-    });
+    this.history.unshift({ ...entry, timestamp: Date.now() / 1000 });
     this.history = this.history.slice(0, 100);
     this.persist();
   }
 }
 
-/**
- * Main Application Component
- *
- * Handles routing directly (no separate Router) following the Sciter Reactor pattern.
- */
+// ===== Helpers =====
+
+function timeAgo(timestamp) {
+  if (!timestamp) return "";
+  const seconds = Math.floor(Date.now() / 1000 - timestamp);
+  if (seconds < 60) return "Just now";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days}d ago`;
+  return `${Math.floor(days / 30)}mo ago`;
+}
+
+function rootLabel(path) {
+  if (!path) return "";
+  const parts = path.split("/");
+  return parts[parts.length - 1] || parts[parts.length - 2] || path;
+}
+
+// ===== Main Application =====
+
 export class Application extends Element {
   appState = null;
-  routeName = "home";
-  routeView = null;
   sidebarVisible = true;
+  currentPage = "workspace"; // workspace | stats | history | settings
 
   async componentDidMount() {
     const saved = await Settings.loadState();
     this.appState = new AppState(saved);
-    this.routeView = this.buildRouteView("home");
+
+    // Auto-scan on launch if we have a root
+    if (this.appState.selectedRoot && this.appState.settings.autoScan) {
+      this.appState.scan();
+    }
+
     this.componentUpdate();
-  }
-
-  buildRouteView(name) {
-    const s = this.appState || new AppState({});
-    switch (name) {
-      case "home":
-        return <HomePage state={s} />;
-      case "workspace":
-        return <WorkspacePage state={s} projects={s.getVisibleProjects()} />;
-      case "settings":
-        return <SettingsPage state={s} />;
-      case "history":
-        return <HistoryPage state={s} history={s.history} />;
-      case "stats":
-        return <StatsPage state={s} stats={this.getStats()} />;
-      case "project-detail":
-        return <ProjectDetailPage />;
-      default:
-        return <HomePage state={s} />;
-    }
-  }
-
-  navigateTo(name) {
-    this.componentUpdate({
-      routeName: name,
-      routeView: this.buildRouteView(name),
-    });
-    return true;
-  }
-
-  getRouteLabel(name) {
-    switch (name) {
-      case "home": return "Home";
-      case "workspace": return "Workspace";
-      case "settings": return "Settings";
-      case "history": return "History";
-      case "stats": return "Statistics";
-      case "project-detail": return "Project";
-      default: return "";
-    }
   }
 
   render() {
@@ -187,15 +150,12 @@ export class Application extends Element {
       this.appState = new AppState({});
     }
 
-    if (!this.routeView) {
-      this.routeView = this.buildRouteView(this.routeName);
-    }
-
-    const totalReclaimable = this.appState.projects.reduce((s, p) => s + (p.reclaimableBytes || 0), 0);
-    const projectCount = this.appState.projects.length;
-    const rn = this.routeName;
-
+    const s = this.appState;
     const sv = this.sidebarVisible;
+    const page = this.currentPage;
+    const projects = s.getVisibleProjects();
+    const totalReclaimable = s.projects.reduce((sum, p) => sum + (p.reclaimableBytes || 0), 0);
+    const hasRoots = s.roots.length > 0;
 
     return <div .app-shell>
       <window-header>
@@ -220,133 +180,205 @@ export class Application extends Element {
       </window-header>
       <div .app-body>
         {sv ? <aside .sidebar>
-          <nav .sidebar-nav>
-            <div .nav-section>
-              <a .nav-item href="route:home" state-current={rn === "home"}>
-                <i .icon-home />
-                <span .nav-label>Home</span>
-              </a>
-              <a .nav-item href="route:workspace" state-current={rn === "workspace"}>
-                <i .icon-folder />
-                <span .nav-label>Workspace</span>
-                {projectCount > 0 ? <span .nav-count>{projectCount}</span> : []}
-              </a>
-            </div>
-            <div .nav-section>
-              <div .nav-section-label>Insights</div>
-              <a .nav-item href="route:stats" state-current={rn === "stats"}>
-                <i .icon-bar-chart-2 />
-                <span .nav-label>Statistics</span>
-              </a>
-              <a .nav-item href="route:history" state-current={rn === "history"}>
-                <i .icon-clock />
-                <span .nav-label>History</span>
-              </a>
-            </div>
-            <div .nav-section>
-              <div .nav-section-label>Configuration</div>
-              <a .nav-item href="route:settings" state-current={rn === "settings"}>
-                <i .icon-settings />
-                <span .nav-label>Settings</span>
-              </a>
-            </div>
-          </nav>
-          {totalReclaimable > 0 ? <div .sidebar-footer>
-            <div .footer-label>Reclaimable</div>
-            <div .footer-value>{formatBytes(totalReclaimable)}</div>
+          <div .col .p-2 .gap-1>
+            <div .fg-3 .text-xs .medium .px-2 .py-1 style="text-transform:uppercase; letter-spacing:0.04em;">Workspaces</div>
+            {s.roots.map(root => <div .si
+                key={root}
+                state-active={root === s.selectedRoot && page === "workspace"}
+                data-root={root}>
+              <i .icon-folder />
+              <span .w-full .truncate>{rootLabel(root)}</span>
+              <button .si-remove data-path={root}><i .icon-x /></button>
+            </div>)}
+            <button .si .muted #add-workspace>
+              <i .icon-plus />
+              <span>Add workspace</span>
+            </button>
+          </div>
+          <div .sidebar-divider />
+          <div .col .p-2 .gap-1>
+            <a .si href="page:stats" state-current={page === "stats"}>
+              <i .icon-bar-chart-2 />
+              <span .w-full>Statistics</span>
+            </a>
+            <a .si href="page:history" state-current={page === "history"}>
+              <i .icon-clock />
+              <span .w-full>History</span>
+            </a>
+            <a .si href="page:settings" state-current={page === "settings"}>
+              <i .icon-settings />
+              <span .w-full>Settings</span>
+            </a>
+          </div>
+          {totalReclaimable > 0 ? <div .p-3 .border-t .col style="margin-top:auto;">
+            <span .text-xs .fg-3>Reclaimable</span>
+            <span .text-base .bold .fg-grn .font-mono>{formatBytes(totalReclaimable)}</span>
           </div> : []}
         </aside> : []}
         <div .app-content>
-          {this.routeView}
+          {page === "workspace" ? this.renderWorkspace(s, projects, hasRoots)
+            : page === "stats" ? <StatsPage state={s} stats={this.getStats()} />
+            : page === "history" ? <HistoryPage state={s} history={s.history} />
+            : page === "settings" ? <SettingsPage state={s} />
+            : this.renderWorkspace(s, projects, hasRoots)}
         </div>
       </div>
     </div>;
   }
 
-  // ===== Route link handler =====
-  ["on click at [href^='route:']"](event, hyperlink) {
-    const href = hyperlink.attributes["href"];
-    const name = href.substring(6);
-    return this.navigateTo(name);
+  // ===== Workspace View (inline, not a separate page) =====
+
+  renderWorkspace(s, projects, hasRoots) {
+    // First-launch: no roots configured
+    if (!hasRoots) {
+      return <div .onboarding>
+        <div .col .gap-4 .m-auto .p-6 .text-center style="min-width:300dip; max-width:500dip;">
+          <i .icon-folder .mx-auto style="font-size:40dip; size:40dip; line-height:40dip; color:color(fg-3);" />
+          <div .col .gap-2>
+            <h2 .text-2xl .semibold>Add a workspace</h2>
+            <p .fg-2 .text-base>Pick a folder that contains your projects. RepoSweep will scan it and find cleanup targets.</p>
+          </div>
+          <div .row .gap-3 .mx-auto .mt-2>
+            <button .primary .lg #auto-detect><i .icon-zap /> Auto-detect</button>
+            <button .lg #add-workspace><i .icon-folder /> Browse...</button>
+          </div>
+        </div>
+      </div>;
+    }
+
+    // Has roots but no projects yet
+    if (projects.length === 0 && !s.scanning && !s.search) {
+      return <div .workspace>
+        <div .row .gap-3 .px-5 .py-3 .border-b>
+          <h3 .text-lg .semibold .nowrap>{rootLabel(s.selectedRoot)}</h3>
+          <div .spacer />
+          <button .primary .sm #rescan><i .icon-refresh-cw /> Scan</button>
+        </div>
+        <div .h-full>
+          <div .col .gap-2 .m-auto .text-center>
+            <i .icon-search .mx-auto style="font-size:28dip; size:28dip; line-height:28dip; color:color(fg-3);" />
+            <h3 .text-lg .medium>{s.projects.length === 0 ? "No projects scanned yet" : "No matches"}</h3>
+            <p .fg-2 .text-sm>Click Scan to discover projects in this workspace.</p>
+          </div>
+        </div>
+      </div>;
+    }
+
+    const totalReclaimable = projects.reduce((sum, p) => sum + (p.reclaimableBytes || 0), 0);
+
+    return <div .workspace>
+      <div .row .gap-3 .px-5 .py-3 .border-b>
+        <h3 .text-lg .semibold .nowrap>{rootLabel(s.selectedRoot)}</h3>
+        <span .text-xs .fg-3 .nowrap>{projects.length} projects · {formatBytes(totalReclaimable)} reclaimable</span>
+        <div .spacer />
+        <input|text .search .sm searchBox value={s.search} novalue="Search..." style="width:180dip;" />
+        <select|list .sm filterSelect value={s.filter} style="width:100dip;">
+          <option value="All">All</option>
+          <option value="Node">Node</option>
+          <option value="Flutter">Flutter</option>
+          <option value="Rust">Rust</option>
+          <option value="Python">Python</option>
+          <option value="Git">Git</option>
+          <option value="Unknown">Unknown</option>
+        </select>
+        <button .ghost .sm #rescan disabled={s.scanning} title="Rescan"><i .icon-refresh-cw /></button>
+      </div>
+      <div .project-list>
+        {projects.map(project => <div .project-row .row .gap-3 .px-5 .py-2 .border-b key={project.id}>
+          <div .col .gap-1 .w-full style="min-width:200dip;">
+            <span .text-sm .medium>{project.name}</span>
+            <span .font-mono .text-xs .fg-3 .truncate>{project.path}</span>
+          </div>
+          <div .row .gap-2>
+            <span .badge class={project.type.toLowerCase()}>{project.type}</span>
+            <span .fg-3 .text-xs>{timeAgo(project.modifiedAt)}</span>
+          </div>
+          <span .font-mono .text-sm .semibold .fg-grn .nowrap style="width:90dip; text-align:right;">{formatBytes(project.reclaimableBytes)}</span>
+          <div .actions .row .gap-1>
+            <button .primary .sm data-id={project.id} disabled={!project.cleanupTargets?.length}>Clean</button>
+            <button .ghost .sm data-open={project.path} title="Open"><i .icon-external-link /></button>
+          </div>
+        </div>)}
+      </div>
+    </div>;
   }
 
-  // ===== Event Handlers =====
+  // ===== Navigation =====
+
+  ["on click at [href^='page:']"](event, el) {
+    const page = el.attributes["href"].substring(5);
+    this.componentUpdate({ currentPage: page });
+    return true;
+  }
+
+  ["on click at .root-entry"](event, el) {
+    const root = el.attributes["data-root"];
+    if (root) {
+      this.appState.selectedRoot = root;
+      this.appState.scan();
+      this.componentUpdate({ currentPage: "workspace" });
+    }
+    return true;
+  }
 
   ["on click at button#toggle-sidebar"]() {
     this.componentUpdate({ sidebarVisible: !this.sidebarVisible });
     return true;
   }
 
-  ["on click at button#auto-detect"]() {
-    this.appState.suggestRoots();
-    if (this.appState.roots.length > 0) {
-      this.appState.scan();
-      this.navigateTo("workspace");
-    }
-    this.componentUpdate();
-    return true;
-  }
+  // ===== Workspace Actions =====
 
-  ["on click at button#select-path"]() {
+  ["on click at button#add-workspace"]() {
     const fn = Window.this.selectFolder();
     if (fn) {
       const path = URL.toPath(fn);
       this.appState.addRoot(path);
       this.appState.scan();
-      this.navigateTo("workspace");
+      this.componentUpdate({ currentPage: "workspace" });
     }
     return true;
   }
 
-  ["on click at button#start"]() {
-    this.appState.scan();
-    this.navigateTo("workspace");
-    return true;
-  }
-
-  ["on change at input(rootChoice)"](evt, input) {
-    this.appState.selectedRoot = input.value;
-    this.componentUpdate();
-    return true;
-  }
-
-  ["on click at button.inline-remove"](evt, button) {
-    this.appState.removeRoot(button.attributes["data-path"]);
-    this.componentUpdate();
-    return true;
-  }
-
-  ["on click at button#change-root"]() {
-    this.navigateTo("home");
+  ["on click at button#auto-detect"]() {
+    this.appState.suggestRoots();
+    if (this.appState.selectedRoot) {
+      this.appState.scan();
+    }
+    this.componentUpdate({ currentPage: "workspace" });
     return true;
   }
 
   ["on click at button#rescan"]() {
     this.appState.scan();
-    this.routeView = this.buildRouteView(this.routeName);
+    this.componentUpdate();
+    return true;
+  }
+
+  ["on click at button.root-entry-remove"](evt, button) {
+    evt.stopPropagation();
+    this.appState.removeRoot(button.attributes["data-path"]);
+    if (this.appState.selectedRoot) {
+      this.appState.scan();
+    }
     this.componentUpdate();
     return true;
   }
 
   ["on change at select(filterSelect)"](evt, select) {
     this.appState.filter = select.value;
-    this.routeView = this.buildRouteView(this.routeName);
     this.componentUpdate();
     return true;
   }
 
   ["on change at input(searchBox)"](evt, input) {
     this.appState.search = input.value;
-    this.routeView = this.buildRouteView(this.routeName);
     this.componentUpdate();
     return true;
   }
 
   ["on click at button[data-id]"](evt, button) {
     const project = this.appState.projects.find(p => p.id === button.attributes["data-id"]);
-    if (project) {
-      this.cleanProject(project);
-    }
+    if (project) this.cleanProject(project);
     return true;
   }
 
@@ -355,7 +387,7 @@ export class Application extends Element {
     return true;
   }
 
-  // ===== Actions =====
+  // ===== Clean =====
 
   cleanProject(project) {
     if (!project.cleanupTargets.length) return;
@@ -364,8 +396,7 @@ export class Application extends Element {
       <question caption="Confirm Cleanup">
         <content>
           Clean {project.cleanupTargets.length} target(s) in <b>{project.name}</b>?
-          <br />
-          This will remove {project.reclaimableLabel} of caches and build folders.
+          <br/>This will remove {project.reclaimableLabel} of caches and build folders.
         </content>
         <buttons>
           <button id="clean" role="default-button">Clean</button>
@@ -394,106 +425,43 @@ export class Application extends Element {
 
     this.appState.projects = this.appState.projects.map(p =>
       p.id === project.id
-        ? {
-            ...p,
-            cleanupTargets: rescannedTargets,
-            reclaimableBytes,
-            reclaimableLabel: formatBytes(reclaimableBytes),
-          }
+        ? { ...p, cleanupTargets: rescannedTargets, reclaimableBytes, reclaimableLabel: formatBytes(reclaimableBytes) }
         : p
     );
 
-    this.appState.lastScanSummary = `Cleaned ${project.name}`;
-    this.routeView = this.buildRouteView(this.routeName);
     this.componentUpdate();
   }
 
+  // ===== Stats =====
+
   getStats() {
-    const totalReclaimed = this.appState.history.reduce((sum, e) => sum + e.bytesReclaimed, 0);
+    const s = this.appState;
+    const totalReclaimed = s.history.reduce((sum, e) => sum + e.bytesReclaimed, 0);
 
     const typeMap = new Map();
-    for (const project of this.appState.projects) {
+    for (const project of s.projects) {
       const existing = typeMap.get(project.type) || { count: 0, reclaimable: 0 };
       existing.count++;
       existing.reclaimable += project.reclaimableBytes;
       typeMap.set(project.type, existing);
     }
-    const totalReclaimable = Array.from(typeMap.values()).reduce((s, v) => s + v.reclaimable, 0);
+    const totalReclaimable = Array.from(typeMap.values()).reduce((sum, v) => sum + v.reclaimable, 0);
     const typeBreakdown = Array.from(typeMap.entries())
       .map(([name, data]) => ({
-        name,
-        ...data,
+        name, ...data,
         percentage: totalReclaimable > 0 ? (data.reclaimable / totalReclaimable) * 100 : 0,
       }))
       .sort((a, b) => b.reclaimable - a.reclaimable);
 
     return {
       totalReclaimed,
-      totalProjectsScanned: this.appState.projects.length,
-      totalProjectsCleaned: this.appState.history.length,
+      totalProjectsScanned: s.projects.length,
+      totalProjectsCleaned: s.history.length,
       currentlyReclaimable: totalReclaimable,
       typeBreakdown,
-      monthlyReclaim: this.getMonthlyReclaim(),
-      largestProjects: this.appState.projects
-        .slice()
-        .sort((a, b) => b.reclaimableBytes - a.reclaimableBytes)
-        .slice(0, 10)
-        .map(p => ({
-          name: p.name,
-          path: p.path,
-          type: p.type,
-          size: p.reclaimableBytes,
-        })),
-      recommendations: this.getRecommendations(),
+      largestProjects: s.projects
+        .slice().sort((a, b) => b.reclaimableBytes - a.reclaimableBytes).slice(0, 10)
+        .map(p => ({ name: p.name, path: p.path, type: p.type, size: p.reclaimableBytes })),
     };
-  }
-
-  getMonthlyReclaim() {
-    const monthly = new Map();
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    for (let i = 5; i >= 0; i--) {
-      const d = new Date();
-      d.setMonth(d.getMonth() - i);
-      const key = `${months[d.getMonth()]} ${d.getFullYear()}`;
-      monthly.set(key, { label: months[d.getMonth()], bytes: 0 });
-    }
-    for (const entry of this.appState.history) {
-      const d = new Date(entry.timestamp * 1000);
-      const key = `${months[d.getMonth()]} ${d.getFullYear()}`;
-      if (monthly.has(key)) {
-        const existing = monthly.get(key);
-        existing.bytes += entry.bytesReclaimed;
-        monthly.set(key, existing);
-      }
-    }
-    const values = Array.from(monthly.values());
-    const maxBytes = Math.max(...values.map(v => v.bytes), 1);
-    return values.map(v => ({
-      ...v,
-      percentage: (v.bytes / maxBytes) * 100,
-    }));
-  }
-
-  getRecommendations() {
-    const recs = [];
-    const staleThreshold = Date.now() / 1000 - this.appState.settings.staleDays * 86400;
-    const staleProjects = this.appState.projects.filter(p => p.modifiedAt < staleThreshold);
-    const staleReclaimable = staleProjects.reduce((s, p) => s + p.reclaimableBytes, 0);
-    if (staleProjects.length > 0) {
-      recs.push({
-        priority: "high",
-        title: `${staleProjects.length} stale projects detected`,
-        description: `Projects not modified in ${this.appState.settings.staleDays} days. ${formatBytes(staleReclaimable)} reclaimable.`,
-      });
-    }
-    const largeProjects = this.appState.projects.filter(p => p.reclaimableBytes > 1024 * 1024 * 1024);
-    if (largeProjects.length > 0) {
-      recs.push({
-        priority: "medium",
-        title: `${largeProjects.length} projects with >1GB reclaimable`,
-        description: "Focus on these for maximum space recovery.",
-      });
-    }
-    return recs;
   }
 }

@@ -1,289 +1,189 @@
 /**
- * Notion-Inspired Components
- * Using Sciter native color(name) / length(name) syntax.
+ * RepoSweep Components
+ * Only elements that need their own base style: buttons, inputs, badges, tables.
+ * Everything else: compose from utilities in JSX.
  */
 
 @import url(tokens.css);
 
 /* ============================================
    BUTTONS
+   All buttons: horizontal flow, centered content.
+   Add icons + text and they center automatically.
    ============================================ */
 
 button {
   appearance: none;
   display: inline-block;
-  padding: 4dip 12dip;
+  flow: horizontal;
+  vertical-align: middle;
+  border-spacing: length(sp-2);
+  padding: 0 12dip;
   height: 32dip;
-  border: 1dip solid color(border-default);
-  border-radius: length(radius-md);
-  background: color(bg-primary);
-  color: color(text-color);
+  line-height: 30dip;
+  border: 1dip solid color(line);
+  border-radius: length(r-md);
+  background: color(bg-0);
+  color: color(fg);
   font-size: length(text-sm);
   font-weight: 500;
-  line-height: 1;
   cursor: pointer;
-  transition: background 80ms ease;
-  vertical-align: middle;
-  text-align: center;
   white-space: nowrap;
+  transition: background 80ms ease;
 }
 
-button:hover {
-  background: color(bg-hover);
-}
-
-button:active {
-  background: color(bg-active);
-}
-
-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-button:disabled:hover {
-  background: color(bg-primary);
-}
+button [class^="icon-"] { line-height: 30dip; height: 30dip; }
+button:hover            { background: color(bg-hover); }
+button:active           { background: color(bg-active); }
+button:disabled         { opacity: 0.4; cursor: not-allowed; }
+button:disabled:hover   { background: color(bg-0); }
 
 /* Primary */
-button.primary {
-  background: color(accent);
-  border-color: color(accent);
-  color: #ffffff;
-}
-
-button.primary:hover {
-  background: color(accent-hover);
-  border-color: color(accent-hover);
-}
-
-button.primary:disabled:hover {
-  background: color(accent);
-}
+button.primary              { background: color(accent); border-color: color(accent); color: color(fg-inv); }
+button.primary:hover        { background: color(accent-hover); border-color: color(accent-hover); }
+button.primary:disabled:hover { background: color(accent); }
 
 /* Ghost */
-button.ghost {
-  background: transparent;
-  border-color: transparent;
-  color: color(text-secondary);
-}
-
-button.ghost:hover {
-  background: color(bg-hover);
-  color: color(text-color);
-}
+button.ghost              { background: transparent; border-color: transparent; color: color(fg-2); }
+button.ghost:hover        { background: color(bg-hover); color: color(fg); }
 
 /* Subtle */
-button.subtle {
-  background: color(bg-tertiary);
-  border-color: transparent;
-  color: color(text-secondary);
-}
-
-button.subtle:hover {
-  background: color(bg-active);
-  color: color(text-color);
-}
+button.subtle             { background: color(bg-2); border-color: transparent; color: color(fg-2); }
+button.subtle:hover       { background: color(bg-active); color: color(fg); }
 
 /* Danger */
-button.danger {
-  background: transparent;
-  border-color: color(error);
-  color: color(error);
-}
-
-button.danger:hover {
-  background: color(error-bg);
-}
+button.danger             { background: transparent; border-color: color(red); color: color(red); }
+button.danger:hover       { background: color(red-soft); }
 
 /* Sizes */
-button.xs {
-  padding: 2dip 8dip;
-  height: 24dip;
-  font-size: length(text-xs);
-}
+button.xs { padding: 0 8dip; height: 24dip; line-height: 22dip; font-size: length(text-xs); }
+button.xs [class^="icon-"] { line-height: 22dip; height: 22dip; }
 
-button.sm {
-  padding: 3dip 10dip;
-  height: 28dip;
-  font-size: length(text-xs);
-}
+button.sm { padding: 0 10dip; height: 28dip; line-height: 26dip; font-size: length(text-xs); }
+button.sm [class^="icon-"] { line-height: 26dip; height: 26dip; }
 
-button.lg {
-  padding: 8dip 20dip;
-  height: 40dip;
-  font-size: length(text-base);
-}
+button.lg { padding: 0 20dip; height: 40dip; line-height: 38dip; font-size: length(text-base); }
+button.lg [class^="icon-"] { line-height: 38dip; height: 38dip; }
 
 /* ============================================
-   FORM ELEMENTS
+   INPUTS
    ============================================ */
 
 input[type="text"] {
   appearance: none;
   display: inline-block;
-  padding: 4dip 10dip;
+  padding: 0 10dip;
   height: 32dip;
-  border: 1dip solid color(border-default);
-  border-radius: length(radius-md);
-  background: color(bg-primary);
-  color: color(text-color);
+  line-height: 30dip;
+  border: 1dip solid color(line);
+  border-radius: length(r-md);
+  background: color(bg-0);
+  color: color(fg);
   font-size: length(text-sm);
-  transition: border-color 80ms ease;
   width: *;
+  transition: border-color 80ms ease;
 }
 
-input:focus {
-  outline: none;
-  border-color: color(accent);
-}
+input:focus       { outline: none; border-color: color(accent); }
+input:disabled    { background: color(bg-2); color: color(fg-4); cursor: not-allowed; }
+input:empty       { color: color(fg-4); }
+input.sm          { height: 28dip; line-height: 26dip; font-size: length(text-xs); }
 
-input:disabled {
-  background: color(bg-tertiary);
-  color: color(text-disabled);
-  cursor: not-allowed;
-}
-
-input:empty {
-  color: color(text-placeholder);
-}
-
-input.sm {
-  height: 28dip;
-  padding: 3dip 8dip;
-  font-size: length(text-xs);
-}
-
-/* Search */
 .search {
   padding-left: 32dip;
   background-image: url("path:M11 19 C6 19 2 15 2 10 C2 5 6 1 11 1 C16 1 20 5 20 10 C20 15 16 19 11 19 Z M18 18 L24 24");
   background-size: 14dip;
   background-repeat: no-repeat;
   background-position: 10dip 50%;
-  stroke: color(text-tertiary);
+  stroke: color(fg-3);
   stroke-width: 2dip;
   fill: none;
 }
 
-/* Textarea */
 textarea {
   appearance: none;
   display: block;
   padding: 8dip 10dip;
-  border: 1dip solid color(border-default);
-  border-radius: length(radius-md);
-  background: color(bg-primary);
-  color: color(text-color);
+  border: 1dip solid color(line);
+  border-radius: length(r-md);
+  background: color(bg-0);
+  color: color(fg);
   font-size: length(text-sm);
-  font-family: @FONT_SANS;
   line-height: 1.5;
   min-height: 80dip;
   width: *;
-  transition: border-color 80ms ease;
 }
 
-textarea:focus {
-  outline: none;
-  border-color: color(accent);
-}
+textarea:focus { outline: none; border-color: color(accent); }
+textarea:empty { color: color(fg-4); }
 
-textarea:empty {
-  color: color(text-placeholder);
-}
-
-/* Select */
 select {
   appearance: none;
   display: inline-block;
-  padding: 4dip 28dip 4dip 10dip;
+  padding: 0 28dip 0 10dip;
   height: 32dip;
-  border: 1dip solid color(border-default);
-  border-radius: length(radius-md);
-  background: color(bg-primary);
-  color: color(text-color);
+  line-height: 30dip;
+  border: 1dip solid color(line);
+  border-radius: length(r-md);
+  background: color(bg-0);
+  color: color(fg);
   font-size: length(text-sm);
   cursor: pointer;
-  transition: border-color 80ms ease;
   foreground-image: url("path:M6 9 L12 15 L18 9");
   foreground-size: 10dip;
   foreground-repeat: no-repeat;
   foreground-position: right 8dip top 50%;
-  stroke: color(text-tertiary);
+  stroke: color(fg-3);
   stroke-width: 2dip;
   fill: none;
 }
 
-select:focus {
-  outline: none;
-  border-color: color(accent);
-}
+select:focus { outline: none; border-color: color(accent); }
+select.sm    { height: 28dip; line-height: 26dip; font-size: length(text-xs); }
 
-select.sm {
-  height: 28dip;
-  font-size: length(text-xs);
-}
-
-/* Checkbox */
 input[type="checkbox"] {
   appearance: none;
-  width: 16dip;
-  height: 16dip;
-  padding: 0;
-  border: 1.5dip solid color(border-strong);
-  border-radius: length(radius-sm);
-  background: color(bg-primary);
+  width: 16dip; height: 16dip; padding: 0;
+  border: 1.5dip solid color(line-strong);
+  border-radius: length(r-sm);
+  background: color(bg-0);
   cursor: pointer;
   vertical-align: middle;
 }
 
-input[type="checkbox"]:hover {
-  border-color: color(accent);
-}
-
+input[type="checkbox"]:hover   { border-color: color(accent); }
 input[type="checkbox"]:checked {
-  background: color(accent);
-  border-color: color(accent);
+  background: color(accent); border-color: color(accent);
   foreground-image: url("path:M4 8 L7 11 L13 4");
-  foreground-size: 12dip;
-  foreground-repeat: no-repeat;
-  foreground-position: 50% 50%;
-  stroke: white;
-  stroke-width: 2dip;
-  fill: none;
+  foreground-size: 12dip; foreground-repeat: no-repeat; foreground-position: 50% 50%;
+  stroke: white; stroke-width: 2dip; fill: none;
 }
 
-/* Radio */
 input[type="radio"] {
   appearance: none;
-  width: 16dip;
-  height: 16dip;
-  padding: 0;
-  border: 1.5dip solid color(border-strong);
+  width: 16dip; height: 16dip; padding: 0;
+  border: 1.5dip solid color(line-strong);
   border-radius: 50%;
-  background: color(bg-primary);
+  background: color(bg-0);
   cursor: pointer;
   vertical-align: middle;
 }
 
 input[type="radio"]:checked {
-  background: color(accent);
-  border-color: color(accent);
+  background: color(accent); border-color: color(accent);
   foreground-image: url("path:M5 5 A3 3 0 0 0 5 11 A3 3 0 0 0 11 11 A3 3 0 0 0 11 5 A3 3 0 0 0 5 5");
-  foreground-size: 8dip;
-  foreground-repeat: no-repeat;
-  foreground-position: 50% 50%;
+  foreground-size: 8dip; foreground-repeat: no-repeat; foreground-position: 50% 50%;
   fill: white;
 }
 
 /* ============================================
-   BADGES - Notion colored tags
+   BADGES
    ============================================ */
 
 .badge {
   display: inline-block;
   padding: 2dip 8dip;
-  border-radius: length(radius-sm);
+  border-radius: length(r-sm);
   background: color(tag-gray-bg);
   color: color(tag-gray-fg);
   font-size: length(text-xs);
@@ -292,187 +192,38 @@ input[type="radio"]:checked {
   white-space: nowrap;
 }
 
-.badge.node     { background: color(tag-green-bg);  color: color(tag-green-fg); }
-.badge.flutter  { background: color(tag-blue-bg);   color: color(tag-blue-fg); }
-.badge.rust     { background: color(tag-orange-bg);  color: color(tag-orange-fg); }
-.badge.python   { background: color(tag-yellow-bg);  color: color(tag-yellow-fg); }
-.badge.git      { background: color(tag-red-bg);    color: color(tag-red-fg); }
-.badge.unknown  { background: color(tag-gray-bg);   color: color(tag-gray-fg); }
-
-/* ============================================
-   STAT BOX
-   ============================================ */
-
-.stat-box {
-  width: *;
-  padding: length(space-4);
-  background: color(bg-secondary);
-  border: 1dip solid color(border-default);
-  border-radius: length(radius-lg);
-}
-
-.stat-box .stat-value {
-  font-size: length(text-2xl);
-  font-weight: 700;
-  color: color(text-color);
-  margin-bottom: 2dip;
-}
-
-.stat-box .stat-label {
-  font-size: length(text-xs);
-  color: color(text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.stats-row {
-  flow: horizontal;
-  border-spacing: length(space-3);
-}
-
-/* ============================================
-   EMPTY STATE
-   ============================================ */
-
-.empty-state {
-  padding: length(space-16) length(space-8);
-  text-align: center;
-  color: color(text-secondary);
-}
-
-.empty-state h3 {
-  margin-bottom: length(space-2);
-  color: color(text-color);
-}
-
-.empty-state p {
-  margin-bottom: length(space-4);
-}
-
-/* ============================================
-   LOADING
-   ============================================ */
-
-.loading {
-  display: inline-block;
-  size: 20dip;
-  border: 2dip solid color(border-default);
-  border-top-color: color(accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-/* ============================================
-   LINKS
-   ============================================ */
-
-a {
-  color: color(text-color);
-  text-decoration: none;
-}
-
-a:hover {
-  color: color(accent);
-}
-
-a.subtle {
-  color: color(text-secondary);
-  font-size: length(text-sm);
-}
-
-a.subtle:hover {
-  color: color(text-color);
-  background: color(bg-hover);
-  border-radius: length(radius-sm);
-}
+.badge.node    { background: color(tag-green-bg);  color: color(tag-green-fg); }
+.badge.flutter { background: color(tag-blue-bg);   color: color(tag-blue-fg); }
+.badge.rust    { background: color(tag-orange-bg); color: color(tag-orange-fg); }
+.badge.python  { background: color(tag-yellow-bg); color: color(tag-yellow-fg); }
+.badge.git     { background: color(tag-red-bg);    color: color(tag-red-fg); }
+.badge.unknown { background: color(tag-gray-bg);   color: color(tag-gray-fg); }
 
 /* ============================================
    TABLE
    ============================================ */
 
-table {
-  width: *;
-  border-collapse: collapse;
-}
-
-th {
-  text-align: left;
-  padding: length(space-2) length(space-3);
-  font-size: length(text-xs);
-  font-weight: 500;
-  color: color(text-tertiary);
-  border-bottom: 1dip solid color(border-default);
-}
-
-td {
-  padding: length(space-2) length(space-3);
-  font-size: length(text-sm);
-  border-bottom: 1dip solid color(border-default);
-  vertical-align: middle;
-}
-
-tr:hover td {
-  background: color(bg-hover);
-}
+table    { width: *; border-collapse: collapse; }
+th       { text-align: left; padding: length(sp-2) length(sp-3); font-size: length(text-xs); font-weight: 500; color: color(fg-3); border-bottom: 1dip solid color(line); }
+td       { padding: length(sp-2) length(sp-3); font-size: length(text-sm); border-bottom: 1dip solid color(line); vertical-align: middle; }
+tr:hover td { background: color(bg-hover); }
 
 /* ============================================
-   KBD
+   CODE / KBD
    ============================================ */
 
-kbd {
-  display: inline-block;
-  padding: 2dip 6dip;
-  font-family: @FONT_SANS;
-  font-size: length(text-xs);
-  font-weight: 500;
-  color: color(text-secondary);
-  background: color(bg-tertiary);
-  border: 1dip solid color(border-default);
-  border-radius: length(radius-sm);
-}
+code { font-family: @FONT_MONO; font-size: 0.9em; padding: 2dip 5dip; background: color(bg-2); border-radius: length(r-sm); }
+kbd  { display: inline-block; padding: 2dip 6dip; font-family: @FONT_SANS; font-size: length(text-xs); font-weight: 500; color: color(fg-2); background: color(bg-2); border: 1dip solid color(line); border-radius: length(r-sm); }
+
+/* ============================================
+   LINKS
+   ============================================ */
+
+a               { color: color(fg); text-decoration: none; }
+a:hover         { color: color(accent); }
 
 /* ============================================
    TOOLTIP
    ============================================ */
 
-tooltip {
-  padding: 4dip 8dip;
-  border-radius: length(radius-md);
-  background: color(text-color);
-  color: color(text-inverse);
-  font-size: length(text-xs);
-}
-
-/* ============================================
-   SCROLLBAR
-   ============================================ */
-
-@set notion-v-scrollbar
-{
-  .prev { height: 0; background: transparent; }
-  .next { height: 0; background: transparent; }
-  .base { width: 6dip; background: transparent; }
-  .slider {
-    background: rgba(0, 0, 0, 0.12);
-    border-radius: 9999px;
-    min-height: 40dip;
-    margin: 2dip;
-  }
-  .slider:hover { background: rgba(0, 0, 0, 0.2); }
-  .corner { background: transparent; }
-}
-
-@set notion-h-scrollbar
-{
-  .prev { width: 0; background: transparent; }
-  .next { width: 0; background: transparent; }
-  .base { height: 6dip; background: transparent; }
-  .slider {
-    background: rgba(0, 0, 0, 0.12);
-    border-radius: 9999px;
-    min-width: 40dip;
-    margin: 2dip;
-  }
-  .slider:hover { background: rgba(0, 0, 0, 0.2); }
-  .corner { background: transparent; }
-}
+tooltip { padding: 4dip 8dip; border-radius: length(r-md); background: color(fg); color: color(fg-inv); font-size: length(text-xs); }
