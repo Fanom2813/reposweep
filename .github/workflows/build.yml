@@ -27,8 +27,8 @@ jobs:
 
       - name: Create DMG
         run: |
-          APP_NAME=$(python3 -c "import json; print(json.load(open('app.json'))['name'])")
-          VERSION=$(python3 -c "import json; print(json.load(open('app.json'))['version'])")
+          APP_NAME=$(cat app.json | python3 -c "import json,sys; print(json.load(sys.stdin)['name'])")
+          VERSION=$(cat app.json | python3 -c "import json,sys; print(json.load(sys.stdin)['version'])")
           hdiutil create -volname "$APP_NAME" -srcfolder dist/macos -ov -format UDZO "dist/$APP_NAME-$VERSION-macos.dmg"
 
       - uses: actions/upload-artifact@v4
@@ -53,8 +53,8 @@ jobs:
 
       - name: Archive
         run: |
-          APP_NAME=$(python3 -c "import json; print(json.load(open('app.json'))['name'])")
-          VERSION=$(python3 -c "import json; print(json.load(open('app.json'))['version'])")
+          APP_NAME=$(cat app.json | python3 -c "import json,sys; print(json.load(sys.stdin)['name'])")
+          VERSION=$(cat app.json | python3 -c "import json,sys; print(json.load(sys.stdin)['version'])")
           tar -czf "dist/$APP_NAME-$VERSION-linux-x64.tar.gz" -C dist/linux "$APP_NAME"
 
       - uses: actions/upload-artifact@v4
@@ -82,8 +82,8 @@ jobs:
       - name: Archive
         shell: bash
         run: |
-          APP_NAME=$(python3 -c "import json; print(json.load(open('app.json'))['name'])")
-          VERSION=$(python3 -c "import json; print(json.load(open('app.json'))['version'])")
+          APP_NAME=$(cat app.json | python3 -c "import json,sys; print(json.load(sys.stdin)['name'])")
+          VERSION=$(cat app.json | python3 -c "import json,sys; print(json.load(sys.stdin)['version'])")
           mv "dist/windows/$APP_NAME.exe" "dist/$APP_NAME-$VERSION-windows-x64.exe"
 
       - uses: actions/upload-artifact@v4

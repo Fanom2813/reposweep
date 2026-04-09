@@ -21,11 +21,12 @@ PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 SDK_ROOT="${SCITER_SDK:-$PROJECT_ROOT/../..}"
 DIST="$PROJECT_ROOT/dist"
 
-# Read app.json
-APP_NAME=$(python3 -c "import json; print(json.load(open('$PROJECT_ROOT/app.json'))['name'])")
-VERSION=$(python3 -c "import json; print(json.load(open('$PROJECT_ROOT/app.json'))['version'])")
-IDENTIFIER=$(python3 -c "import json; print(json.load(open('$PROJECT_ROOT/app.json'))['identifier'])")
-ICON=$(python3 -c "import json; print(json.load(open('$PROJECT_ROOT/app.json'))['icon'])")
+# Read app.json (pipe via cat to avoid Windows path issues with python)
+APP_JSON="$PROJECT_ROOT/app.json"
+APP_NAME=$(cat "$APP_JSON" | python3 -c "import json,sys; print(json.load(sys.stdin)['name'])")
+VERSION=$(cat "$APP_JSON" | python3 -c "import json,sys; print(json.load(sys.stdin)['version'])")
+IDENTIFIER=$(cat "$APP_JSON" | python3 -c "import json,sys; print(json.load(sys.stdin)['identifier'])")
+ICON=$(cat "$APP_JSON" | python3 -c "import json,sys; print(json.load(sys.stdin)['icon'])")
 
 echo "Building $APP_NAME v$VERSION"
 
