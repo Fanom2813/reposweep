@@ -1,8 +1,9 @@
 /**
  * App — UI shell only. All business logic lives in store.js.
  *
- * Navigation uses componentUpdate() — the correct Sciter pattern.
- * Page components use key to ensure proper reconciliation.
+ * All pages live in the DOM simultaneously as .page-panel elements.
+ * Navigation toggles :expanded — Sciter's visibility:none/visible pattern —
+ * so page state (scroll position, table data, inputs) is preserved across switches.
  */
 
 import { Store, formatBytes } from "lib/store.js";
@@ -49,51 +50,73 @@ export class Application extends Element {
   render() {
     const s = this.store;
 
+    // Before any roots are added, show onboarding full-screen
+    if (s.roots.length === 0) {
+      return <div .app-shell>
+        {this.renderHeader()}
+        <div .app-body>
+          <Onboarding key="onboarding" />
+        </div>
+      </div>;
+    }
+
+    const page = this.currentPage;
+
     return <div .app-shell>
-      <window-header>
-        <window-caption role="window-caption">
-          <div .titlebar-left>
-            <button .titlebar-btn #toggle-sidebar title="Toggle sidebar">
-              <i .icon-panel-left />
-            </button>
-            <img .titlebar-icon src="icon.svg" />
-            <span .titlebar-name>RepoSweep</span>
-          </div>
-          <div .titlebar-center />
-          <div .titlebar-right />
-        </window-caption>
-        <window-buttons>
-          <window-button role="window-minimize" />
-          <window-button role="window-maximize" />
-          <window-button role="window-close" />
-        </window-buttons>
-      </window-header>
+      {this.renderHeader()}
       <div .app-body>
         {this.sidebarVisible ? <Sidebar
           roots={s.roots}
           selectedRoot={s.selectedRoot}
           navItems={this.navItems}
-          currentPage={this.currentPage}
+          currentPage={page}
         /> : []}
-        <div .app-content key={this.currentPage}>
-          {this.renderPage(this.currentPage, s)}
+        <div .app-content>
+          <div .page-panel :expanded={page === "workspace"}>
+            {this.renderWorkspace(s)}
+          </div>
+          <div .page-panel :expanded={page === "settings"}>
+            <SettingsPage settings={s.settings} />
+          </div>
+          <div .page-panel :expanded={page === "history"}>
+            <HistoryPage history={s.history} />
+          </div>
+          <div .page-panel :expanded={page === "stats"}>
+            <StatsPage stats={s.getStats()} />
+          </div>
         </div>
       </div>
     </div>;
   }
 
-  renderPage(page, s) {
-    if (page === "settings") return <SettingsPage key="settings" settings={s.settings} />;
-    if (page === "history")  return <HistoryPage key="history" history={s.history} />;
-    if (page === "stats")    return <StatsPage key="stats" stats={s.getStats()} />;
+  renderHeader() {
+    return <window-header>
+      <window-caption role="window-caption">
+        <div .titlebar-left>
+          <button .titlebar-btn #toggle-sidebar title="Toggle sidebar">
+            <i .icon-panel-left />
+          </button>
+          <img .titlebar-icon src="icon.svg" />
+          <span .titlebar-name>RepoSweep</span>
+        </div>
+        <div .titlebar-center />
+        <div .titlebar-right />
+      </window-caption>
+      <window-buttons>
+        <window-button role="window-minimize" />
+        <window-button role="window-maximize" />
+        <window-button role="window-close" />
+      </window-buttons>
+    </window-header>;
+  }
 
-    if (s.roots.length === 0) return <Onboarding key="onboarding" />;
+  renderWorkspace(s) {
     const projects = s.getVisibleProjects();
     if (projects.length === 0 && !s.scanning && !s.search) {
       const name = s.selectedRoot.split("/").pop() || s.selectedRoot;
-      return <WorkspaceEmpty key="empty" rootName={name} hasProjects={s.projects.length > 0} />;
+      return <WorkspaceEmpty rootName={name} hasProjects={s.projects.length > 0} />;
     }
-    return <WorkspaceView key="workspace" state={s} projects={projects} projectTypes={s.getProjectTypes()} />;
+    return <WorkspaceView state={s} projects={projects} projectTypes={s.getProjectTypes()} />;
   }
 
   // ===== Sidebar events =====
@@ -104,9 +127,15 @@ export class Application extends Element {
   }
 
   ["on sidebar-select-root"](evt) {
-    this.store.selectRoot(evt.data.root);
-    this.navigateTo("workspace");
-    this.store.scan();
+    const root = evt.data.root;
+    if (root === this.store.selectedRoot) {
+      // Same root — just switch back to workspace, no rescan
+      this.navigateTo("workspace");
+    } else {
+      this.store.selectRoot(root);
+      this.navigateTo("workspace");
+      this.store.scan();
+    }
     return true;
   }
 

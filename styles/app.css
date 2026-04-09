@@ -24,18 +24,140 @@
   flow: vertical;
 }
 
-/* Project list scrollable area */
-.project-list {
+/* Project table — Sciter table-fixed layout with scrollable body */
+.project-table {
+  flow: table-fixed;
+  width: *;
   height: *;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.project-table > thead {
+  behavior: column-resizer;
+}
+
+.project-table > thead > tr > th {
+  text-align: left;
+  padding: length(sp-2) length(sp-3);
+  font-size: length(text-xs);
+  font-weight: 500;
+  color: color(fg-3);
+  border-bottom: 1dip solid color(line);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.project-table > tbody {
+  flow: table-body;
+  size: *;
   overflow-y: scroll-indicator;
   vertical-scrollbar: scroll-v;
 }
 
-/* Project row - hover reveals actions */
-.project-row { transition: background 80ms ease; }
-.project-row:hover { background: color(bg-hover); }
-.project-row .actions { opacity: 0; transition: opacity 80ms ease; }
-.project-row:hover .actions { opacity: 1; }
+.project-table > tbody > tr > td {
+  padding: length(sp-2) length(sp-3);
+  font-size: length(text-sm);
+  border-bottom: 1dip solid color(line);
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Column widths */
+.col-name     { width: *; }
+.col-type     { width: 80dip; }
+.col-modified { width: 80dip; }
+.col-size     { width: 90dip; text-align: right; }
+.col-actions  { width: 90dip; text-align: right; }
+
+/* Name cell — two-line: name + path */
+.cell-name {
+  flow: vertical;
+  overflow-x: hidden;
+}
+.cell-name > .name-text {
+  font-size: length(text-sm);
+  font-weight: 500;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+.cell-name > .path-text {
+  font-family: @FONT_MONO;
+  font-size: length(text-xs);
+  color: color(fg-3);
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Modified column */
+.modified-text {
+  font-size: length(text-xs);
+  color: color(fg-3);
+}
+
+/* Size column */
+.col-size .size-text {
+  font-family: @FONT_MONO;
+  font-weight: 600;
+  color: color(green);
+}
+
+/* Stale row indicator */
+tr.stale > td:first-child {
+  border-left: 2dip solid color(yellow);
+}
+
+/* Row hover — reveal actions */
+.project-table > tbody > tr { transition: background 80ms ease; }
+.project-table > tbody > tr:hover > td { background: color(bg-hover); }
+.project-table > tbody > tr .actions { opacity: 0; transition: opacity 80ms ease; }
+.project-table > tbody > tr:hover .actions { opacity: 1; }
+.actions { flow: horizontal; border-spacing: length(sp-1); }
+
+/* ============================================
+   SCANNING / BUSY STATE
+   ============================================ */
+
+/* Indeterminate progress bar — sits between toolbar and table */
+.scan-bar {
+  width: *;
+  height: 2dip;
+  background: color(bg-2);
+}
+
+.scan-bar-track {
+  width: *;
+  height: *;
+  overflow: hidden;
+}
+
+.scan-bar-fill {
+  width: 30%;
+  height: *;
+  background: color(accent);
+  border-radius: 9999px;
+  animation: scanSlide 1.2s ease-in-out infinite;
+}
+
+@keyframes scanSlide {
+  0%   { margin-left: -30%; }
+  100% { margin-left: 100%; }
+}
+
+/* Spinning icon on rescan button */
+.spinning {
+  animation: spin 0.8s linear infinite;
+}
+
+/* Table dimmed while scanning */
+.project-table.busy > tbody {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
 
 /* ============================================
    PAGES (stats, history, settings)
@@ -46,6 +168,96 @@
   overflow-y: scroll-indicator;
   vertical-scrollbar: scroll-v;
 }
+
+.page-wide { max-width: 900dip; }
+
+/* --- History --- */
+.history-table {
+  flow: table-fixed;
+  width: *;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.history-table > thead > tr > th {
+  text-align: left;
+  padding: length(sp-2) length(sp-3);
+  font-size: length(text-xs);
+  font-weight: 500;
+  color: color(fg-3);
+  border-bottom: 1dip solid color(line);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.history-table > tbody > tr > td {
+  padding: length(sp-2) length(sp-3);
+  font-size: length(text-sm);
+  border-bottom: 1dip solid color(line);
+  vertical-align: middle;
+}
+
+.history-table > tbody > tr:hover > td { background: color(bg-hover); }
+
+.col-path {
+  font-family: @FONT_MONO;
+  font-size: length(text-xs);
+  color: color(fg-3);
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  max-width: 200dip;
+}
+
+.col-bytes {
+  font-family: @FONT_MONO;
+  font-weight: 600;
+  text-align: right;
+  color: color(green);
+}
+
+.history-footer {
+  flow: horizontal;
+  padding: length(sp-3) 0;
+  border-spacing: length(sp-2);
+}
+
+/* --- Stats --- */
+.stats-row {
+  flow: horizontal;
+  border-spacing: length(sp-3);
+}
+
+.stat-box {
+  flow: vertical;
+  padding: length(sp-4);
+  background: color(bg-1);
+  border: 1dip solid color(line);
+  border-radius: length(r-md);
+  width: *;
+}
+
+.stat-value {
+  font-size: length(text-2xl);
+  font-weight: 700;
+  color: color(fg);
+}
+
+.stat-label {
+  font-size: length(text-xs);
+  color: color(fg-3);
+  margin-top: length(sp-1);
+}
+
+.empty-state {
+  flow: vertical;
+  padding: length(sp-8);
+  text-align: center;
+  color: color(fg-3);
+}
+
+.empty-state > h3 { font-size: length(text-lg); font-weight: 500; margin-bottom: length(sp-2); }
+.empty-state > p  { font-size: length(text-sm); }
 
 /* Type breakdown bar */
 .bar-track { width: 120dip; height: 6dip; background: color(bg-2); border-radius: 9999px; }

@@ -123,10 +123,15 @@ window-button[role="window-close"]:hover { background: rgb(232,17,35); stroke: #
 
 .app-content {
   size: *;
-  flow: vertical;
+  flow: stack;
   overflow: hidden;
   background: color(bg-0);
 }
+
+/* Page panels — all stay in DOM, only the :expanded one is visible.
+   Uses Sciter's native visibility toggle: no mount/unmount, state preserved. */
+.page-panel              { visibility: none; }
+.page-panel:expanded     { visibility: visible; size: *; }
 
 /* ============================================
    SIDEBAR STRUCTURE

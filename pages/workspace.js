@@ -1,5 +1,5 @@
 /**
- * Workspace views — project list, empty state, toolbar.
+ * Workspace views — project table, empty state, toolbar, busy state.
  */
 
 import { formatBytes } from "../lib/scanner.js";
@@ -24,6 +24,17 @@ function rootLabel(path) {
 }
 
 /**
+ * Scanning indicator — indeterminate progress bar.
+ */
+function ScanBar() {
+  return <div .scan-bar>
+    <div .scan-bar-track>
+      <div .scan-bar-fill />
+    </div>
+  </div>;
+}
+
+/**
  * Empty workspace — root selected but no projects scanned yet.
  */
 export function WorkspaceEmpty(props) {
@@ -45,43 +56,73 @@ export function WorkspaceEmpty(props) {
 }
 
 /**
- * Workspace view — toolbar + scrollable project list.
+ * Workspace view — toolbar + scrollable project table.
+ * Shows busy state when scanning:
+ *   - No projects yet → full placeholder with spinner
+ *   - Has projects (rescan) → progress bar + dimmed table
  */
 export function WorkspaceView(props) {
   const { state, projects, projectTypes } = props;
+  const scanning = state.scanning;
   const totalReclaimable = projects.reduce((sum, p) => sum + (p.reclaimableBytes || 0), 0);
   const rootName = rootLabel(state.selectedRoot);
 
   return <div .workspace>
     <div .row .gap-3 .px-5 .py-3 .border-b>
       <h3 .text-lg .semibold .nowrap>{rootName}</h3>
-      <span .text-xs .fg-3 .nowrap>{projects.length} projects · {formatBytes(totalReclaimable)} reclaimable</span>
+      {!scanning
+        ? <span .text-xs .fg-3 .nowrap>{projects.length} projects · {formatBytes(totalReclaimable)} reclaimable</span>
+        : <span .text-xs .fg-3 .nowrap>Scanning...</span>
+      }
       <div .spacer />
       <input|text(searchBox) .search .sm value={state.search} novalue="Search..." style="width:180dip;" />
       <select|dropdown(filterSelect) .sm value={state.filter} style="width:100dip;">
         <option value="All">All</option>
         {(projectTypes || []).map(t => <option value={t.name} key={t.id}>{t.name}</option>)}
       </select>
-      <button .ghost .sm #rescan disabled={state.scanning} title="Rescan"><i .icon-refresh-cw /></button>
+      <button .ghost .sm #rescan disabled={scanning} title="Rescan">
+        <i .icon-refresh-cw class={scanning ? "spinning" : ""} />
+      </button>
     </div>
-    <div .project-list>
-      {projects.map(project => <div .project-row .row .gap-3 .px-5 .py-2 .border-b key={project.id}>
-        <div .col .gap-1 .w-full style="min-width:200dip;">
-          <span .text-sm .medium>{project.name}</span>
-          <span .font-mono .text-xs .fg-3 .truncate>{project.path}</span>
-        </div>
-        <div .row .gap-2>
-          <span .badge class={project.type.toLowerCase()}>{project.type}</span>
-          <span .fg-3 .text-xs>{timeAgo(project.modifiedAt)}</span>
-        </div>
-        <span .font-mono .text-sm .semibold .fg-grn .nowrap style="width:90dip; text-align:right;">
-          {formatBytes(project.reclaimableBytes)}
-        </span>
-        <div .actions .row .gap-1>
-          <button .primary .sm data-id={project.id} disabled={!project.cleanupTargets?.length}>Clean</button>
-          <button .ghost .sm data-open={project.path} title="Open"><i .icon-external-link /></button>
-        </div>
-      </div>)}
-    </div>
+    {scanning ? <ScanBar /> : []}
+    <table .project-table class={scanning ? "busy" : ""}>
+      <thead>
+        <tr>
+          <th .col-name>Project</th>
+          <th .col-type>Type</th>
+          <th .col-modified>Modified</th>
+          <th .col-size>Size</th>
+          <th .col-actions></th>
+        </tr>
+      </thead>
+      <tbody>
+        {projects.map(project => <tr key={project.id} class={project.isStale ? "stale" : ""}>
+          <td .col-name>
+            <div .cell-name>
+              <span .name-text>{project.name}</span>
+              <span .path-text>{project.path}</span>
+            </div>
+          </td>
+          <td .col-type>
+            <span .badge class={project.type.toLowerCase()}>{project.type}</span>
+          </td>
+          <td .col-modified>
+            <span .modified-text>{timeAgo(project.modifiedAt)}</span>
+          </td>
+          <td .col-size>
+            <span .size-text>
+              {project.sizing === "pending" ? "..." : formatBytes(project.reclaimableBytes)}
+            </span>
+          </td>
+          <td .col-actions>
+            <div .actions>
+              <button .primary .xs data-id={project.id}
+                disabled={scanning || !project.cleanupTargets?.length}>Clean</button>
+              <button .ghost .xs data-open={project.path} title="Open"><i .icon-external-link /></button>
+            </div>
+          </td>
+        </tr>)}
+      </tbody>
+    </table>
   </div>;
 }
