@@ -57,10 +57,20 @@ echo "==> Syncing devicons..."
 rm -rf "$DIST"
 mkdir -p "$DIST"
 
+# Stage only app files (exclude .git, scripts, dist, .github, etc.)
+echo "==> Staging app files..."
+STAGE="$DIST/_stage"
+mkdir -p "$STAGE"
+for item in main.htm main.js app.js app.json icon.svg lib pages ui styles fonts icons; do
+  [ -e "$PROJECT_ROOT/$item" ] && cp -r "$PROJECT_ROOT/$item" "$STAGE/"
+done
+echo "    Staged: $(du -sh "$STAGE" | cut -f1)"
+
 # Pack resources
 echo "==> Packing resources..."
 DATFILE="$DIST/$APP_NAME.dat"
-"$PACKFOLDER" "$PROJECT_ROOT" "$DATFILE" -binary
+"$PACKFOLDER" "$STAGE" "$DATFILE" -binary
+rm -rf "$STAGE"
 echo "    Archive: $(du -h "$DATFILE" | cut -f1)"
 
 # Build helper
