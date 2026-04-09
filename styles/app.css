@@ -1,0 +1,705 @@
+/**
+ * Notion-Inspired Application Layouts
+ * Sciter native color()/length() syntax.
+ */
+
+@import url(tokens.css);
+@import url(components.css);
+@import url(chrome.css);
+
+/* ============================================
+   PAGE PATTERNS
+   ============================================ */
+
+.page-scroll {
+  height: *;
+  overflow-y: scroll-indicator;
+  padding: length(space-8) length(space-10);
+  vertical-scrollbar: notion-v-scrollbar;
+}
+
+.page-narrow { max-width: 720dip; }
+.page-wide { max-width: 960dip; }
+
+.page-header {
+  margin-bottom: length(space-8);
+}
+
+.page-header h1 {
+  font-size: length(text-3xl);
+  font-weight: 700;
+  margin-bottom: length(space-1);
+}
+
+.page-description {
+  color: color(text-secondary);
+  font-size: length(text-base);
+}
+
+/* ============================================
+   HOME / LANDING
+   ============================================ */
+
+.landing {
+  size: *;
+  flow: vertical;
+  vertical-align: middle;
+  padding: length(space-8);
+}
+
+.landing-content {
+  max-width: 560dip;
+  margin: 0 auto;
+  flow: vertical;
+  border-spacing: length(space-8);
+}
+
+.landing-hero {
+  text-align: center;
+  flow: vertical;
+  border-spacing: length(space-4);
+}
+
+.hero-icon { size: 64dip; margin: 0 auto 8dip; }
+
+.hero-text {
+  color: color(text-secondary);
+  font-size: length(text-lg);
+  line-height: 1.5;
+}
+
+/* Setup card */
+.setup-card {
+  background: color(bg-secondary);
+  border: 1dip solid color(border-default);
+  border-radius: length(radius-xl);
+  padding: length(space-6);
+  flow: vertical;
+  border-spacing: length(space-4);
+}
+
+.setup-card header h2 {
+  font-size: length(text-lg);
+  margin-bottom: length(space-1);
+}
+
+.setup-card header p {
+  color: color(text-secondary);
+  font-size: length(text-sm);
+}
+
+.setup-actions {
+  flow: horizontal;
+  border-spacing: length(space-3);
+  vertical-align: middle;
+}
+
+/* Root list */
+.root-list {
+  flow: vertical;
+  border-spacing: length(space-1);
+  margin-top: length(space-3);
+}
+
+.root-item {
+  display: block;
+  flow: horizontal;
+  border-spacing: length(space-3);
+  padding: length(space-3);
+  background: color(bg-primary);
+  border: 1dip solid color(border-default);
+  border-radius: length(radius-md);
+  vertical-align: middle;
+  cursor: pointer;
+  transition: background 80ms ease;
+}
+
+.root-item:hover { background: color(bg-hover); }
+
+.root-item[state-selected] {
+  background: color(bg-selected);
+  border-color: color(accent);
+}
+
+.root-item .root-info {
+  width: *;
+  flow: vertical;
+  border-spacing: 1dip;
+}
+
+.root-item .root-name {
+  font-weight: 500;
+  font-size: length(text-sm);
+}
+
+.root-item .root-path {
+  font-family: @FONT_MONO;
+  font-size: length(text-xs);
+  color: color(text-tertiary);
+}
+
+.root-item .root-actions {
+  flow: horizontal;
+  border-spacing: length(space-1);
+  opacity: 0;
+  transition: opacity 80ms ease;
+}
+
+.root-item:hover .root-actions { opacity: 1; }
+
+.root-list-actions {
+  flow: horizontal;
+  border-spacing: length(space-2);
+  margin-top: length(space-2);
+}
+
+/* Feature grid */
+.feature-grid {
+  flow: horizontal;
+  border-spacing: length(space-4);
+}
+
+.feature-item {
+  width: *;
+  flow: vertical;
+  border-spacing: length(space-2);
+  padding: length(space-4);
+  background: color(bg-secondary);
+  border: 1dip solid color(border-default);
+  border-radius: length(radius-lg);
+}
+
+.feature-item h3 {
+  font-size: length(text-sm);
+  font-weight: 600;
+}
+
+.feature-item p {
+  font-size: length(text-xs);
+  color: color(text-secondary);
+  line-height: 1.5;
+}
+
+/* ============================================
+   WORKSPACE
+   ============================================ */
+
+.workspace {
+  size: *;
+  flow: vertical;
+}
+
+.workspace-header {
+  padding: length(space-6) length(space-8) length(space-4);
+}
+
+.workspace-header-top {
+  flow: horizontal;
+  vertical-align: middle;
+  border-spacing: length(space-3);
+  margin-bottom: length(space-3);
+}
+
+.workspace-header-top h1 {
+  width: *;
+  font-size: length(text-2xl);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.workspace-meta {
+  flow: horizontal;
+  border-spacing: length(space-6);
+  font-size: length(text-sm);
+  color: color(text-secondary);
+}
+
+.meta-item {
+  flow: horizontal;
+  border-spacing: length(space-2);
+}
+
+.meta-label { color: color(text-tertiary); }
+.meta-value { font-weight: 500; }
+
+/* Filter bar */
+.filter-bar {
+  flow: horizontal;
+  border-spacing: length(space-2);
+  padding: length(space-2) length(space-8);
+  vertical-align: middle;
+  border-bottom: 1dip solid color(border-default);
+}
+
+.filter-bar .search { width: 240dip; }
+.filter-bar select { width: 140dip; }
+
+/* Project list */
+.project-list {
+  height: *;
+  overflow-y: scroll-indicator;
+  vertical-scrollbar: notion-v-scrollbar;
+}
+
+.project-item {
+  display: block;
+  flow: horizontal;
+  border-spacing: length(space-4);
+  padding: length(space-3) length(space-8);
+  border-bottom: 1dip solid color(border-default);
+  vertical-align: middle;
+  transition: background 80ms ease;
+}
+
+.project-item:hover { background: color(bg-hover); }
+
+.project-info {
+  width: *;
+  flow: vertical;
+  border-spacing: 2dip;
+  min-width: 200dip;
+}
+
+.project-name {
+  font-weight: 500;
+  font-size: length(text-sm);
+  color: color(text-color);
+}
+
+.project-path {
+  font-family: @FONT_MONO;
+  font-size: length(text-xs);
+  color: color(text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-meta {
+  flow: horizontal;
+  border-spacing: length(space-2);
+  vertical-align: middle;
+}
+
+.project-size {
+  width: 90dip;
+  text-align: right;
+  font-family: @FONT_MONO;
+  font-size: length(text-sm);
+  font-weight: 600;
+  color: color(success);
+}
+
+.project-actions {
+  flow: horizontal;
+  border-spacing: length(space-1);
+  width: max-content;
+  opacity: 0;
+  transition: opacity 80ms ease;
+}
+
+.project-item:hover .project-actions { opacity: 1; }
+
+/* Empty workspace */
+.workspace-empty {
+  height: *;
+  vertical-align: middle;
+  text-align: center;
+  padding: length(space-16);
+  color: color(text-secondary);
+}
+
+.workspace-empty h2 {
+  font-size: length(text-xl);
+  color: color(text-color);
+  margin-bottom: length(space-2);
+}
+
+/* ============================================
+   SETTINGS
+   ============================================ */
+
+.settings-section {
+  margin-bottom: length(space-8);
+}
+
+.settings-section > h2 {
+  font-size: length(text-sm);
+  font-weight: 600;
+  color: color(text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-bottom: length(space-3);
+  border-bottom: 1dip solid color(border-default);
+  margin-bottom: length(space-1);
+}
+
+.setting-row {
+  display: block;
+  flow: horizontal;
+  border-spacing: length(space-4);
+  padding: length(space-3) 0;
+  vertical-align: middle;
+}
+
+.setting-label {
+  width: *;
+  flow: vertical;
+  border-spacing: 2dip;
+}
+
+.setting-label h3 {
+  font-size: length(text-sm);
+  font-weight: 500;
+  color: color(text-color);
+}
+
+.setting-label p {
+  font-size: length(text-xs);
+  color: color(text-tertiary);
+}
+
+.setting-control {
+  min-width: 180dip;
+  text-align: right;
+}
+
+.setting-control-wide {
+  width: *;
+  text-align: left;
+}
+
+.setting-control-wide textarea {
+  width: *;
+  font-family: @FONT_MONO;
+  font-size: length(text-sm);
+}
+
+.settings-footer {
+  flow: horizontal;
+  border-spacing: length(space-2);
+  padding: length(space-4) 0;
+  border-top: 1dip solid color(border-default);
+  margin-top: length(space-4);
+}
+
+/* ============================================
+   HISTORY
+   ============================================ */
+
+.history-table {
+  width: *;
+  border-collapse: collapse;
+}
+
+.history-table th {
+  text-align: left;
+  padding: length(space-2) length(space-3);
+  font-size: length(text-xs);
+  font-weight: 500;
+  color: color(text-tertiary);
+  border-bottom: 1dip solid color(border-default);
+}
+
+.history-table td {
+  padding: length(space-2) length(space-3);
+  font-size: length(text-sm);
+  border-bottom: 1dip solid color(border-default);
+  vertical-align: middle;
+}
+
+.history-table tr:hover td { background: color(bg-hover); }
+
+.col-path {
+  font-family: @FONT_MONO;
+  font-size: length(text-xs);
+  color: color(text-secondary);
+  max-width: 240dip;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.col-bytes {
+  font-family: @FONT_MONO;
+  text-align: right;
+  color: color(success);
+  font-weight: 600;
+}
+
+.history-footer {
+  flow: horizontal;
+  border-spacing: length(space-2);
+  padding: length(space-4) 0;
+  border-top: 1dip solid color(border-default);
+  margin-top: length(space-4);
+  vertical-align: middle;
+}
+
+/* ============================================
+   STATS
+   ============================================ */
+
+.stats-section {
+  margin-bottom: length(space-8);
+}
+
+.section-title {
+  font-size: length(text-base);
+  font-weight: 600;
+  margin-bottom: length(space-3);
+}
+
+.type-breakdown {
+  flow: vertical;
+  border-spacing: length(space-2);
+}
+
+.type-row {
+  display: block;
+  flow: horizontal;
+  border-spacing: length(space-3);
+  padding: length(space-2) 0;
+  vertical-align: middle;
+}
+
+.type-bar-bg {
+  width: 120dip;
+  height: 6dip;
+  background: color(bg-tertiary);
+  border-radius: 9999px;
+}
+
+.type-bar-fill {
+  height: *;
+  background: color(accent);
+  border-radius: 9999px;
+}
+
+.type-info {
+  width: *;
+  flow: horizontal;
+  border-spacing: length(space-3);
+  vertical-align: middle;
+}
+
+.type-name { font-weight: 500; width: 80dip; }
+
+.type-bytes {
+  font-family: @FONT_MONO;
+  font-size: length(text-sm);
+  color: color(success);
+  font-weight: 500;
+}
+
+/* Chart */
+.chart-container {
+  flow: horizontal;
+  border-spacing: length(space-3);
+  padding: length(space-4);
+  background: color(bg-secondary);
+  border: 1dip solid color(border-default);
+  border-radius: length(radius-lg);
+  height: 180dip;
+  vertical-align: bottom;
+}
+
+.chart-bar {
+  width: *;
+  flow: vertical;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.chart-bar-fill {
+  width: 28dip;
+  background: color(accent);
+  border-radius: length(radius-sm) length(radius-sm) 0 0;
+  margin: 0 auto;
+}
+
+.chart-bar-label {
+  font-size: length(text-xs);
+  color: color(text-tertiary);
+  margin-top: length(space-2);
+}
+
+/* List */
+.list { flow: vertical; }
+
+.list-item {
+  display: block;
+  flow: horizontal;
+  border-spacing: length(space-3);
+  padding: length(space-2) length(space-1);
+  border-bottom: 1dip solid color(border-default);
+  vertical-align: middle;
+}
+
+.list-item:hover { background: color(bg-hover); }
+
+.list-rank {
+  width: 24dip;
+  color: color(text-tertiary);
+  font-size: length(text-xs);
+}
+
+.list-item-info {
+  width: *;
+  flow: vertical;
+  border-spacing: 2dip;
+}
+
+.list-item-name { font-weight: 500; font-size: length(text-sm); }
+
+.list-item-path {
+  font-family: @FONT_MONO;
+  font-size: length(text-xs);
+  color: color(text-tertiary);
+}
+
+.list-item-size {
+  font-family: @FONT_MONO;
+  color: color(success);
+  width: 80dip;
+  text-align: right;
+  font-weight: 500;
+}
+
+/* Recommendations */
+.recommendations { flow: vertical; border-spacing: length(space-2); }
+
+.recommendation {
+  padding: length(space-3) length(space-4);
+  background: color(bg-secondary);
+  border: 1dip solid color(border-default);
+  border-radius: length(radius-md);
+  border-left: 3dip solid color(accent);
+}
+
+.recommendation-title {
+  font-weight: 500;
+  font-size: length(text-sm);
+  margin-bottom: length(space-1);
+}
+
+.recommendation-desc {
+  font-size: length(text-xs);
+  color: color(text-secondary);
+}
+
+/* ============================================
+   PROJECT DETAIL
+   ============================================ */
+
+.detail-header {
+  margin-bottom: length(space-6);
+  padding-bottom: length(space-4);
+  border-bottom: 1dip solid color(border-default);
+}
+
+.detail-header h1 {
+  font-size: length(text-2xl);
+  margin-bottom: length(space-1);
+}
+
+.detail-path {
+  font-family: @FONT_MONO;
+  font-size: length(text-sm);
+  color: color(text-secondary);
+  margin-top: length(space-1);
+}
+
+.back-link {
+  display: inline-block;
+  font-size: length(text-sm);
+  color: color(text-secondary);
+  margin-bottom: length(space-2);
+  text-decoration: none;
+}
+
+.back-link:hover { color: color(text-color); }
+
+.detail-grid {
+  flow: horizontal;
+  border-spacing: length(space-3);
+  margin-bottom: length(space-6);
+}
+
+.detail-cell {
+  width: *;
+  padding: length(space-4);
+  background: color(bg-secondary);
+  border: 1dip solid color(border-default);
+  border-radius: length(radius-lg);
+}
+
+.cell-label {
+  font-size: length(text-xs);
+  color: color(text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: length(space-1);
+}
+
+.cell-value {
+  font-size: length(text-lg);
+  font-weight: 600;
+}
+
+/* Targets */
+.targets-list {
+  flow: vertical;
+  border-spacing: length(space-1);
+  margin-bottom: length(space-3);
+}
+
+.target-row {
+  display: block;
+  flow: horizontal;
+  border-spacing: length(space-3);
+  padding: length(space-3);
+  background: color(bg-secondary);
+  border: 1dip solid color(border-default);
+  border-radius: length(radius-md);
+  vertical-align: middle;
+}
+
+.target-row:hover { background: color(bg-hover); }
+
+.target-name {
+  width: *;
+  font-family: @FONT_MONO;
+  font-size: length(text-sm);
+}
+
+.target-size {
+  font-family: @FONT_MONO;
+  font-size: length(text-sm);
+  color: color(success);
+}
+
+.target-actions {
+  flow: horizontal;
+  border-spacing: length(space-2);
+}
+
+.selection-summary {
+  padding: length(space-3) length(space-4);
+  background: color(accent-subtle);
+  border: 1dip solid color(accent);
+  border-radius: length(radius-md);
+  margin-bottom: length(space-4);
+  text-align: center;
+  font-size: length(text-sm);
+}
+
+.detail-footer {
+  flow: horizontal;
+  border-spacing: length(space-2);
+  padding: length(space-4) 0;
+  border-top: 1dip solid color(border-default);
+  vertical-align: middle;
+}

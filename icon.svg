@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#37352f"/>
+      <stop offset="100%" stop-color="#2c2b27"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <!-- Folder shape -->
+  <path d="M30 44c0-4.4 3.6-8 8-8h18l6 6h28c4.4 0 8 3.6 8 8v38c0 4.4-3.6 8-8 8H38c-4.4 0-8-3.6-8-8V44z" fill="none" stroke="#fbfbfa" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Sweep/broom line -->
+  <path d="M52 60l24 24" stroke="#2383e2" stroke-width="4" stroke-linecap="round"/>
+  <path d="M72 60l4 4M68 56l4 4M64 52l4 4" stroke="#2383e2" stroke-width="3" stroke-linecap="round"/>
+  <!-- Sparkle dots -->
+  <circle cx="82" cy="52" r="3" fill="#2383e2"/>
+  <circle cx="90" cy="44" r="2" fill="#2383e2" opacity="0.6"/>
+</svg>
