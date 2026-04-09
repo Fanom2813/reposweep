@@ -1,12 +1,19 @@
 /**
- * App — UI shell only. All business logic lives in store.js.
+ * App — UI shell. All business logic lives in store.js.
+ *
+ * Class components don't auto-subscribe to signals in render().
+ * We bridge store signals → componentUpdate() via Reactor.effect()
+ * set up in componentDidMount(), cleaned up in componentWillUnmount().
+ *
+ * Local UI state (currentPage, sidebarVisible) uses plain properties
+ * with componentUpdate() — the standard class component pattern.
  *
  * All pages live in the DOM simultaneously as .page-panel elements.
  * Navigation toggles :expanded — Sciter's visibility:none/visible pattern —
  * so page state (scroll position, table data, inputs) is preserved across switches.
  */
 
-import { Store, formatBytes } from "lib/store.js";
+import * as store from "lib/store.js";
 import { Sidebar } from "ui/sidebar.js";
 import { Onboarding } from "pages/onboarding.js";
 import { WorkspaceEmpty, WorkspaceView } from "pages/workspace.js";
@@ -14,44 +21,68 @@ import { SettingsPage } from "pages/settings.js";
 import { HistoryPage } from "pages/history.js";
 import { StatsPage } from "pages/stats.js";
 
-export class Application extends Element {
-  store = null;
-  sidebarVisible = true;
-  currentPage = "workspace";
+const navItems = [
+  { id: "stats",    label: "Statistics", icon: "icon-bar-chart-2" },
+  { id: "history",  label: "History",    icon: "icon-clock" },
+  { id: "settings", label: "Settings",   icon: "icon-settings" },
+];
 
-  navItems = [
-    { id: "stats",    label: "Statistics", icon: "icon-bar-chart-2" },
-    { id: "history",  label: "History",    icon: "icon-clock" },
-    { id: "settings", label: "Settings",   icon: "icon-settings" },
-  ];
+export class Application extends Element {
+
+  currentPage = "workspace";
+  sidebarVisible = true;
 
   constructor() {
     super();
-    this.store = new Store(() => {
-      this.componentUpdate();
-    });
-    this.store.init();
+    store.init();
   }
 
   componentDidMount() {
     const header = this.$("window-header");
     if (header) header.state.reactive = false;
 
-    if (this.store.selectedRoot && this.store.settings.autoScan) {
-      requestAnimationFrame(() => this.store.scan());
+    // Bridge store signals → class component re-renders.
+    // effect() subscribes to every signal read inside it;
+    // when any of them change, it calls componentUpdate().
+    this._dispose = Reactor.effect(() => {
+      store.roots.value;
+      store.selectedRoot.value;
+      store.projects.value;
+      store.scanning.value;
+      store.search.value;
+      store.filter.value;
+      store.settings.value;
+      store.history.value;
+      this.componentUpdate();
+    });
+
+    if (store.selectedRoot.value && store.settings.value.autoScan) {
+      store.scan();
     }
   }
 
+  componentWillUnmount() {
+    if (this._dispose) this._dispose();
+  }
+
   navigateTo(page) {
-    this.currentPage = page;
-    this.componentUpdate();
+    this.componentUpdate({ currentPage: page });
   }
 
   render() {
-    const s = this.store;
+    const rootsList   = store.roots.value;
+    const selected    = store.selectedRoot.value;
+    const allProjects = store.projects.value;
+    const isScanning  = store.scanning.value;
+    const searchQuery = store.search.value;
+    const filterValue = store.filter.value;
+    const settingsVal = store.settings.value;
+    const historyVal  = store.history.value;
+    const page        = this.currentPage;
+    const showSidebar = this.sidebarVisible;
 
     // Before any roots are added, show onboarding full-screen
-    if (s.roots.length === 0) {
+    if (rootsList.length === 0) {
       return <div .app-shell>
         {this.renderHeader()}
         <div .app-body>
@@ -60,29 +91,55 @@ export class Application extends Element {
       </div>;
     }
 
-    const page = this.currentPage;
+    // Filter projects
+    const query = searchQuery.trim().toLowerCase();
+    const visible = allProjects.filter(project => {
+      if (filterValue !== "All" && project.type !== filterValue) return false;
+      if (!query) return true;
+      return (
+        project.name.toLowerCase().includes(query) ||
+        project.path.toLowerCase().includes(query) ||
+        project.type.toLowerCase().includes(query)
+      );
+    });
+
+    // Workspace content
+    let workspace;
+    if (visible.length === 0 && !isScanning && !searchQuery) {
+      const name = selected.split("/").pop() || selected;
+      workspace = <WorkspaceEmpty rootName={name} hasProjects={allProjects.length > 0} />;
+    } else {
+      workspace = <WorkspaceView
+        projects={visible}
+        projectTypes={store.getProjectTypes()}
+        scanning={isScanning}
+        searchValue={searchQuery}
+        filterValue={filterValue}
+        selectedRoot={selected}
+      />;
+    }
 
     return <div .app-shell>
       {this.renderHeader()}
       <div .app-body>
-        {this.sidebarVisible ? <Sidebar
-          roots={s.roots}
-          selectedRoot={s.selectedRoot}
-          navItems={this.navItems}
+        {showSidebar ? <Sidebar
+          roots={rootsList}
+          selectedRoot={selected}
+          navItems={navItems}
           currentPage={page}
         /> : []}
         <div .app-content>
           <div .page-panel :expanded={page === "workspace"}>
-            {this.renderWorkspace(s)}
+            {workspace}
           </div>
           <div .page-panel :expanded={page === "settings"}>
-            <SettingsPage settings={s.settings} />
+            <SettingsPage settings={settingsVal} />
           </div>
           <div .page-panel :expanded={page === "history"}>
-            <HistoryPage history={s.history} />
+            <HistoryPage history={historyVal} />
           </div>
           <div .page-panel :expanded={page === "stats"}>
-            <StatsPage stats={s.getStats()} />
+            <StatsPage stats={store.getStats()} />
           </div>
         </div>
       </div>
@@ -110,15 +167,6 @@ export class Application extends Element {
     </window-header>;
   }
 
-  renderWorkspace(s) {
-    const projects = s.getVisibleProjects();
-    if (projects.length === 0 && !s.scanning && !s.search) {
-      const name = s.selectedRoot.split("/").pop() || s.selectedRoot;
-      return <WorkspaceEmpty rootName={name} hasProjects={s.projects.length > 0} />;
-    }
-    return <WorkspaceView state={s} projects={projects} projectTypes={s.getProjectTypes()} />;
-  }
-
   // ===== Sidebar events =====
 
   ["on sidebar-navigate"](evt) {
@@ -128,57 +176,57 @@ export class Application extends Element {
 
   ["on sidebar-select-root"](evt) {
     const root = evt.data.root;
-    if (root === this.store.selectedRoot) {
-      // Same root — just switch back to workspace, no rescan
+    if (root === store.selectedRoot.value) {
       this.navigateTo("workspace");
     } else {
-      this.store.selectRoot(root);
+      store.selectRoot(root);
       this.navigateTo("workspace");
-      this.store.scan();
+      if (!store.hasCachedScan(root)) {
+        store.scan();
+      }
     }
     return true;
   }
 
   ["on sidebar-add-root"]() {
-    const p = this.store.selectFolder();
+    const p = store.selectFolder();
     if (p) {
-      this.store.addRoot(p);
+      store.addRoot(p);
       this.navigateTo("workspace");
-      this.store.scan();
+      store.scan();
     }
     return true;
   }
 
   ["on sidebar-remove-root"](evt) {
-    this.store.removeRoot(evt.data.root);
-    if (this.store.selectedRoot) this.store.scan();
-    else this.componentUpdate();
+    store.removeRoot(evt.data.root);
+    if (store.selectedRoot.value) store.scan();
+    else this.navigateTo("workspace");
     return true;
   }
 
   // ===== Titlebar =====
 
   ["on click at button#toggle-sidebar"]() {
-    this.sidebarVisible = !this.sidebarVisible;
-    this.componentUpdate();
+    this.componentUpdate({ sidebarVisible: !this.sidebarVisible });
     return true;
   }
 
   // ===== Onboarding =====
 
   ["on click at button#auto-detect"]() {
-    this.store.suggestRoots();
+    store.suggestRoots();
     this.navigateTo("workspace");
-    if (this.store.selectedRoot) this.store.scan();
+    if (store.selectedRoot.value) store.scan();
     return true;
   }
 
   ["on click at button#add-workspace"]() {
-    const p = this.store.selectFolder();
+    const p = store.selectFolder();
     if (p) {
-      this.store.addRoot(p);
+      store.addRoot(p);
       this.navigateTo("workspace");
-      this.store.scan();
+      store.scan();
     }
     return true;
   }
@@ -186,45 +234,45 @@ export class Application extends Element {
   // ===== Settings =====
 
   ["on change at select(themeSelect)"](evt, el) {
-    this.store.setSetting("theme", el.value);
-    this.store.applyTheme();
+    store.setSetting("theme", el.value);
+    store.applyTheme();
     return true;
   }
 
   ["on change at input(settingToggle)"](evt, el) {
-    this.store.setSetting(el.attributes["data-key"], el.value);
+    store.setSetting(el.attributes["data-key"], el.value);
     return true;
   }
 
   ["on change at input(settingNumber)"](evt, el) {
-    this.store.setSetting(el.attributes["data-key"], el.value);
+    store.setSetting(el.attributes["data-key"], el.value);
     return true;
   }
 
   ["on change at textarea(settingExclusions)"](evt, el) {
     const lines = (el.value || "").split("\n").map(s => s.trim()).filter(Boolean);
-    this.store.setSetting("exclusions", lines);
+    store.setSetting("exclusions", lines);
     return true;
   }
 
   ["on click at button#reset-settings"]() {
-    this.store.resetSettings();
-    this.store.applyTheme();
+    store.resetSettings();
+    store.applyTheme();
     return true;
   }
 
   // ===== Workspace =====
 
-  ["on click at button#rescan"]() { this.store.scan(); return true; }
-  ["on change at select(filterSelect)"](evt, el) { this.store.setFilter(el.value); return true; }
-  ["on change at input(searchBox)"](evt, el) { this.store.setSearch(el.value); return true; }
-  ["on click at button[data-open]"](evt, el) { this.store.openFolder(el.attributes["data-open"]); return true; }
+  ["on click at button#rescan"]() { store.scan(); return true; }
+  ["on change at select(filterSelect)"](evt, el) { store.setFilter(el.value); return true; }
+  ["on change at input(searchBox)"](evt, el) { store.setSearch(el.value); return true; }
+  ["on click at button[data-open]"](evt, el) { store.openFolder(el.attributes["data-open"]); return true; }
 
   // ===== Clean =====
 
   ["on click at button[data-id]"](evt, el) {
     const id = el.attributes["data-id"];
-    const project = this.store.projects.find(p => p.id === id);
+    const project = store.projects.value.find(p => p.id === id);
     if (!project || !project.cleanupTargets.length) return true;
 
     const confirmed = Window.this.modal(
@@ -240,7 +288,7 @@ export class Application extends Element {
       </question>
     ) === "clean";
 
-    if (confirmed) this.store.clean(id);
+    if (confirmed) store.clean(id);
     return true;
   }
 }

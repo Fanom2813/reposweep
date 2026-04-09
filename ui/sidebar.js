@@ -19,25 +19,11 @@
 
 export class Sidebar extends Element {
 
-  roots = [];
-  selectedRoot = "";
-  navItems = [];
-  currentPage = "";
-
-  constructor(props) {
-    super();
-    this.roots = props.roots || [];
-    this.selectedRoot = props.selectedRoot || "";
-    this.navItems = props.navItems || [];
-    this.currentPage = props.currentPage || "";
-  }
-
   render(props) {
-    // Accept fresh props on each render cycle
-    const roots = props?.roots || this.roots;
-    const selectedRoot = props?.selectedRoot || this.selectedRoot;
-    const navItems = props?.navItems || this.navItems;
-    const currentPage = props?.currentPage || this.currentPage;
+    const roots = props?.roots || [];
+    const selectedRoot = props?.selectedRoot || "";
+    const navItems = props?.navItems || [];
+    const currentPage = props?.currentPage || "";
 
     return <aside .sidebar>
       {/* Workspace roots */}

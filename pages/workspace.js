@@ -1,8 +1,9 @@
 /**
  * Workspace views — project table, empty state, toolbar, busy state.
+ * Pure functional components — all data comes via props from the parent.
  */
 
-import { formatBytes } from "../lib/scanner.js";
+import { formatBytes } from "../lib/store.js";
 
 function timeAgo(timestamp) {
   if (!timestamp) return "";
@@ -57,26 +58,24 @@ export function WorkspaceEmpty(props) {
 
 /**
  * Workspace view — toolbar + scrollable project table.
- * Shows busy state when scanning:
- *   - No projects yet → full placeholder with spinner
- *   - Has projects (rescan) → progress bar + dimmed table
+ * All data passed via props — no signal reads here.
  */
 export function WorkspaceView(props) {
-  const { state, projects, projectTypes } = props;
-  const scanning = state.scanning;
+  const { projects, projectTypes, scanning, searchValue, filterValue, selectedRoot } = props;
   const totalReclaimable = projects.reduce((sum, p) => sum + (p.reclaimableBytes || 0), 0);
-  const rootName = rootLabel(state.selectedRoot);
+  const rootName = rootLabel(selectedRoot);
 
   return <div .workspace>
     <div .row .gap-3 .px-5 .py-3 .border-b>
-      <h3 .text-lg .semibold .nowrap>{rootName}</h3>
-      {!scanning
-        ? <span .text-xs .fg-3 .nowrap>{projects.length} projects · {formatBytes(totalReclaimable)} reclaimable</span>
-        : <span .text-xs .fg-3 .nowrap>Scanning...</span>
-      }
+      <div .col>
+        <h3 .text-lg .semibold .nowrap>{rootName}</h3>
+        {!scanning &&
+          <span .text-xs .fg-2 .nowrap>{projects.length} projects · {formatBytes(totalReclaimable)} reclaimable</span>
+        }
+      </div>
       <div .spacer />
-      <input|text(searchBox) .search .sm value={state.search} novalue="Search..." style="width:180dip;" />
-      <select|dropdown(filterSelect) .sm value={state.filter} style="width:100dip;">
+      <input|text(searchBox) .search .sm value={searchValue} novalue="Search..." style="width:180dip;" />
+      <select|dropdown(filterSelect) .sm value={filterValue} style="width:100dip;">
         <option value="All">All</option>
         {(projectTypes || []).map(t => <option value={t.name} key={t.id}>{t.name}</option>)}
       </select>
