@@ -49,10 +49,9 @@ jobs:
           vpk download github \
             --repoUrl ${{ github.server_url }}/${{ github.repository }} \
             --outputDir releases/${{ matrix.rid }} \
-            --channel ${{ matrix.rid }}
+            --channel ${{ matrix.rid }} \
+            --token "${{ secrets.GITHUB_TOKEN }}"
         shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish (single self-contained binary)
         run: dotnet publish -c Release -r ${{ matrix.rid }} -o publish/${{ matrix.rid }}
@@ -75,8 +74,7 @@ jobs:
             --tag ${{ github.ref_name }} \
             --outputDir releases/${{ matrix.rid }} \
             --channel ${{ matrix.rid }} \
+            --token "${{ secrets.GITHUB_TOKEN }}" \
             --merge \
             --publish
         shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
