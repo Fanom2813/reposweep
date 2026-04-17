@@ -73,7 +73,7 @@ jobs:
           vpk upload github \
             --repoUrl ${{ github.server_url }}/${{ github.repository }} \
             --tag ${{ github.ref_name }} \
-            --releaseDir releases/${{ matrix.rid }} \
+            --outputDir releases/${{ matrix.rid }} \
             --merge \
             --publish
         shell: bash
