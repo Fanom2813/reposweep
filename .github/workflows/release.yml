@@ -74,6 +74,7 @@ jobs:
             --repoUrl ${{ github.server_url }}/${{ github.repository }} \
             --tag ${{ github.ref_name }} \
             --outputDir releases/${{ matrix.rid }} \
+            --channel ${{ matrix.rid }} \
             --merge \
             --publish
         shell: bash
