@@ -19,8 +19,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Both macOS RIDs build on Apple Silicon runners — .NET
+          # cross-compiles to osx-x64 and Velopack still produces the
+          # .app/.pkg correctly. macos-13 (Intel) is being retired by
+          # GitHub-hosted runners.
           - { os: macos-14,       rid: osx-arm64,   exe: RepoSweep }
-          - { os: macos-13,       rid: osx-x64,     exe: RepoSweep }
+          - { os: macos-14,       rid: osx-x64,     exe: RepoSweep }
           - { os: windows-latest, rid: win-x64,     exe: RepoSweep.exe }
           - { os: ubuntu-latest,  rid: linux-x64,   exe: RepoSweep }
     runs-on: ${{ matrix.os }}
