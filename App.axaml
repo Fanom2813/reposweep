@@ -1,0 +1,24 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="RepoSweep.App"
+             RequestedThemeVariant="Default">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Fonts -->
+            <FontFamily x:Key="SansFont">avares://RepoSweep/Assets/Fonts#Ubuntu</FontFamily>
+            <FontFamily x:Key="MonoFont">avares://RepoSweep/Assets/Fonts#JetBrains Mono</FontFamily>
+            <FontFamily x:Key="LucideFont">avares://RepoSweep/Assets/Fonts#lucide</FontFamily>
+
+            <!-- Design tokens (theme-aware brushes + scales) -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://RepoSweep/Themes/Tokens.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://RepoSweep/Themes/Styles.axaml" />
+    </Application.Styles>
+</Application>

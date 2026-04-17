@@ -1,0 +1,21 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="RepoSweep.Views.ConfirmDialog"
+        x:Name="Root"
+        Width="420"
+        SizeToContent="Height"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Title="Confirm">
+    <Border Padding="20">
+        <StackPanel Spacing="12">
+            <TextBlock Name="TitleText" FontSize="16" FontWeight="SemiBold" />
+            <TextBlock Name="MessageText" TextWrapping="Wrap" Opacity="0.85" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,8,0,0">
+                <Button Classes="Outline" Content="Cancel" Click="OnCancel" />
+                <Button Classes="Destructive" Content="Confirm" Click="OnConfirm" IsDefault="True" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

@@ -1,0 +1,1433 @@
+[
+  {
+    "id": "node",
+    "name": "Node.js",
+    "icon": "icon-package",
+    "devicon": "icons/devicon/nodejs.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", ".next", ".nuxt", ".turbo", ".cache", "dist", "build", ".parcel-cache", ".vite", ".pnpm-store", ".yarn", "coverage", ".nyc_output", "*.log"],
+    "priority": 10
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/javascript.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist", "build", ".cache", "coverage", ".nyc_output"],
+    "priority": 10
+  },
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/typescript.svg",
+    "markers": ["tsconfig.json", "package.json"],
+    "targets": ["node_modules", "dist", "build", "*.tsbuildinfo", ".cache"],
+    "priority": 10
+  },
+  {
+    "id": "react",
+    "name": "React",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/react.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "build", "dist", ".cache", "coverage"],
+    "priority": 10
+  },
+  {
+    "id": "nextjs",
+    "name": "Next.js",
+    "icon": "icon-zap",
+    "devicon": "icons/devicon/nextjs.svg",
+    "markers": ["next.config.js", "next.config.mjs", "package.json"],
+    "targets": [".next", "out", "dist", ".turbo"],
+    "priority": 10
+  },
+  {
+    "id": "vue",
+    "name": "Vue.js",
+    "icon": "icon-layout",
+    "devicon": "icons/devicon/vuejs.svg",
+    "markers": ["vue.config.js", "vite.config.js", "package.json"],
+    "targets": ["node_modules", "dist", ".nuxt", ".output", ".cache"],
+    "priority": 10
+  },
+  {
+    "id": "nuxt",
+    "name": "Nuxt",
+    "icon": "icon-layers",
+    "devicon": "icons/devicon/nuxtjs.svg",
+    "markers": ["nuxt.config.ts", "nuxt.config.js", "package.json"],
+    "targets": [".nuxt", "dist", ".output", ".nitro", "node_modules/.vite", "node_modules/.cache"],
+    "priority": 9
+  },
+  {
+    "id": "angular",
+    "name": "Angular",
+    "icon": "icon-hexagon",
+    "devicon": "icons/devicon/angular.svg",
+    "markers": ["angular.json", "package.json"],
+    "targets": ["node_modules", "dist", ".angular", "coverage"],
+    "priority": 9
+  },
+  {
+    "id": "svelte",
+    "name": "Svelte",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/svelte.svg",
+    "markers": ["svelte.config.js", "vite.config.js", "package.json"],
+    "targets": ["node_modules", "dist", ".svelte-kit", "build", ".vercel"],
+    "priority": 8
+  },
+  {
+    "id": "astro",
+    "name": "Astro",
+    "icon": "icon-star",
+    "devicon": "icons/devicon/astro.svg",
+    "markers": ["astro.config.mjs", "astro.config.js", "package.json"],
+    "targets": ["node_modules", "dist", ".astro", ".vercel", ".netlify"],
+    "priority": 8
+  },
+  {
+    "id": "vite",
+    "name": "Vite",
+    "icon": "icon-zap",
+    "devicon": "icons/devicon/vitejs.svg",
+    "markers": ["vite.config.js", "vite.config.ts", "package.json"],
+    "targets": ["node_modules", "dist", "build", ".vite"],
+    "priority": 9
+  },
+  {
+    "id": "webpack",
+    "name": "Webpack",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/webpack.svg",
+    "markers": ["webpack.config.js", "package.json"],
+    "targets": ["node_modules", "dist", "build", ".cache"],
+    "priority": 8
+  },
+  {
+    "id": "rollup",
+    "name": "Rollup",
+    "icon": "icon-refresh-cw",
+    "devicon": "icons/devicon/rollup.svg",
+    "markers": ["rollup.config.js", "package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 7
+  },
+  {
+    "id": "gulp",
+    "name": "Gulp",
+    "icon": "icon-droplet",
+    "devicon": "icons/devicon/gulp.svg",
+    "markers": ["gulpfile.js", "package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 6
+  },
+  {
+    "id": "grunt",
+    "name": "Grunt",
+    "icon": "icon-terminal",
+    "devicon": "icons/devicon/grunt.svg",
+    "markers": ["Gruntfile.js", "package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 5
+  },
+  {
+    "id": "bun",
+    "name": "Bun",
+    "icon": "icon-zap",
+    "devicon": "icons/devicon/bun.svg",
+    "markers": ["bun.lockb", "package.json"],
+    "targets": ["node_modules", "dist", "build", ".bun"],
+    "priority": 7
+  },
+  {
+    "id": "deno",
+    "name": "Deno",
+    "icon": "icon-terminal",
+    "devicon": "icons/devicon/denojs.svg",
+    "markers": ["deno.json", "deno.jsonc", "deno.lock"],
+    "targets": ["dist", "build", "coverage", ".deno"],
+    "priority": 6
+  },
+  {
+    "id": "yarn",
+    "name": "Yarn",
+    "icon": "icon-package",
+    "devicon": "icons/devicon/yarn.svg",
+    "markers": ["yarn.lock", ".yarnrc.yml", "package.json"],
+    "targets": ["node_modules", ".yarn", ".pnp.*", ".yarnrc.yml"],
+    "priority": 9
+  },
+  {
+    "id": "pnpm",
+    "name": "pnpm",
+    "icon": "icon-package",
+    "devicon": "icons/devicon/pnpm.svg",
+    "markers": ["pnpm-lock.yaml", "package.json"],
+    "targets": ["node_modules", ".pnpm-store"],
+    "priority": 9
+  },
+  {
+    "id": "express",
+    "name": "Express",
+    "icon": "icon-server",
+    "devicon": "icons/devicon/express.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist", "build", "coverage"],
+    "priority": 9
+  },
+  {
+    "id": "fastify",
+    "name": "Fastify",
+    "icon": "icon-zap",
+    "devicon": "icons/devicon/fastify.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 7
+  },
+  {
+    "id": "nestjs",
+    "name": "NestJS",
+    "icon": "icon-grid",
+    "devicon": "icons/devicon/nestjs.svg",
+    "markers": ["nest-cli.json", "package.json"],
+    "targets": ["node_modules", "dist", "build", "coverage"],
+    "priority": 8
+  },
+  {
+    "id": "remix",
+    "name": "Remix",
+    "icon": "icon-refresh-cw",
+    "devicon": "icons/devicon/remix.svg",
+    "markers": ["remix.config.js", "vite.config.js", "package.json"],
+    "targets": ["node_modules", "build", ".cache", ".netlify", ".vercel"],
+    "priority": 8
+  },
+  {
+    "id": "gatsby",
+    "name": "Gatsby",
+    "icon": "icon-circle",
+    "devicon": "icons/devicon/gatsby.svg",
+    "markers": ["gatsby-config.js", "gatsby-config.ts", "package.json"],
+    "targets": ["node_modules", "public", ".cache"],
+    "priority": 7
+  },
+  {
+    "id": "ember",
+    "name": "Ember.js",
+    "icon": "icon-flame",
+    "devicon": "icons/devicon/ember.svg",
+    "markers": ["ember-cli-build.js", "package.json"],
+    "targets": ["node_modules", "dist", "tmp"],
+    "priority": 6
+  },
+  {
+    "id": "backbonejs",
+    "name": "Backbone.js",
+    "icon": "icon-layers",
+    "devicon": "icons/devicon/backbonejs.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist"],
+    "priority": 5
+  },
+  {
+    "id": "jquery",
+    "name": "jQuery",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/jquery.svg",
+    "markers": ["package.json", "bower.json"],
+    "targets": ["node_modules", "bower_components", "dist"],
+    "priority": 7
+  },
+  {
+    "id": "electron",
+    "name": "Electron",
+    "icon": "icon-monitor",
+    "devicon": "icons/devicon/electron.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist", "out", "release", "build"],
+    "priority": 8
+  },
+  {
+    "id": "reactnative",
+    "name": "React Native",
+    "icon": "icon-smartphone",
+    "devicon": "icons/devicon/react.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "android/build", "ios/build", "ios/Pods", ".expo", "build"],
+    "priority": 9
+  },
+  {
+    "id": "expo",
+    "name": "Expo",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/expo.svg",
+    "markers": ["app.json", "app.config.js", "package.json"],
+    "targets": ["node_modules", ".expo", "dist", "web-build", "android", "ios"],
+    "priority": 8
+  },
+  {
+    "id": "ionic",
+    "name": "Ionic",
+    "icon": "icon-droplet",
+    "devicon": "icons/devicon/ionic.svg",
+    "markers": ["ionic.config.json", "package.json"],
+    "targets": ["node_modules", "www", "platforms", "plugins", ".ionic"],
+    "priority": 7
+  },
+  {
+    "id": "capacitor",
+    "name": "Capacitor",
+    "icon": "icon-battery-charging",
+    "devicon": "icons/devicon/capacitor.svg",
+    "markers": ["capacitor.config.ts", "capacitor.config.json", "package.json"],
+    "targets": ["node_modules", "android/app/build", "ios/App/build", "dist"],
+    "priority": 7
+  },
+  {
+    "id": "preact",
+    "name": "Preact",
+    "icon": "icon-circle",
+    "devicon": "icons/devicon/preact.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "build", "dist"],
+    "priority": 6
+  },
+  {
+    "id": "angularjs",
+    "name": "AngularJS",
+    "icon": "icon-hexagon",
+    "devicon": "icons/devicon/angularjs.svg",
+    "markers": ["package.json", "bower.json"],
+    "targets": ["node_modules", "bower_components", "dist", "build"],
+    "priority": 5
+  },
+  {
+    "id": "tailwindcss",
+    "name": "Tailwind CSS",
+    "icon": "icon-wind",
+    "devicon": "icons/devicon/tailwindcss.svg",
+    "markers": ["tailwind.config.js", "tailwind.config.ts", "package.json"],
+    "targets": ["node_modules", ".turbo"],
+    "priority": 10
+  },
+  {
+    "id": "sass",
+    "name": "Sass",
+    "icon": "icon-circle",
+    "devicon": "icons/devicon/sass.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", ".sass-cache", "*.css.map"],
+    "priority": 8
+  },
+  {
+    "id": "less",
+    "name": "Less",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/less.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 6
+  },
+  {
+    "id": "stylus",
+    "name": "Stylus",
+    "icon": "icon-edit",
+    "devicon": "icons/devicon/stylus.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 5
+  },
+  {
+    "id": "postcss",
+    "name": "PostCSS",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/postcss.svg",
+    "markers": ["postcss.config.js", "package.json"],
+    "targets": ["node_modules", ".cache"],
+    "priority": 7
+  },
+  {
+    "id": "jest",
+    "name": "Jest",
+    "icon": "icon-check-circle",
+    "devicon": "icons/devicon/jest.svg",
+    "markers": ["jest.config.js", "package.json"],
+    "targets": ["node_modules", "coverage", ".cache"],
+    "priority": 9
+  },
+  {
+    "id": "vitest",
+    "name": "Vitest",
+    "icon": "icon-flash",
+    "devicon": "icons/devicon/vitest.svg",
+    "markers": ["vitest.config.ts", "vitest.config.js", "package.json"],
+    "targets": ["node_modules", "coverage", "dist"],
+    "priority": 8
+  },
+  {
+    "id": "cypress",
+    "name": "Cypress",
+    "icon": "icon-check-square",
+    "devicon": "icons/devicon/cypressio.svg",
+    "markers": ["cypress.config.js", "cypress.json", "package.json"],
+    "targets": ["node_modules", "cypress/screenshots", "cypress/videos", "cypress/downloads"],
+    "priority": 8
+  },
+  {
+    "id": "playwright",
+    "name": "Playwright",
+    "icon": "icon-play",
+    "devicon": "icons/devicon/playwright.svg",
+    "markers": ["playwright.config.ts", "playwright.config.js", "package.json"],
+    "targets": ["node_modules", "test-results", "playwright-report", "playwright/.cache"],
+    "priority": 8
+  },
+  {
+    "id": "puppeteer",
+    "name": "Puppeteer",
+    "icon": "icon-mouse-pointer",
+    "devicon": "icons/devicon/puppeteer.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", ".cache/puppeteer"],
+    "priority": 7
+  },
+  {
+    "id": "jasmine",
+    "name": "Jasmine",
+    "icon": "icon-flower",
+    "devicon": "icons/devicon/jasmine.svg",
+    "markers": ["spec/support/jasmine.json", "package.json"],
+    "targets": ["node_modules"],
+    "priority": 6
+  },
+  {
+    "id": "storybook",
+    "name": "Storybook",
+    "icon": "icon-book",
+    "devicon": "icons/devicon/storybook.svg",
+    "markers": [".storybook/main.js", "package.json"],
+    "targets": ["node_modules", "storybook-static"],
+    "priority": 8
+  },
+  {
+    "id": "graphql",
+    "name": "GraphQL",
+    "icon": "icon-share-2",
+    "devicon": "icons/devicon/apollographql.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 8
+  },
+  {
+    "id": "prisma",
+    "name": "Prisma",
+    "icon": "icon-triangle",
+    "devicon": "icons/devicon/prisma.svg",
+    "markers": ["prisma/schema.prisma", "package.json"],
+    "targets": ["node_modules", "prisma/migrations"],
+    "priority": 8
+  },
+  {
+    "id": "sequelize",
+    "name": "Sequelize",
+    "icon": "icon-database",
+    "devicon": "icons/devicon/sequelize.svg",
+    "markers": [".sequelizerc", "package.json"],
+    "targets": ["node_modules"],
+    "priority": 7
+  },
+  {
+    "id": "mongoose",
+    "name": "Mongoose",
+    "icon": "icon-database",
+    "devicon": "icons/devicon/mongoose.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 7
+  },
+  {
+    "id": "d3js",
+    "name": "D3.js",
+    "icon": "icon-pie-chart",
+    "devicon": "icons/devicon/d3js.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist"],
+    "priority": 7
+  },
+  {
+    "id": "threejs",
+    "name": "Three.js",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/threejs.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist", "build"],
+    "priority": 7
+  },
+  {
+    "id": "p5js",
+    "name": "p5.js",
+    "icon": "icon-pen-tool",
+    "devicon": "icons/devicon/p5js.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist"],
+    "priority": 6
+  },
+  {
+    "id": "vuetify",
+    "name": "Vuetify",
+    "icon": "icon-layout",
+    "devicon": "icons/devicon/vuetify.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "dist"],
+    "priority": 7
+  },
+  {
+    "id": "quasar",
+    "name": "Quasar",
+    "icon": "icon-star",
+    "devicon": "icons/devicon/quasar.svg",
+    "markers": ["quasar.config.js", "package.json"],
+    "targets": ["node_modules", "dist", ".quasar"],
+    "priority": 6
+  },
+  {
+    "id": "pug",
+    "name": "Pug",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/pug.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules"],
+    "priority": 6
+  },
+  {
+    "id": "feathersjs",
+    "name": "Feathers",
+    "icon": "icon-feather",
+    "devicon": "icons/devicon/feathersjs.svg",
+    "markers": ["package.json"],
+    "targets": ["node_modules", "lib", "dist"],
+    "priority": 6
+  },
+  {
+    "id": "meteor",
+    "name": "Meteor",
+    "icon": "icon-flame",
+    "devicon": "icons/devicon/meteor.svg",
+    "markers": [".meteor/release", "package.json"],
+    "targets": ["node_modules", ".meteor/local"],
+    "priority": 5
+  },
+  {
+    "id": "elm",
+    "name": "Elm",
+    "icon": "icon-triangle",
+    "devicon": "icons/devicon/elm.svg",
+    "markers": ["elm.json", "elm-package.json"],
+    "targets": ["elm-stuff", "elm.js"],
+    "priority": 5
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "icon": "icon-coffee",
+    "devicon": "icons/devicon/java.svg",
+    "markers": ["pom.xml", "build.gradle", "build.gradle.kts"],
+    "targets": ["target", "build", ".gradle", "out", "*.class"],
+    "priority": 10
+  },
+  {
+    "id": "kotlin",
+    "name": "Kotlin",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/kotlin.svg",
+    "markers": ["build.gradle.kts", "pom.xml"],
+    "targets": ["build", ".gradle", "target", "out"],
+    "priority": 9
+  },
+  {
+    "id": "scala",
+    "name": "Scala",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/scala.svg",
+    "markers": ["build.sbt", "pom.xml"],
+    "targets": ["target", ".bloop", ".metals", "project/target", "dist"],
+    "priority": 7
+  },
+  {
+    "id": "maven",
+    "name": "Maven",
+    "icon": "icon-package",
+    "devicon": "icons/devicon/maven.svg",
+    "markers": ["pom.xml"],
+    "targets": ["target"],
+    "priority": 9
+  },
+  {
+    "id": "gradle",
+    "name": "Gradle",
+    "icon": "icon-elephant",
+    "devicon": "icons/devicon/gradle.svg",
+    "markers": ["build.gradle", "build.gradle.kts", "settings.gradle"],
+    "targets": ["build", ".gradle", "out"],
+    "priority": 9
+  },
+  {
+    "id": "spring",
+    "name": "Spring",
+    "icon": "icon-leaf",
+    "devicon": "icons/devicon/spring.svg",
+    "markers": ["pom.xml", "build.gradle"],
+    "targets": ["target", "build", ".gradle"],
+    "priority": 9
+  },
+  {
+    "id": "hibernate",
+    "name": "Hibernate",
+    "icon": "icon-database",
+    "devicon": "icons/devicon/hibernate.svg",
+    "markers": ["pom.xml", "build.gradle", "hibernate.cfg.xml"],
+    "targets": ["target", "build"],
+    "priority": 7
+  },
+  {
+    "id": "android",
+    "name": "Android",
+    "icon": "icon-smartphone",
+    "devicon": "icons/devicon/android.svg",
+    "markers": ["build.gradle", "settings.gradle", "AndroidManifest.xml"],
+    "targets": ["build", ".gradle", "app/build", "local.properties"],
+    "priority": 9
+  },
+  {
+    "id": "androidstudio",
+    "name": "Android Studio",
+    "icon": "icon-smartphone",
+    "devicon": "icons/devicon/androidstudio.svg",
+    "markers": ["build.gradle", "settings.gradle", "AndroidManifest.xml"],
+    "targets": ["build", "app/build", ".gradle", "captures"],
+    "priority": 9
+  },
+  {
+    "id": "tomcat",
+    "name": "Tomcat",
+    "icon": "icon-server",
+    "devicon": "icons/devicon/tomcat.svg",
+    "markers": ["pom.xml"],
+    "targets": ["target", "webapps"],
+    "priority": 7
+  },
+  {
+    "id": "clojure",
+    "name": "Clojure",
+    "icon": "icon-circle",
+    "devicon": "icons/devicon/clojure.svg",
+    "markers": ["project.clj", "deps.edn"],
+    "targets": ["target", ".cpcache", ".lein-failures", ".lein-repl-history"],
+    "priority": 6
+  },
+  {
+    "id": "clojurescript",
+    "name": "ClojureScript",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/clojurescript.svg",
+    "markers": ["project.clj", "deps.edn", "shadow-cljs.edn"],
+    "targets": ["target", "out", "resources/public/js", ".shadow-cljs"],
+    "priority": 5
+  },
+  {
+    "id": "csharp",
+    "name": "C#",
+    "icon": "icon-hash",
+    "devicon": "icons/devicon/csharp.svg",
+    "markers": ["*.csproj", "*.sln"],
+    "targets": ["bin", "obj", "packages", ".vs"],
+    "priority": 10
+  },
+  {
+    "id": "cplusplus",
+    "name": "C++",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/cplusplus.svg",
+    "markers": ["CMakeLists.txt", "Makefile", "configure.ac"],
+    "targets": ["build", "cmake-build-*", "out", "Debug", "Release", "x64", "*.o", "*.obj", "*.exe"],
+    "priority": 9
+  },
+  {
+    "id": "cmake",
+    "name": "CMake",
+    "icon": "icon-settings",
+    "devicon": "icons/devicon/cmake.svg",
+    "markers": ["CMakeLists.txt"],
+    "targets": ["build", "cmake-build-*", "CMakeCache.txt", "CMakeFiles", "cmake_install.cmake"],
+    "priority": 8
+  },
+  {
+    "id": "dotnet",
+    "name": ".NET",
+    "icon": "icon-layers",
+    "devicon": "icons/devicon/dotnetcore.svg",
+    "markers": ["*.csproj", "*.sln", "global.json"],
+    "targets": ["bin", "obj", "packages", ".vs", "TestResults", "artifacts"],
+    "priority": 10
+  },
+  {
+    "id": "blazor",
+    "name": "Blazor",
+    "icon": "icon-layout",
+    "devicon": "icons/devicon/blazor.svg",
+    "markers": ["*.csproj", "*.sln"],
+    "targets": ["bin", "obj", "wwwroot", ".vs"],
+    "priority": 7
+  },
+  {
+    "id": "go",
+    "name": "Go",
+    "icon": "icon-terminal",
+    "devicon": "icons/devicon/go.svg",
+    "markers": ["go.mod", "go.sum"],
+    "targets": ["vendor", "bin", "dist", "*.test", "*.out"],
+    "priority": 10
+  },
+  {
+    "id": "rust",
+    "name": "Rust",
+    "icon": "icon-cpu",
+    "devicon": "icons/devicon/rust.svg",
+    "markers": ["Cargo.toml", "Cargo.lock"],
+    "targets": ["target"],
+    "priority": 9
+  },
+  {
+    "id": "ruby",
+    "name": "Ruby",
+    "icon": "icon-gem",
+    "devicon": "icons/devicon/ruby.svg",
+    "markers": ["Gemfile", "*.gemspec"],
+    "targets": ["vendor", ".bundle", "pkg", "*.gem", "coverage", ".yardoc"],
+    "priority": 9
+  },
+  {
+    "id": "rails",
+    "name": "Ruby on Rails",
+    "icon": "icon-train",
+    "devicon": "icons/devicon/rails.svg",
+    "markers": ["Gemfile", "config/routes.rb"],
+    "targets": ["vendor", "tmp", "log", "public/assets", ".sass-cache", "coverage"],
+    "priority": 9
+  },
+  {
+    "id": "jekyll",
+    "name": "Jekyll",
+    "icon": "icon-book",
+    "devicon": "icons/devicon/jekyll.svg",
+    "markers": ["_config.yml", "Gemfile"],
+    "targets": ["_site", ".jekyll-cache", ".sass-cache", "vendor"],
+    "priority": 7
+  },
+  {
+    "id": "php",
+    "name": "PHP",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/php.svg",
+    "markers": ["composer.json"],
+    "targets": ["vendor", "composer.lock"],
+    "priority": 9
+  },
+  {
+    "id": "laravel",
+    "name": "Laravel",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/laravel.svg",
+    "markers": ["artisan", "composer.json"],
+    "targets": ["vendor", "node_modules", "public/storage", "storage/framework/cache", "storage/framework/sessions", "storage/framework/views", "bootstrap/cache", "composer.lock"],
+    "priority": 9
+  },
+  {
+    "id": "symfony",
+    "name": "Symfony",
+    "icon": "icon-circle",
+    "devicon": "icons/devicon/symfony.svg",
+    "markers": ["bin/console", "composer.json", "symfony.lock"],
+    "targets": ["vendor", "var/cache", "var/log", "public/build"],
+    "priority": 8
+  },
+  {
+    "id": "composer",
+    "name": "Composer",
+    "icon": "icon-music",
+    "devicon": "icons/devicon/composer.svg",
+    "markers": ["composer.json"],
+    "targets": ["vendor", "composer.lock"],
+    "priority": 9
+  },
+  {
+    "id": "drupal",
+    "name": "Drupal",
+    "icon": "icon-droplet",
+    "devicon": "icons/devicon/drupal.svg",
+    "markers": ["composer.json", "core/lib/Drupal.php"],
+    "targets": ["vendor", "sites/default/files"],
+    "priority": 7
+  },
+  {
+    "id": "wordpress",
+    "name": "WordPress",
+    "icon": "icon-type",
+    "devicon": "icons/devicon/wordpress.svg",
+    "markers": ["wp-config.php", "composer.json"],
+    "targets": ["vendor", "wp-content/uploads", "wp-content/cache"],
+    "priority": 8
+  },
+  {
+    "id": "cakephp",
+    "name": "CakePHP",
+    "icon": "icon-cake",
+    "devicon": "icons/devicon/cakephp.svg",
+    "markers": ["composer.json", "bin/cake"],
+    "targets": ["vendor", "tmp", "logs"],
+    "priority": 6
+  },
+  {
+    "id": "yii",
+    "name": "Yii",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/yii.svg",
+    "markers": ["composer.json", "yii"],
+    "targets": ["vendor", "runtime"],
+    "priority": 5
+  },
+  {
+    "id": "zend",
+    "name": "Zend",
+    "icon": "icon-z",
+    "devicon": "icons/devicon/zend.svg",
+    "markers": ["composer.json"],
+    "targets": ["vendor", "data/cache"],
+    "priority": 5
+  },
+  {
+    "id": "flutter",
+    "name": "Flutter",
+    "icon": "icon-smartphone",
+    "devicon": "icons/devicon/flutter.svg",
+    "markers": ["pubspec.yaml", "pubspec.lock"],
+    "targets": ["build", ".dart_tool", ".flutter-plugins", ".flutter-plugins-dependencies", ".packages", "ios/Pods", "android/.gradle"],
+    "priority": 9
+  },
+  {
+    "id": "dart",
+    "name": "Dart",
+    "icon": "icon-target",
+    "devicon": "icons/devicon/dart.svg",
+    "markers": ["pubspec.yaml", "pubspec.lock"],
+    "targets": [".dart_tool", "build", ".packages"],
+    "priority": 8
+  },
+  {
+    "id": "swift",
+    "name": "Swift",
+    "icon": "icon-zap",
+    "devicon": "icons/devicon/swift.svg",
+    "markers": ["Package.swift", "*.xcodeproj"],
+    "targets": [".build", "build", ".swiftpm", "DerivedData"],
+    "priority": 8
+  },
+  {
+    "id": "xcode",
+    "name": "Xcode",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/xcode.svg",
+    "markers": ["*.xcodeproj", "*.xcworkspace"],
+    "targets": ["DerivedData", "build", "*.xcworkspace/xcuserdata", "*.xcodeproj/xcuserdata"],
+    "priority": 8
+  },
+  {
+    "id": "xamarin",
+    "name": "Xamarin",
+    "icon": "icon-mobile",
+    "devicon": "icons/devicon/xamarin.svg",
+    "markers": ["*.csproj", "*.sln"],
+    "targets": ["bin", "obj", "packages"],
+    "priority": 6
+  },
+  {
+    "id": "elixir",
+    "name": "Elixir",
+    "icon": "icon-droplet",
+    "devicon": "icons/devicon/elixir.svg",
+    "markers": ["mix.exs", "mix.lock"],
+    "targets": ["_build", "deps", ".elixir_ls"],
+    "priority": 7
+  },
+  {
+    "id": "phoenix",
+    "name": "Phoenix",
+    "icon": "icon-flame",
+    "devicon": "icons/devicon/phoenix.svg",
+    "markers": ["mix.exs", "config/config.exs"],
+    "targets": ["_build", "deps", "assets/node_modules", ".elixir_ls"],
+    "priority": 7
+  },
+  {
+    "id": "erlang",
+    "name": "Erlang",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/erlang.svg",
+    "markers": ["rebar.config", "erlang.mk"],
+    "targets": ["_build", "deps", "ebin"],
+    "priority": 6
+  },
+  {
+    "id": "haskell",
+    "name": "Haskell",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/haskell.svg",
+    "markers": ["*.cabal", "stack.yaml", "package.yaml"],
+    "targets": [".stack-work", "dist", "dist-newstyle", "cabal.project.local"],
+    "priority": 6
+  },
+  {
+    "id": "ocaml",
+    "name": "OCaml",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/ocaml.svg",
+    "markers": ["dune-project", "*.opam", "_oasis"],
+    "targets": ["_build", "*.byte", "*.native"],
+    "priority": 5
+  },
+  {
+    "id": "crystal",
+    "name": "Crystal",
+    "icon": "icon-gem",
+    "devicon": "icons/devicon/crystal.svg",
+    "markers": ["shard.yml", "shard.lock"],
+    "targets": ["lib", "bin", ".crystal"],
+    "priority": 5
+  },
+  {
+    "id": "lua",
+    "name": "Lua",
+    "icon": "icon-moon",
+    "devicon": "icons/devicon/lua.svg",
+    "markers": ["*.rockspec", "luarocks.lock"],
+    "targets": ["rocks", ".luarocks"],
+    "priority": 5
+  },
+  {
+    "id": "perl",
+    "name": "Perl",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/perl.svg",
+    "markers": ["Makefile.PL", "Build.PL", "cpanfile"],
+    "targets": ["blib", "_build", "local", "Makefile", "MYMETA.*"],
+    "priority": 5
+  },
+  {
+    "id": "julia",
+    "name": "Julia",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/julia.svg",
+    "markers": ["Project.toml", "Manifest.toml"],
+    "targets": ["deps", "build", "*.jl.cov", "*.jl.*.cov"],
+    "priority": 6
+  },
+  {
+    "id": "r",
+    "name": "R",
+    "icon": "icon-bar-chart",
+    "devicon": "icons/devicon/r.svg",
+    "markers": ["DESCRIPTION", "NAMESPACE"],
+    "targets": [".Rproj.user", "*.Rcheck", "vignettes/*.html", "vignettes/*.pdf"],
+    "priority": 6
+  },
+  {
+    "id": "python",
+    "name": "Python",
+    "icon": "icon-terminal",
+    "devicon": "icons/devicon/python.svg",
+    "markers": ["requirements.txt", "pyproject.toml", "setup.py", "Pipfile"],
+    "targets": ["__pycache__", "*.pyc", "build", "dist", "*.egg-info", ".pytest_cache", ".mypy_cache", ".ruff_cache", ".venv", "venv"],
+    "priority": 10
+  },
+  {
+    "id": "django",
+    "name": "Django",
+    "icon": "icon-layout",
+    "devicon": "icons/devicon/django.svg",
+    "markers": ["manage.py", "requirements.txt", "pyproject.toml"],
+    "targets": ["__pycache__", "*.pyc", "staticfiles", ".cache", ".venv", "venv"],
+    "priority": 10
+  },
+  {
+    "id": "flask",
+    "name": "Flask",
+    "icon": "icon-flask",
+    "devicon": "icons/devicon/flask.svg",
+    "markers": ["app.py", "wsgi.py", "requirements.txt"],
+    "targets": ["__pycache__", "*.pyc", "instance", ".webassets-cache", ".venv", "venv"],
+    "priority": 9
+  },
+  {
+    "id": "fastapi",
+    "name": "FastAPI",
+    "icon": "icon-zap",
+    "devicon": "icons/devicon/fastapi.svg",
+    "markers": ["main.py", "app.py", "pyproject.toml", "requirements.txt"],
+    "targets": ["__pycache__", "*.pyc", ".venv", "__pypackages__", ".pytest_cache"],
+    "priority": 9
+  },
+  {
+    "id": "djangorest",
+    "name": "Django REST",
+    "icon": "icon-server",
+    "devicon": "icons/devicon/djangorest.svg",
+    "markers": ["manage.py", "settings.py"],
+    "targets": ["__pycache__", "*.pyc", "staticfiles", "media", ".venv"],
+    "priority": 8
+  },
+  {
+    "id": "anaconda",
+    "name": "Anaconda",
+    "icon": "icon-triangle",
+    "devicon": "icons/devicon/anaconda.svg",
+    "markers": ["environment.yml", "conda.yml"],
+    "targets": ["pkgs", ".conda/envs", "__pycache__"],
+    "priority": 8
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/docker.svg",
+    "markers": ["Dockerfile", "docker-compose.yml", ".dockerignore"],
+    "targets": ["build", "dist", ".docker"],
+    "priority": 10
+  },
+  {
+    "id": "kubernetes",
+    "name": "Kubernetes",
+    "icon": "icon-grid",
+    "devicon": "icons/devicon/kubernetes.svg",
+    "markers": ["k8s/", "manifests/", "*.yaml", "helm/"],
+    "targets": [],
+    "priority": 9
+  },
+  {
+    "id": "terraform",
+    "name": "Terraform",
+    "icon": "icon-server",
+    "devicon": "icons/devicon/terraform.svg",
+    "markers": ["*.tf", "*.tfvars"],
+    "targets": [".terraform", ".terraform.lock.hcl", "terraform.tfstate", "terraform.tfstate.*"],
+    "priority": 9
+  },
+  {
+    "id": "pulumi",
+    "name": "Pulumi",
+    "icon": "icon-zap",
+    "devicon": "icons/devicon/pulumi.svg",
+    "markers": ["Pulumi.yaml", "Pulumi.*.yaml"],
+    "targets": ["node_modules", "__pycache__", ".pulumi"],
+    "priority": 7
+  },
+  {
+    "id": "vagrant",
+    "name": "Vagrant",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/vagrant.svg",
+    "markers": ["Vagrantfile"],
+    "targets": [".vagrant"],
+    "priority": 6
+  },
+  {
+    "id": "jenkins",
+    "name": "Jenkins",
+    "icon": "icon-settings",
+    "devicon": "icons/devicon/jenkins.svg",
+    "markers": ["Jenkinsfile"],
+    "targets": ["target", "build"],
+    "priority": 8
+  },
+  {
+    "id": "githubactions",
+    "name": "GitHub Actions",
+    "icon": "icon-git-branch",
+    "devicon": "icons/devicon/githubactions.svg",
+    "markers": [".github/workflows/*.yml", ".github/workflows/*.yaml"],
+    "targets": [],
+    "priority": 10
+  },
+  {
+    "id": "gitlab",
+    "name": "GitLab CI",
+    "icon": "icon-gitlab",
+    "devicon": "icons/devicon/gitlab.svg",
+    "markers": [".gitlab-ci.yml"],
+    "targets": [],
+    "priority": 8
+  },
+  {
+    "id": "travis",
+    "name": "Travis CI",
+    "icon": "icon-check",
+    "devicon": "icons/devicon/travis.svg",
+    "markers": [".travis.yml"],
+    "targets": [],
+    "priority": 6
+  },
+  {
+    "id": "prometheus",
+    "name": "Prometheus",
+    "icon": "icon-activity",
+    "devicon": "icons/devicon/prometheus.svg",
+    "markers": ["prometheus.yml"],
+    "targets": ["data"],
+    "priority": 7
+  },
+  {
+    "id": "sentry",
+    "name": "Sentry",
+    "icon": "icon-alert-triangle",
+    "devicon": "icons/devicon/sentry.svg",
+    "markers": ["sentry.properties", ".sentryclirc"],
+    "targets": [],
+    "priority": 7
+  },
+  {
+    "id": "selenium",
+    "name": "Selenium",
+    "icon": "icon-check-square",
+    "devicon": "icons/devicon/selenium.svg",
+    "markers": ["selenium-server.jar", "*.side"],
+    "targets": ["screenshots", "downloads"],
+    "priority": 7
+  },
+  {
+    "id": "unity",
+    "name": "Unity",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/unity.svg",
+    "markers": ["Assets/", "ProjectSettings/", "Packages/manifest.json"],
+    "targets": ["Library", "Temp", "Obj", "Build", "Builds", "Logs", "UserSettings", "MemoryCaptures", "Recordings"],
+    "priority": 8
+  },
+  {
+    "id": "unrealengine",
+    "name": "Unreal Engine",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/unrealengine.svg",
+    "markers": ["*.uproject"],
+    "targets": ["Binaries", "Build", "DerivedDataCache", "Intermediate", "Saved", ".vs"],
+    "priority": 8
+  },
+  {
+    "id": "godot",
+    "name": "Godot",
+    "icon": "icon-gamepad",
+    "devicon": "icons/devicon/godot.svg",
+    "markers": ["project.godot", "*.godot"],
+    "targets": [".godot", "build", "export"],
+    "priority": 7
+  },
+  {
+    "id": "qt",
+    "name": "Qt",
+    "icon": "icon-layout",
+    "devicon": "icons/devicon/qt.svg",
+    "markers": ["*.pro", "CMakeLists.txt", "*.qbs"],
+    "targets": ["build", "debug", "release", "Makefile", "*.o", "moc_*.cpp", "ui_*.h", "qrc_*.cpp"],
+    "priority": 7
+  },
+  {
+    "id": "processing",
+    "name": "Processing",
+    "icon": "icon-pen-tool",
+    "devicon": "icons/devicon/processing.svg",
+    "markers": ["*.pde"],
+    "targets": ["application.*"],
+    "priority": 5
+  },
+  {
+    "id": "hugo",
+    "name": "Hugo",
+    "icon": "icon-book",
+    "devicon": "icons/devicon/hugo.svg",
+    "markers": ["hugo.toml", "hugo.yaml", "hugo.json", "config.toml"],
+    "targets": ["public", "resources", ".hugo_build.lock"],
+    "priority": 7
+  },
+  {
+    "id": "gitbook",
+    "name": "GitBook",
+    "icon": "icon-book",
+    "devicon": "icons/devicon/gitbook.svg",
+    "markers": ["book.json", "SUMMARY.md"],
+    "targets": ["node_modules", "_book"],
+    "priority": 5
+  },
+  {
+    "id": "latex",
+    "name": "LaTeX",
+    "icon": "icon-file-text",
+    "devicon": "icons/devicon/latex.svg",
+    "markers": ["*.tex", "*.latex"],
+    "targets": ["*.aux", "*.log", "*.out", "*.toc", "*.synctex.gz", "*.fls", "*.fdb_latexmk", "*.bbl", "*.blg"],
+    "priority": 6
+  },
+  {
+    "id": "nginx",
+    "name": "Nginx",
+    "icon": "icon-server",
+    "devicon": "icons/devicon/nginx.svg",
+    "markers": ["nginx.conf"],
+    "targets": ["logs", "temp"],
+    "priority": 8
+  },
+  {
+    "id": "kafka",
+    "name": "Kafka",
+    "icon": "icon-stream",
+    "devicon": "icons/devicon/apachekafka.svg",
+    "markers": ["docker-compose.yml"],
+    "targets": ["logs"],
+    "priority": 7
+  },
+  {
+    "id": "rabbitmq",
+    "name": "RabbitMQ",
+    "icon": "icon-message-square",
+    "devicon": "icons/devicon/rabbitmq.svg",
+    "markers": ["docker-compose.yml"],
+    "targets": ["data"],
+    "priority": 7
+  },
+  {
+    "id": "hadoop",
+    "name": "Hadoop",
+    "icon": "icon-database",
+    "devicon": "icons/devicon/hadoop.svg",
+    "markers": ["pom.xml"],
+    "targets": ["target", "logs"],
+    "priority": 6
+  },
+  {
+    "id": "zig",
+    "name": "Zig",
+    "icon": "icon-zap",
+    "devicon": "icons/devicon/zig.svg",
+    "markers": ["build.zig"],
+    "targets": ["zig-cache", "zig-out", "build"],
+    "priority": 6
+  },
+  {
+    "id": "intellij",
+    "name": "IntelliJ IDEA",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/intellij.svg",
+    "markers": [".idea/"],
+    "targets": [".idea", "*.iml", "out"],
+    "priority": 9
+  },
+  {
+    "id": "webstorm",
+    "name": "WebStorm",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/webstorm.svg",
+    "markers": [".idea/"],
+    "targets": [".idea", "*.iml"],
+    "priority": 8
+  },
+  {
+    "id": "phpstorm",
+    "name": "PhpStorm",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/phpstorm.svg",
+    "markers": [".idea/"],
+    "targets": [".idea", "*.iml"],
+    "priority": 7
+  },
+  {
+    "id": "visualstudio",
+    "name": "Visual Studio",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/visualstudio.svg",
+    "markers": ["*.sln", "*.vcxproj"],
+    "targets": [".vs", "Debug", "Release", "x64", "x86", "bin", "obj", "*.user"],
+    "priority": 9
+  },
+  {
+    "id": "svn",
+    "name": "Subversion",
+    "icon": "icon-git-branch",
+    "devicon": "icons/devicon/subversion.svg",
+    "markers": [".svn/"],
+    "targets": [".svn"],
+    "priority": 5
+  },
+  {
+    "id": "liquibase",
+    "name": "Liquibase",
+    "icon": "icon-database",
+    "devicon": "icons/devicon/liquibase.svg",
+    "markers": ["liquibase.properties", "changelog.xml", "changelog.yaml"],
+    "targets": [],
+    "priority": 5
+  },
+  {
+    "id": "ros",
+    "name": "ROS",
+    "icon": "icon-robot",
+    "devicon": "icons/devicon/ros.svg",
+    "markers": ["package.xml", "CMakeLists.txt"],
+    "targets": ["build", "devel", "install", "logs", ".catkin_tools"],
+    "priority": 5
+  },
+  {
+    "id": "grails",
+    "name": "Grails",
+    "icon": "icon-grid",
+    "devicon": "icons/devicon/grails.svg",
+    "markers": ["build.gradle", "grails-app/"],
+    "targets": ["build", ".gradle", "target"],
+    "priority": 5
+  },
+  {
+    "id": "dropwizard",
+    "name": "Dropwizard",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/dropwizard.svg",
+    "markers": ["pom.xml"],
+    "targets": ["target"],
+    "priority": 5
+  },
+  {
+    "id": "adonisjs",
+    "name": "AdonisJS",
+    "icon": "icon-shield",
+    "devicon": "icons/devicon/adonisjs.svg",
+    "markers": ["package.json", "ace.js", "adonisrc.ts"],
+    "targets": ["build", "tmp", "node_modules/.cache/adonis-require-ts"],
+    "priority": 7
+  },
+  {
+    "id": "airflow",
+    "name": "Apache Airflow",
+    "icon": "icon-wind",
+    "devicon": "icons/devicon/apacheairflow.svg",
+    "markers": ["airflow.cfg", "dags"],
+    "targets": ["logs", "__pycache__", ".cache"],
+    "priority": 7
+  },
+  {
+    "id": "akka",
+    "name": "Akka",
+    "icon": "icon-activity",
+    "devicon": "icons/devicon/akka.svg",
+    "markers": ["build.sbt", "pom.xml"],
+    "targets": ["target", "project/target"],
+    "priority": 6
+  },
+  {
+    "id": "alpinejs",
+    "name": "Alpine.js",
+    "icon": "icon-mountain",
+    "devicon": "icons/devicon/alpinejs.svg",
+    "markers": ["package.json"],
+    "targets": ["dist", "node_modules/.cache"],
+    "priority": 7
+  },
+  {
+    "id": "antdesign",
+    "name": "Ant Design",
+    "icon": "icon-layout",
+    "devicon": "icons/devicon/antdesign.svg",
+    "markers": ["package.json"],
+    "targets": ["dist", "lib", "es", "node_modules/.cache"],
+    "priority": 7
+  },
+  {
+    "id": "apache",
+    "name": "Apache",
+    "icon": "icon-server",
+    "devicon": "icons/devicon/apache.svg",
+    "markers": ["httpd.conf", ".htaccess"],
+    "targets": ["logs", "build", "target"],
+    "priority": 6
+  },
+  {
+    "id": "apachespark",
+    "name": "Apache Spark",
+    "icon": "icon-zap",
+    "devicon": "icons/devicon/apachespark.svg",
+    "markers": ["pom.xml", "build.sbt"],
+    "targets": ["target", "metastore_db", "spark-warehouse", ".cache"],
+    "priority": 7
+  },
+  {
+    "id": "babel",
+    "name": "Babel",
+    "icon": "icon-code",
+    "devicon": "icons/devicon/babel.svg",
+    "markers": ["babel.config.js", ".babelrc", "package.json"],
+    "targets": ["lib", "dist", "node_modules/.cache/babel-loader"],
+    "priority": 8
+  },
+  {
+    "id": "bazel",
+    "name": "Bazel",
+    "icon": "icon-triangle",
+    "devicon": "icons/devicon/bazel.svg",
+    "markers": ["WORKSPACE", "BUILD", "BUILD.bazel", ".bazelrc"],
+    "targets": ["bazel-*", "bazel-out", "bazel-bin", "bazel-testlogs"],
+    "priority": 6
+  },
+  {
+    "id": "bevyengine",
+    "name": "Bevy Engine",
+    "icon": "icon-gamepad",
+    "devicon": "icons/devicon/bevyengine.svg",
+    "markers": ["Cargo.toml"],
+    "targets": ["target"],
+    "priority": 5
+  },
+  {
+    "id": "bootstrap",
+    "name": "Bootstrap",
+    "icon": "icon-layout",
+    "devicon": "icons/devicon/bootstrap.svg",
+    "markers": ["package.json"],
+    "targets": ["dist", "js/dist", "node_modules/.cache"],
+    "priority": 9
+  },
+  {
+    "id": "bower",
+    "name": "Bower",
+    "icon": "icon-box",
+    "devicon": "icons/devicon/bower.svg",
+    "markers": ["bower.json", ".bowerrc"],
+    "targets": ["bower_components"],
+    "priority": 4
+  },
+  {
+    "id": "ansible",
+    "name": "Ansible",
+    "icon": "icon-settings",
+    "devicon": "icons/devicon/ansible.svg",
+    "markers": ["ansible.cfg", "playbook.yml", "inventory"],
+    "targets": [".ansible/tmp", "*.retry"],
+    "priority": 7
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "icon": "icon-git-branch",
+    "devicon": "icons/devicon/git.svg",
+    "markers": [".git"],
+    "targets": [],
+    "priority": 1
+  }
+]

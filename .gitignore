@@ -1,0 +1,35 @@
+# .NET build outputs
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Publish + Velopack release artifacts
+publish/
+releases/
+*.nupkg
+*.snupkg
+
+# IDE
+.vs/
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local AI assistant context — not part of public source
+CLAUDE.md
+
+# Local NuGet config (paths are machine-specific)
+# nuget.config  -- intentionally NOT ignored; it's checked in for the local feed reference
+
+# Test
+TestResults/
+coverage/
+*.coverage
+*.coveragexml

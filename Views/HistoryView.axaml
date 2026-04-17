@@ -1,0 +1,95 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:RepoSweep.ViewModels"
+             xmlns:m="clr-namespace:RepoSweep.Models"
+             xmlns:cv="clr-namespace:RepoSweep.Converters"
+             xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
+             x:Class="RepoSweep.Views.HistoryView"
+             x:DataType="vm:MainViewModel">
+    <UserControl.Resources>
+        <cv:TimeAgoConverter x:Key="TimeAgo" />
+        <cv:JoinStringsConverter x:Key="JoinStrings" />
+    </UserControl.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Border Grid.Row="0" BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1" Padding="20,14">
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" Spacing="2">
+                    <TextBlock Text="History" FontSize="18" FontWeight="SemiBold" />
+                    <TextBlock FontSize="12" Opacity="0.65">
+                        <Run Text="{Binding History.Count}" />
+                        <Run Text="cleanup(s) recorded" />
+                    </TextBlock>
+                </StackPanel>
+                <Button Grid.Column="1" Classes="Outline"
+                        Command="{Binding ClearHistoryCommand}"
+                        IsVisible="{Binding HasHistory}">
+                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <LucideIcon Kind="Trash2" Size="13" />
+                        <TextBlock Text="Clear All" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Empty -->
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Spacing="10"
+                    IsVisible="{Binding !HasHistory}">
+            <LucideIcon Kind="Clock" Size="32" Opacity="0.4"
+                        HorizontalAlignment="Center" />
+            <TextBlock Text="No cleanup history yet" FontSize="16" FontWeight="Medium" HorizontalAlignment="Center" />
+            <TextBlock Text="Clean some projects and they will appear here." Opacity="0.6" HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <!-- List: sticky header, virtualized rows -->
+        <Grid Grid.Row="1" IsVisible="{Binding HasHistory}" RowDefinitions="Auto,*">
+            <Border Grid.Row="0" BorderBrush="{DynamicResource Line}" BorderThickness="0,0,0,1"
+                    Background="{DynamicResource Bg1}">
+                <Grid ColumnDefinitions="90,3*,140,2*,110" Margin="20,10">
+                    <TextBlock Grid.Column="0" Text="When" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Fg3}" />
+                    <TextBlock Grid.Column="1" Text="Project" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Fg3}" />
+                    <TextBlock Grid.Column="2" Text="Type" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Fg3}" />
+                    <TextBlock Grid.Column="3" Text="Cleaned" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Fg3}" />
+                    <TextBlock Grid.Column="4" Text="Reclaimed" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Fg3}" />
+                </Grid>
+            </Border>
+            <ListBox Grid.Row="1" Classes="flat"
+                     ItemsSource="{Binding History}"
+                     SelectionMode="Single">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="m:HistoryEntry">
+                        <Border BorderBrush="{DynamicResource Line}" BorderThickness="0,0,0,1" Padding="20,10">
+                            <Grid ColumnDefinitions="90,3*,140,2*,110" VerticalAlignment="Center">
+                                <TextBlock Grid.Column="0" FontSize="12" Foreground="{DynamicResource Fg2}"
+                                           Text="{Binding Timestamp, Converter={StaticResource TimeAgo}}" />
+                                <StackPanel Grid.Column="1" Spacing="2">
+                                    <TextBlock Text="{Binding ProjectName}" FontWeight="Medium"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding ProjectPath}" Classes="mono" FontSize="11"
+                                               Foreground="{DynamicResource Fg3}"
+                                               TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                                <Border Grid.Column="2" Classes="Badge"
+                                        VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                        <svg:Svg Width="14" Height="14"
+                                                 Path="{Binding Devicon, Converter={x:Static cv:DeviconUriConverter.Instance}}" />
+                                        <TextBlock Text="{Binding ProjectType}" FontSize="11" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+                                <TextBlock Grid.Column="3" FontSize="12" Foreground="{DynamicResource Fg2}"
+                                           TextTrimming="CharacterEllipsis"
+                                           Text="{Binding TargetsCleaned, Converter={StaticResource JoinStrings}}" />
+                                <TextBlock Grid.Column="4" FontWeight="SemiBold" VerticalAlignment="Center"
+                                           Text="{Binding BytesReclaimed, Converter={x:Static cv:BytesConverter.Instance}}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+</UserControl>

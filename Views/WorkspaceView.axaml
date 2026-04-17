@@ -1,0 +1,151 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:RepoSweep.ViewModels"
+             xmlns:m="clr-namespace:RepoSweep.Models"
+             xmlns:cv="clr-namespace:RepoSweep.Converters"
+             xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
+             x:Class="RepoSweep.Views.WorkspaceView"
+             x:DataType="vm:MainViewModel">
+    <UserControl.Resources>
+        <cv:TimeAgoConverter x:Key="TimeAgo" />
+    </UserControl.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- Toolbar -->
+        <Border Grid.Row="0" BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1" Padding="20,14">
+            <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                <StackPanel Grid.Column="0" Spacing="2">
+                    <TextBlock Text="{Binding SelectedRootName}" FontSize="18" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding ProjectsCountLabel}" FontSize="12" Opacity="0.65" />
+                </StackPanel>
+
+                <TextBox Grid.Column="1"
+                         Width="200" Margin="0,0,8,0"
+                         PlaceholderText="Search..."
+                         Text="{Binding SearchText, Mode=TwoWay}" />
+
+                <ComboBox Grid.Column="2"
+                          Width="140" Margin="0,0,8,0"
+                          ItemsSource="{Binding FilterOptions}"
+                          SelectedItem="{Binding SelectedFilter}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:FilterOption">
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Button Grid.Column="3" Classes="Primary"
+                        Command="{Binding ScanCommand}"
+                        IsEnabled="{Binding !IsScanning}">
+                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <LucideIcon Kind="RefreshCw" Size="14" />
+                        <TextBlock Text="Rescan" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Scan indicator -->
+        <ProgressBar Grid.Row="1"
+                     IsIndeterminate="True"
+                     IsVisible="{Binding IsScanning}"
+                     MinHeight="2" Height="2" />
+
+        <!-- Empty state / project list -->
+        <Grid Grid.Row="2">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Spacing="10"
+                        IsVisible="{Binding ShowWorkspaceEmpty}">
+                <LucideIcon Kind="Search" Size="32" Opacity="0.4"
+                            HorizontalAlignment="Center" />
+                <TextBlock Text="No projects scanned yet"
+                           FontSize="16" FontWeight="Medium"
+                           HorizontalAlignment="Center" />
+                <TextBlock Text="Click Rescan to discover projects in this workspace."
+                           Opacity="0.6"
+                           HorizontalAlignment="Center" />
+            </StackPanel>
+
+            <!-- Projects table: sticky header, virtualized rows -->
+            <Grid IsVisible="{Binding ShowWorkspaceData}" RowDefinitions="Auto,*">
+
+                <!-- Sticky header (outside scroller, doesn't virtualize) -->
+                <Border Grid.Row="0" BorderBrush="{DynamicResource Line}" BorderThickness="0,0,0,1"
+                        Background="{DynamicResource Bg1}">
+                    <Grid ColumnDefinitions="3*,140,110,110,200" Margin="20,10">
+                        <TextBlock Grid.Column="0" Text="Project" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Fg3}" />
+                        <TextBlock Grid.Column="1" Text="Type" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Fg3}" />
+                        <TextBlock Grid.Column="2" Text="Modified" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Fg3}" />
+                        <TextBlock Grid.Column="3" Text="Size" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Fg3}" />
+                        <TextBlock Grid.Column="4" Text="" />
+                    </Grid>
+                </Border>
+
+                <!-- Virtualized list (ListBox with VirtualizingStackPanel by default) -->
+                <ListBox Grid.Row="1" Classes="flat"
+                         ItemsSource="{Binding FilteredProjects}"
+                         SelectionMode="Single">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="m:Project">
+                            <Border BorderBrush="{DynamicResource Line}" BorderThickness="0,0,0,1"
+                                    Padding="20,10">
+                                <Grid ColumnDefinitions="3*,140,110,110,200" VerticalAlignment="Center">
+
+                                    <!-- Name + path -->
+                                    <StackPanel Grid.Column="0" Spacing="2">
+                                        <TextBlock Text="{Binding Name}" FontWeight="Medium"
+                                                   TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding Path}" Classes="mono"
+                                                   Foreground="{DynamicResource Fg3}" FontSize="11"
+                                                   TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+
+                                    <!-- Type badge: devicon + type name -->
+                                    <Border Grid.Column="1" Classes="Badge" VerticalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                            <svg:Svg Width="14" Height="14"
+                                                     Path="{Binding Devicon, Converter={x:Static cv:DeviconUriConverter.Instance}}" />
+                                            <TextBlock Text="{Binding Type}" FontSize="11" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Modified -->
+                                    <TextBlock Grid.Column="2" FontSize="12"
+                                               Foreground="{DynamicResource Fg2}"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding ModifiedAt, Converter={StaticResource TimeAgo}}" />
+
+                                    <!-- Size -->
+                                    <TextBlock Grid.Column="3" FontWeight="SemiBold"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding ReclaimableLabel}" />
+
+                                    <!-- Actions -->
+                                    <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="6"
+                                                HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <Button Classes="Primary" Padding="12,4"
+                                                Tag="{Binding}"
+                                                Click="OnCleanClick">
+                                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                                <LucideIcon Kind="Trash2" Size="12" />
+                                                <TextBlock Text="Clean" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="Outline" Padding="8,4"
+                                                Tag="{Binding Path}"
+                                                ToolTip.Tip="Open in Finder/Explorer"
+                                                Click="OnOpenClick">
+                                            <LucideIcon Kind="ExternalLink" Size="12" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

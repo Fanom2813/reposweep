@@ -1,0 +1,119 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:RepoSweep.ViewModels"
+             x:Class="RepoSweep.Views.SidebarView"
+             x:DataType="vm:MainViewModel"
+             Width="240">
+    <Border Background="{DynamicResource BgSidebar}"
+            BorderBrush="{DynamicResource Line}"
+            BorderThickness="0,0,1,0">
+        <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" Margin="0,12,0,12">
+
+            <!-- Workspaces heading -->
+            <TextBlock Grid.Row="0" Text="WORKSPACES"
+                       FontSize="11" FontWeight="Medium"
+                       Foreground="{DynamicResource Fg3}"
+                       Margin="16,4,16,6" />
+
+            <!-- Workspace list -->
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Roots}" Padding="8,0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:WorkspaceRootViewModel">
+                        <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,1" VerticalAlignment="Center">
+                            <Border Grid.ColumnSpan="3"
+                                    Background="{DynamicResource BgActive}"
+                                    CornerRadius="6"
+                                    IsVisible="{Binding IsSelected}" />
+                            <Button Grid.ColumnSpan="3"
+                                    Classes="Ghost"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Padding="8,6"
+                                    Background="Transparent"
+                                    Tag="{Binding}"
+                                    Click="OnSelectRootClick">
+                                <Grid ColumnDefinitions="Auto,*,Auto" VerticalAlignment="Center">
+                                    <LucideIcon Grid.Column="0" Kind="Folder" Size="14" Margin="0,0,8,0" Opacity="0.75" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Label}"
+                                               TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center" />
+                                    <Button Grid.Column="2"
+                                            Classes="Icon"
+                                            Width="20" Height="20"
+                                            Padding="0"
+                                            Tag="{Binding}"
+                                            ToolTip.Tip="Remove workspace"
+                                            Click="OnRemoveRootClick">
+                                        <LucideIcon Kind="X" Size="11" Opacity="0.6" />
+                                    </Button>
+                                </Grid>
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Add workspace -->
+            <Button Grid.Row="2" Classes="Ghost"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
+                    Padding="8,6"
+                    Margin="8,2,8,0"
+                    VerticalAlignment="Top"
+                    Command="{Binding AddWorkspaceCommand}"
+                    Opacity="0.85">
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <LucideIcon Kind="Plus" Size="14" />
+                    <TextBlock Text="Add workspace" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+
+            <!-- Divider -->
+            <Separator Grid.Row="3" Margin="8,8" />
+
+            <!-- Nav -->
+            <StackPanel Grid.Row="4" Spacing="1" Margin="8,0">
+                <Button Classes="Ghost" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Padding="8,6"
+                        Tag="workspace"
+                        Click="OnNavClick">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <LucideIcon Kind="FolderOpen" Size="14" />
+                        <TextBlock Text="Workspace" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+                <Button Classes="Ghost" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Padding="8,6"
+                        Tag="stats"
+                        Click="OnNavClick">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <LucideIcon Kind="ChartBar" Size="14" />
+                        <TextBlock Text="Statistics" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+                <Button Classes="Ghost" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Padding="8,6"
+                        Tag="history"
+                        Click="OnNavClick">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <LucideIcon Kind="Clock" Size="14" />
+                        <TextBlock Text="History" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+                <Button Classes="Ghost" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Padding="8,6"
+                        Tag="settings"
+                        Click="OnNavClick">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <LucideIcon Kind="Settings" Size="14" />
+                        <TextBlock Text="Settings" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

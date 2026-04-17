@@ -1,0 +1,154 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:RepoSweep.ViewModels"
+             x:Class="RepoSweep.Views.SettingsView"
+             x:DataType="vm:MainViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Spacing="24" Margin="24" HorizontalAlignment="Stretch">
+
+            <StackPanel Spacing="4">
+                <TextBlock Text="Settings" FontSize="24" FontWeight="SemiBold" />
+                <TextBlock Text="Changes are saved automatically." Opacity="0.6" />
+            </StackPanel>
+
+            <!-- Appearance -->
+            <StackPanel Spacing="10">
+                <TextBlock Text="APPEARANCE" FontSize="11" FontWeight="SemiBold" Opacity="0.55" />
+                <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1" />
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6">
+                    <StackPanel Grid.Column="0" Spacing="2">
+                        <TextBlock Text="Theme" FontWeight="Medium" />
+                        <TextBlock Text="Choose your preferred color scheme." Opacity="0.6" FontSize="12" />
+                    </StackPanel>
+                    <ComboBox Grid.Column="1" Width="140" VerticalAlignment="Center"
+                              SelectedItem="{Binding Theme, Mode=TwoWay}">
+                        <x:String>system</x:String>
+                        <x:String>light</x:String>
+                        <x:String>dark</x:String>
+                    </ComboBox>
+                </Grid>
+            </StackPanel>
+
+            <!-- Safety -->
+            <StackPanel Spacing="10">
+                <TextBlock Text="SAFETY" FontSize="11" FontWeight="SemiBold" Opacity="0.55" />
+                <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1" />
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6">
+                    <StackPanel Grid.Column="0" Spacing="2">
+                        <TextBlock Text="Move to Trash" FontWeight="Medium" />
+                        <TextBlock Text="Use system trash instead of permanent deletion." Opacity="0.6" FontSize="12" />
+                    </StackPanel>
+                    <CheckBox Grid.Column="1" VerticalAlignment="Center"
+                              IsChecked="{Binding UseTrash, Mode=TwoWay}" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6">
+                    <StackPanel Grid.Column="0" Spacing="2">
+                        <TextBlock Text="Dry Run Preview" FontWeight="Medium" />
+                        <TextBlock Text="Always show preview before cleaning." Opacity="0.6" FontSize="12" />
+                    </StackPanel>
+                    <CheckBox Grid.Column="1" VerticalAlignment="Center"
+                              IsChecked="{Binding DryRunDefault, Mode=TwoWay}" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6">
+                    <StackPanel Grid.Column="0" Spacing="2">
+                        <TextBlock Text="Confirmation Threshold" FontWeight="Medium" />
+                        <TextBlock Text="Require confirmation above this size (MB)." Opacity="0.6" FontSize="12" />
+                    </StackPanel>
+                    <NumericUpDown Grid.Column="1" Width="120" VerticalAlignment="Center"
+                                   Minimum="0" Increment="10"
+                                   Value="{Binding ConfirmThreshold, Mode=TwoWay}" />
+                </Grid>
+            </StackPanel>
+
+            <!-- Scanning -->
+            <StackPanel Spacing="10">
+                <TextBlock Text="SCANNING" FontSize="11" FontWeight="SemiBold" Opacity="0.55" />
+                <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1" />
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6">
+                    <StackPanel Grid.Column="0" Spacing="2">
+                        <TextBlock Text="Auto-scan on launch" FontWeight="Medium" />
+                        <TextBlock Text="Scan workspace automatically when app opens." Opacity="0.6" FontSize="12" />
+                    </StackPanel>
+                    <CheckBox Grid.Column="1" VerticalAlignment="Center"
+                              IsChecked="{Binding AutoScan, Mode=TwoWay}" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6">
+                    <StackPanel Grid.Column="0" Spacing="2">
+                        <TextBlock Text="Deep Scan" FontWeight="Medium" />
+                        <TextBlock Text="Scan subdirectories for nested projects." Opacity="0.6" FontSize="12" />
+                    </StackPanel>
+                    <CheckBox Grid.Column="1" VerticalAlignment="Center"
+                              IsChecked="{Binding DeepScan, Mode=TwoWay}" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6">
+                    <StackPanel Grid.Column="0" Spacing="2">
+                        <TextBlock Text="Scan Depth" FontWeight="Medium" />
+                        <TextBlock Text="Maximum directory depth (1-5)." Opacity="0.6" FontSize="12" />
+                    </StackPanel>
+                    <NumericUpDown Grid.Column="1" Width="100" VerticalAlignment="Center"
+                                   Minimum="1" Maximum="5" Increment="1"
+                                   Value="{Binding ScanDepth, Mode=TwoWay}" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6">
+                    <StackPanel Grid.Column="0" Spacing="2">
+                        <TextBlock Text="Stale Threshold" FontWeight="Medium" />
+                        <TextBlock Text="Days since modification to mark as stale." Opacity="0.6" FontSize="12" />
+                    </StackPanel>
+                    <NumericUpDown Grid.Column="1" Width="100" VerticalAlignment="Center"
+                                   Minimum="7" Increment="1"
+                                   Value="{Binding StaleDays, Mode=TwoWay}" />
+                </Grid>
+            </StackPanel>
+
+            <!-- Exclusions -->
+            <StackPanel Spacing="10">
+                <TextBlock Text="EXCLUSIONS" FontSize="11" FontWeight="SemiBold" Opacity="0.55" />
+                <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1" />
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Protected patterns" FontWeight="Medium" />
+                    <TextBlock Text="Files and folders matching these patterns will never be deleted. One per line."
+                               Opacity="0.6" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+                <TextBox AcceptsReturn="True"
+                         Height="120"
+                         Classes="mono"
+                         FontSize="12"
+                         Text="{Binding ExclusionsText, Mode=TwoWay}"
+                         PlaceholderText="One pattern per line" />
+            </StackPanel>
+
+            <!-- About -->
+            <StackPanel Spacing="10">
+                <TextBlock Text="ABOUT" FontSize="11" FontWeight="SemiBold" Opacity="0.55" />
+                <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1" />
+                <StackPanel Spacing="4" Margin="0,6">
+                    <TextBlock Text="RepoSweep" FontWeight="SemiBold" />
+                    <TextBlock Text="Workspace cleanup utility" Opacity="0.65" FontSize="12" />
+                    <TextBlock Text="Version 1.0.0 — Avalonia port" Opacity="0.55" FontSize="12" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Reset -->
+            <StackPanel Spacing="10">
+                <TextBlock Text="DATA" FontSize="11" FontWeight="SemiBold" Opacity="0.55" />
+                <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1" />
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6">
+                    <StackPanel Grid.Column="0" Spacing="2">
+                        <TextBlock Text="Reset Settings" FontWeight="Medium" />
+                        <TextBlock Text="Restore all settings to their default values." Opacity="0.6" FontSize="12" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Classes="Outline" Content="Reset"
+                            Command="{Binding ResetSettingsCommand}" />
+                </Grid>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

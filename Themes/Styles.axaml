@@ -1,0 +1,354 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        Component styles. Compose with utility-style class names:
+            <Button Classes="Primary" />
+            <Button Classes="Ghost Sm" />
+            <TextBlock Classes="mono" />
+            <Border Classes="Badge BadgeBlue" />
+    -->
+
+    <!-- ===== Window / UserControl base font ===== -->
+    <Style Selector="Window">
+        <Setter Property="FontFamily" Value="{StaticResource SansFont}" />
+        <Setter Property="FontSize"   Value="{StaticResource TextBase}" />
+        <Setter Property="Background" Value="{DynamicResource Bg0}" />
+        <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+    </Style>
+
+    <Style Selector="UserControl">
+        <Setter Property="FontFamily" Value="{StaticResource SansFont}" />
+        <Setter Property="FontSize"   Value="{StaticResource TextBase}" />
+        <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+    </Style>
+
+    <!-- ===== Mono opt-in ===== -->
+    <Style Selector=":is(TemplatedControl).mono">
+        <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+    </Style>
+    <Style Selector="TextBlock.mono">
+        <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+    </Style>
+
+    <!-- ===== Headings ===== -->
+    <Style Selector="TextBlock.h1">
+        <Setter Property="FontSize"   Value="{StaticResource Text3xl}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="LineHeight" Value="34" />
+    </Style>
+    <Style Selector="TextBlock.h2">
+        <Setter Property="FontSize"   Value="{StaticResource TextXl}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="TextBlock.h3">
+        <Setter Property="FontSize"   Value="{StaticResource TextLg}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="TextBlock.muted">
+        <Setter Property="Foreground" Value="{DynamicResource Fg2}" />
+    </Style>
+    <Style Selector="TextBlock.subtle">
+        <Setter Property="Foreground" Value="{DynamicResource Fg3}" />
+    </Style>
+
+    <!-- ============================================================
+         BUTTONS — Primary / Outline / Ghost / Subtle / Destructive / Icon
+
+         All variant buttons share a single Height so a row of
+         icon-only and icon+text buttons lines up. Sm/Lg modifiers
+         override the height. Inline Height/Width on a Button still
+         wins (used by the sidebar workspace-remove and the title-bar
+         theme toggle).
+         ============================================================ -->
+    <Style Selector="Button.Primary, Button.Outline, Button.Ghost, Button.Subtle, Button.Destructive, Button.Danger, Button.Icon">
+        <Setter Property="Height"                     Value="32" />
+        <Setter Property="VerticalContentAlignment"   Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.Icon">
+        <Setter Property="Width" Value="32" />
+    </Style>
+    <Style Selector="Button.Sm">
+        <Setter Property="Height" Value="26" />
+    </Style>
+    <Style Selector="Button.Sm.Icon">
+        <Setter Property="Width" Value="26" />
+    </Style>
+    <Style Selector="Button.Lg">
+        <Setter Property="Height" Value="40" />
+    </Style>
+    <Style Selector="Button.Lg.Icon">
+        <Setter Property="Width" Value="40" />
+    </Style>
+
+    <Style Selector="Button.Primary">
+        <Setter Property="Background"      Value="{DynamicResource Accent}" />
+        <Setter Property="Foreground"      Value="{DynamicResource FgInverse}" />
+        <Setter Property="BorderBrush"     Value="{DynamicResource Accent}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius"    Value="{StaticResource RadiusMd}" />
+        <Setter Property="Padding"         Value="14,6" />
+        <Setter Property="FontWeight"      Value="Medium" />
+    </Style>
+    <Style Selector="Button.Primary:pointerover /template/ ContentPresenter">
+        <Setter Property="Background"  Value="{DynamicResource AccentHover}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentHover}" />
+        <Setter Property="Foreground"  Value="{DynamicResource FgInverse}" />
+    </Style>
+    <Style Selector="Button.Primary:pressed /template/ ContentPresenter">
+        <Setter Property="Background"  Value="{DynamicResource AccentHover}" />
+        <Setter Property="Foreground"  Value="{DynamicResource FgInverse}" />
+    </Style>
+    <Style Selector="Button.Primary:disabled /template/ ContentPresenter">
+        <Setter Property="Opacity" Value="0.5" />
+    </Style>
+
+    <Style Selector="Button.Outline">
+        <Setter Property="Background"      Value="Transparent" />
+        <Setter Property="Foreground"      Value="{DynamicResource Fg}" />
+        <Setter Property="BorderBrush"     Value="{DynamicResource Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius"    Value="{StaticResource RadiusMd}" />
+        <Setter Property="Padding"         Value="12,6" />
+    </Style>
+    <Style Selector="Button.Outline:pointerover /template/ ContentPresenter">
+        <Setter Property="Background"  Value="{DynamicResource BgHover}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource LineStrong}" />
+    </Style>
+    <Style Selector="Button.Outline:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BgActive}" />
+    </Style>
+
+    <Style Selector="Button.Ghost">
+        <Setter Property="Background"      Value="Transparent" />
+        <Setter Property="Foreground"      Value="{DynamicResource Fg2}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius"    Value="{StaticResource RadiusMd}" />
+        <Setter Property="Padding"         Value="10,6" />
+    </Style>
+    <Style Selector="Button.Ghost:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BgHover}" />
+        <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+    </Style>
+    <Style Selector="Button.Ghost:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BgActive}" />
+    </Style>
+
+    <Style Selector="Button.Subtle">
+        <Setter Property="Background"      Value="{DynamicResource Bg2}" />
+        <Setter Property="Foreground"      Value="{DynamicResource Fg2}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius"    Value="{StaticResource RadiusMd}" />
+        <Setter Property="Padding"         Value="10,6" />
+    </Style>
+    <Style Selector="Button.Subtle:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BgActive}" />
+        <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+    </Style>
+
+    <Style Selector="Button.Destructive">
+        <Setter Property="Background"      Value="{DynamicResource Red}" />
+        <Setter Property="Foreground"      Value="White" />
+        <Setter Property="BorderBrush"     Value="{DynamicResource Red}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius"    Value="{StaticResource RadiusMd}" />
+        <Setter Property="Padding"         Value="14,6" />
+        <Setter Property="FontWeight"      Value="Medium" />
+    </Style>
+    <Style Selector="Button.Destructive:pointerover /template/ ContentPresenter">
+        <Setter Property="Background"  Value="{DynamicResource Red}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Red}" />
+        <Setter Property="Foreground"  Value="White" />
+        <Setter Property="Opacity"     Value="0.85" />
+    </Style>
+
+    <Style Selector="Button.Danger">
+        <Setter Property="Background"      Value="Transparent" />
+        <Setter Property="Foreground"      Value="{DynamicResource Red}" />
+        <Setter Property="BorderBrush"     Value="{DynamicResource Red}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius"    Value="{StaticResource RadiusMd}" />
+        <Setter Property="Padding"         Value="12,6" />
+    </Style>
+    <Style Selector="Button.Danger:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource RedSoft}" />
+    </Style>
+
+    <Style Selector="Button.Icon">
+        <Setter Property="Background"      Value="Transparent" />
+        <Setter Property="Foreground"      Value="{DynamicResource Fg3}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding"         Value="4" />
+        <Setter Property="CornerRadius"    Value="{StaticResource RadiusMd}" />
+    </Style>
+    <Style Selector="Button.Icon:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BgHover}" />
+        <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+    </Style>
+
+    <!-- Sizes -->
+    <Style Selector="Button.Sm">
+        <Setter Property="Padding"  Value="8,3" />
+        <Setter Property="FontSize" Value="{StaticResource TextXs}" />
+    </Style>
+    <Style Selector="Button.Lg">
+        <Setter Property="Padding"  Value="16,10" />
+        <Setter Property="FontSize" Value="{StaticResource TextBase}" />
+    </Style>
+
+    <!-- ============================================================
+         INPUTS
+         ============================================================ -->
+    <Style Selector="TextBox">
+        <Setter Property="Background"      Value="{DynamicResource Bg0}" />
+        <Setter Property="Foreground"      Value="{DynamicResource Fg}" />
+        <Setter Property="BorderBrush"     Value="{DynamicResource Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius"    Value="{StaticResource RadiusMd}" />
+        <Setter Property="Padding"         Value="8,4" />
+    </Style>
+    <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+        <Setter Property="BorderBrush" Value="{DynamicResource Accent}" />
+    </Style>
+
+    <!-- ============================================================
+         BADGES — Border.Badge with optional color variant
+         ============================================================ -->
+    <Style Selector="Border.Badge">
+        <Setter Property="Background"      Value="{DynamicResource TagGrayBg}" />
+        <Setter Property="BorderBrush"     Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius"    Value="{StaticResource RadiusSm}" />
+        <Setter Property="Padding"         Value="8,2" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+    <Style Selector="Border.Badge > TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TagGrayFg}" />
+        <Setter Property="FontSize"   Value="{StaticResource TextXs}" />
+        <Setter Property="FontWeight" Value="Medium" />
+    </Style>
+    <Style Selector="Border.Badge.Blue">
+        <Setter Property="Background" Value="{DynamicResource TagBlueBg}" />
+    </Style>
+    <Style Selector="Border.Badge.Blue > TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TagBlueFg}" />
+    </Style>
+    <Style Selector="Border.Badge.Green">
+        <Setter Property="Background" Value="{DynamicResource TagGreenBg}" />
+    </Style>
+    <Style Selector="Border.Badge.Green > TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TagGreenFg}" />
+    </Style>
+    <Style Selector="Border.Badge.Orange">
+        <Setter Property="Background" Value="{DynamicResource TagOrangeBg}" />
+    </Style>
+    <Style Selector="Border.Badge.Orange > TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TagOrangeFg}" />
+    </Style>
+    <Style Selector="Border.Badge.Red">
+        <Setter Property="Background" Value="{DynamicResource TagRedBg}" />
+    </Style>
+    <Style Selector="Border.Badge.Red > TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TagRedFg}" />
+    </Style>
+    <Style Selector="Border.Badge.Yellow">
+        <Setter Property="Background" Value="{DynamicResource TagYellowBg}" />
+    </Style>
+    <Style Selector="Border.Badge.Yellow > TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TagYellowFg}" />
+    </Style>
+    <Style Selector="Border.Badge.Purple">
+        <Setter Property="Background" Value="{DynamicResource TagPurpleBg}" />
+    </Style>
+    <Style Selector="Border.Badge.Purple > TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TagPurpleFg}" />
+    </Style>
+
+    <!-- ============================================================
+         CARD
+         ============================================================ -->
+    <Style Selector="Border.Card">
+        <Setter Property="Background"      Value="{DynamicResource Bg1}" />
+        <Setter Property="BorderBrush"     Value="{DynamicResource Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius"    Value="{StaticResource RadiusLg}" />
+        <Setter Property="Padding"         Value="16" />
+    </Style>
+
+    <!-- ============================================================
+         SEPARATOR
+         ============================================================ -->
+    <Style Selector="Separator">
+        <Setter Property="Background" Value="{DynamicResource Line}" />
+        <Setter Property="Height"     Value="1" />
+    </Style>
+
+    <!-- ============================================================
+         LISTBOX.FLAT — virtualized rows without selection chrome
+         Use as a drop-in replacement for ItemsControl when the list
+         can grow large (workspace projects, history, etc.).
+         ============================================================ -->
+    <Style Selector="ListBox.flat">
+        <Setter Property="Background"      Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding"         Value="0" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+    </Style>
+    <Style Selector="ListBox.flat ListBoxItem">
+        <Setter Property="Padding"             Value="0" />
+        <Setter Property="Background"          Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+    <Style Selector="ListBox.flat ListBoxItem:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BgHover}" />
+    </Style>
+    <Style Selector="ListBox.flat ListBoxItem:selected /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="ListBox.flat ListBoxItem:selected:focus /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <!-- ============================================================
+         WINDOW CHROME (custom title bar buttons)
+         ============================================================ -->
+    <Style Selector="Button.WindowChrome">
+        <Setter Property="Background"      Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius"    Value="0" />
+        <Setter Property="Width"           Value="46" />
+        <Setter Property="Height"          Value="44" />
+        <Setter Property="Padding"         Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment"   Value="Center" />
+    </Style>
+    <Style Selector="Button.WindowChrome:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource WindowControlHoverBg}" />
+    </Style>
+    <Style Selector="Button.WindowChrome.WindowClose:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource WindowCloseHoverBg}" />
+    </Style>
+    <Style Selector="Button.WindowChrome.WindowClose:pointerover Path">
+        <Setter Property="Stroke" Value="{DynamicResource WindowCloseHoverFg}" />
+    </Style>
+
+    <!-- ============================================================
+         SCROLLBAR — slim, ghosted thumb
+         ============================================================ -->
+    <Style Selector="ScrollBar:vertical">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Width"      Value="8" />
+    </Style>
+    <Style Selector="ScrollBar:horizontal">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height"     Value="8" />
+    </Style>
+    <Style Selector="ScrollBar /template/ Thumb">
+        <Setter Property="Background" Value="{DynamicResource Fg4}" />
+    </Style>
+    <Style Selector="ScrollBar:pointerover /template/ Thumb">
+        <Setter Property="Background" Value="{DynamicResource Fg3}" />
+    </Style>
+
+</Styles>

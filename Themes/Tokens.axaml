@@ -1,0 +1,188 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!--
+        RepoSweep design tokens.
+        Ported from sciter-js-sdk-main/projects/reposweep/styles/tokens.css.
+
+        Brushes are theme-aware and resolved via DynamicResource so they swap
+        automatically when Application.RequestedThemeVariant changes.
+        Doubles (spacing, radius, type scale) are theme-invariant.
+    -->
+
+    <!-- ============================================================
+         TYPE SCALE (dip)
+         ============================================================ -->
+    <x:Double x:Key="TextXs">11</x:Double>
+    <x:Double x:Key="TextSm">12</x:Double>
+    <x:Double x:Key="TextBase">14</x:Double>
+    <x:Double x:Key="TextMd">15</x:Double>
+    <x:Double x:Key="TextLg">16</x:Double>
+    <x:Double x:Key="TextXl">18</x:Double>
+    <x:Double x:Key="Text2xl">22</x:Double>
+    <x:Double x:Key="Text3xl">28</x:Double>
+
+    <!-- ============================================================
+         SPACING SCALE (dip)
+         ============================================================ -->
+    <x:Double x:Key="Sp1">4</x:Double>
+    <x:Double x:Key="Sp2">8</x:Double>
+    <x:Double x:Key="Sp3">12</x:Double>
+    <x:Double x:Key="Sp4">16</x:Double>
+    <x:Double x:Key="Sp5">20</x:Double>
+    <x:Double x:Key="Sp6">24</x:Double>
+    <x:Double x:Key="Sp8">32</x:Double>
+    <x:Double x:Key="Sp10">40</x:Double>
+    <x:Double x:Key="Sp12">48</x:Double>
+
+    <!-- ============================================================
+         RADIUS
+         ============================================================ -->
+    <CornerRadius x:Key="RadiusSm">3</CornerRadius>
+    <CornerRadius x:Key="RadiusMd">4</CornerRadius>
+    <CornerRadius x:Key="RadiusLg">6</CornerRadius>
+    <CornerRadius x:Key="RadiusXl">8</CornerRadius>
+    <CornerRadius x:Key="RadiusFull">9999</CornerRadius>
+
+    <!-- ============================================================
+         LAYOUT
+         ============================================================ -->
+    <x:Double x:Key="SidebarWidth">240</x:Double>
+    <x:Double x:Key="TitlebarHeight">44</x:Double>
+
+    <!-- ============================================================
+         THEME-AWARE BRUSHES
+         ============================================================ -->
+    <ResourceDictionary.ThemeDictionaries>
+
+        <!-- ===== LIGHT ===== -->
+        <ResourceDictionary x:Key="Light">
+            <!-- Backgrounds -->
+            <SolidColorBrush x:Key="Bg0"        Color="#FFFFFF" />
+            <SolidColorBrush x:Key="Bg1"        Color="#FBFBFA" />
+            <SolidColorBrush x:Key="Bg2"        Color="#F1F1EF" />
+            <SolidColorBrush x:Key="BgSidebar"  Color="#F7F7F5" />
+            <SolidColorBrush x:Key="BgHover"    Color="#0A37352F" />
+            <SolidColorBrush x:Key="BgActive"   Color="#1437352F" />
+            <SolidColorBrush x:Key="BgSelected" Color="#122383E2" />
+
+            <!-- Foregrounds -->
+            <SolidColorBrush x:Key="Fg"        Color="#37352F" />
+            <SolidColorBrush x:Key="Fg2"       Color="#6B6B6B" />
+            <SolidColorBrush x:Key="Fg3"       Color="#9B9A97" />
+            <SolidColorBrush x:Key="Fg4"       Color="#B4B4B0" />
+            <SolidColorBrush x:Key="FgInverse" Color="#FFFFFF" />
+
+            <!-- Lines -->
+            <SolidColorBrush x:Key="Line"        Color="#1737352F" />
+            <SolidColorBrush x:Key="LineStrong"  Color="#2937352F" />
+
+            <!-- Accent + status -->
+            <SolidColorBrush x:Key="Accent"      Color="#2383E2" />
+            <SolidColorBrush x:Key="AccentHover" Color="#1B6EC2" />
+            <SolidColorBrush x:Key="AccentSoft"  Color="#142383E2" />
+            <SolidColorBrush x:Key="Green"       Color="#0F7B6C" />
+            <SolidColorBrush x:Key="GreenSoft"   Color="#140F7B6C" />
+            <SolidColorBrush x:Key="Orange"      Color="#D9730D" />
+            <SolidColorBrush x:Key="OrangeSoft"  Color="#14D9730D" />
+            <SolidColorBrush x:Key="Red"         Color="#E03E3E" />
+            <SolidColorBrush x:Key="RedSoft"     Color="#14E03E3E" />
+            <SolidColorBrush x:Key="Yellow"      Color="#DFAB01" />
+            <SolidColorBrush x:Key="Purple"      Color="#9065B0" />
+
+            <!-- Tag bg/fg pairs -->
+            <SolidColorBrush x:Key="TagGrayBg"   Color="#80E3E2E0" />
+            <SolidColorBrush x:Key="TagGrayFg"   Color="#6B6B6B" />
+            <SolidColorBrush x:Key="TagGreenBg"  Color="#80DBEDDB" />
+            <SolidColorBrush x:Key="TagGreenFg"  Color="#0F7B6C" />
+            <SolidColorBrush x:Key="TagBlueBg"   Color="#80D3E5EF" />
+            <SolidColorBrush x:Key="TagBlueFg"   Color="#2383E2" />
+            <SolidColorBrush x:Key="TagOrangeBg" Color="#80FADEC9" />
+            <SolidColorBrush x:Key="TagOrangeFg" Color="#D9730D" />
+            <SolidColorBrush x:Key="TagRedBg"    Color="#80FFE2DD" />
+            <SolidColorBrush x:Key="TagRedFg"    Color="#E03E3E" />
+            <SolidColorBrush x:Key="TagYellowBg" Color="#80FDECC8" />
+            <SolidColorBrush x:Key="TagYellowFg" Color="#DFAB01" />
+            <SolidColorBrush x:Key="TagPurpleBg" Color="#80E8DEEE" />
+            <SolidColorBrush x:Key="TagPurpleFg" Color="#9065B0" />
+
+            <!-- Window chrome -->
+            <SolidColorBrush x:Key="WindowChromeBackground" Color="#F7F7F5" />
+            <SolidColorBrush x:Key="WindowControlForeground" Color="#6B6B6B" />
+            <SolidColorBrush x:Key="WindowControlHoverBg"   Color="#1437352F" />
+            <SolidColorBrush x:Key="WindowCloseHoverBg"     Color="#E81123" />
+            <SolidColorBrush x:Key="WindowCloseHoverFg"     Color="#FFFFFF" />
+
+            <!-- Back-compat aliases (existing views use these names) -->
+            <SolidColorBrush x:Key="CardBackgroundColor" Color="#F7F8FA" />
+            <SolidColorBrush x:Key="BorderColor"         Color="#1F000000" />
+            <SolidColorBrush x:Key="GhostColor"          Color="#0F000000" />
+        </ResourceDictionary>
+
+        <!-- ===== DARK ===== -->
+        <ResourceDictionary x:Key="Dark">
+            <!-- Backgrounds -->
+            <SolidColorBrush x:Key="Bg0"        Color="#191919" />
+            <SolidColorBrush x:Key="Bg1"        Color="#202020" />
+            <SolidColorBrush x:Key="Bg2"        Color="#2F2F2F" />
+            <SolidColorBrush x:Key="BgSidebar"  Color="#1E1E1E" />
+            <SolidColorBrush x:Key="BgHover"    Color="#0DFFFFFF" />
+            <SolidColorBrush x:Key="BgActive"   Color="#14FFFFFF" />
+            <SolidColorBrush x:Key="BgSelected" Color="#262383E2" />
+
+            <!-- Foregrounds -->
+            <SolidColorBrush x:Key="Fg"        Color="#CFFFFFFF" />
+            <SolidColorBrush x:Key="Fg2"       Color="#9EFFFFFF" />
+            <SolidColorBrush x:Key="Fg3"       Color="#5EFFFFFF" />
+            <SolidColorBrush x:Key="Fg4"       Color="#3DFFFFFF" />
+            <SolidColorBrush x:Key="FgInverse" Color="#191919" />
+
+            <!-- Lines -->
+            <SolidColorBrush x:Key="Line"        Color="#12FFFFFF" />
+            <SolidColorBrush x:Key="LineStrong"  Color="#21FFFFFF" />
+
+            <!-- Accent + status -->
+            <SolidColorBrush x:Key="Accent"      Color="#529CCA" />
+            <SolidColorBrush x:Key="AccentHover" Color="#6AAFDA" />
+            <SolidColorBrush x:Key="AccentSoft"  Color="#26529CCA" />
+            <SolidColorBrush x:Key="Green"       Color="#4DAB9A" />
+            <SolidColorBrush x:Key="GreenSoft"   Color="#264DAB9A" />
+            <SolidColorBrush x:Key="Orange"      Color="#E8930C" />
+            <SolidColorBrush x:Key="OrangeSoft"  Color="#26E8930C" />
+            <SolidColorBrush x:Key="Red"         Color="#FF6B6B" />
+            <SolidColorBrush x:Key="RedSoft"     Color="#26FF6B6B" />
+            <SolidColorBrush x:Key="Yellow"      Color="#DFAB01" />
+            <SolidColorBrush x:Key="Purple"      Color="#B49CCC" />
+
+            <!-- Tag bg/fg pairs -->
+            <SolidColorBrush x:Key="TagGrayBg"   Color="#14FFFFFF" />
+            <SolidColorBrush x:Key="TagGrayFg"   Color="#9B9A97" />
+            <SolidColorBrush x:Key="TagGreenBg"  Color="#334DAB9A" />
+            <SolidColorBrush x:Key="TagGreenFg"  Color="#4DAB9A" />
+            <SolidColorBrush x:Key="TagBlueBg"   Color="#33529CCA" />
+            <SolidColorBrush x:Key="TagBlueFg"   Color="#529CCA" />
+            <SolidColorBrush x:Key="TagOrangeBg" Color="#33E8930C" />
+            <SolidColorBrush x:Key="TagOrangeFg" Color="#E8930C" />
+            <SolidColorBrush x:Key="TagRedBg"    Color="#33FF6B6B" />
+            <SolidColorBrush x:Key="TagRedFg"    Color="#FF6B6B" />
+            <SolidColorBrush x:Key="TagYellowBg" Color="#33DFAB01" />
+            <SolidColorBrush x:Key="TagYellowFg" Color="#DFAB01" />
+            <SolidColorBrush x:Key="TagPurpleBg" Color="#339065B0" />
+            <SolidColorBrush x:Key="TagPurpleFg" Color="#B494C7" />
+
+            <!-- Window chrome -->
+            <SolidColorBrush x:Key="WindowChromeBackground" Color="#1E1E1E" />
+            <SolidColorBrush x:Key="WindowControlForeground" Color="#9EFFFFFF" />
+            <SolidColorBrush x:Key="WindowControlHoverBg"   Color="#1FFFFFFF" />
+            <SolidColorBrush x:Key="WindowCloseHoverBg"     Color="#E81123" />
+            <SolidColorBrush x:Key="WindowCloseHoverFg"     Color="#FFFFFF" />
+
+            <!-- Back-compat aliases (existing views use these names) -->
+            <SolidColorBrush x:Key="CardBackgroundColor" Color="#1B1D22" />
+            <SolidColorBrush x:Key="BorderColor"         Color="#2AFFFFFF" />
+            <SolidColorBrush x:Key="GhostColor"          Color="#1AFFFFFF" />
+        </ResourceDictionary>
+
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

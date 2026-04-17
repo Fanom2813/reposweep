@@ -1,0 +1,46 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:v="clr-namespace:RepoSweep.Views"
+        xmlns:vm="clr-namespace:RepoSweep.ViewModels"
+        mc:Ignorable="d"
+        d:DesignWidth="1100" d:DesignHeight="720"
+        x:Class="RepoSweep.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="RepoSweep"
+        Width="1100" Height="720"
+        MinWidth="960" MinHeight="620"
+        CanResize="True"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource Bg0}"
+        Foreground="{DynamicResource Fg}"
+        TransparencyLevelHint="None"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="44">
+
+    <Grid RowDefinitions="44,*">
+
+        <!-- Custom title bar (draggable, hosts window controls) -->
+        <v:TitleBar Grid.Row="0" />
+
+        <!-- App content -->
+        <Grid Grid.Row="1">
+            <!-- Onboarding (shown when no roots) -->
+            <v:OnboardingView IsVisible="{Binding ShowOnboarding}" />
+
+            <!-- Main shell (shown when roots exist) -->
+            <Grid IsVisible="{Binding ShowShell}" ColumnDefinitions="Auto,*">
+                <v:SidebarView Grid.Column="0" IsVisible="{Binding SidebarVisible}" />
+
+                <!-- Page area -->
+                <Grid Grid.Column="1">
+                    <v:WorkspaceView IsVisible="{Binding IsWorkspacePage}" />
+                    <v:SettingsView IsVisible="{Binding IsSettingsPage}" />
+                    <v:HistoryView IsVisible="{Binding IsHistoryPage}" />
+                    <v:StatsView IsVisible="{Binding IsStatsPage}" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

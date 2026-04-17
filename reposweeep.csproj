@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <RootNamespace>RepoSweep</RootNamespace>
+    <AssemblyName>RepoSweep</AssemblyName>
+  </PropertyGroup>
+
+  <!--
+    Release publish = single self-contained binary.
+
+      dotnet publish -c Release -r osx-arm64
+      dotnet publish -c Release -r win-x64
+      dotnet publish -c Release -r linux-x64
+
+    Produces one executable in bin/Release/net10.0/<rid>/publish/ that
+    bundles the .NET runtime, all managed dependencies, and native libs.
+    No extra flags needed at the command line — everything below kicks in
+    when -r is supplied.
+
+    Trimming is intentionally OFF: Avalonia + System.Text.Json reflection
+    + Velopack hooks all tend to break under aggressive trimming. R2R
+    gives most of the startup win with none of the breakage risk.
+  -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' AND '$(RuntimeIdentifier)' != ''">
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.0.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.0.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Lucide.Avalonia" Version="0.2.3" />
+    <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="12.0.0.3" />
+    <PackageReference Include="Velopack" Version="0.0.1298" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets/**" />
+  </ItemGroup>
+</Project>

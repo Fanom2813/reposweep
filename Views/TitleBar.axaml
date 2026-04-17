@@ -1,0 +1,106 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:RepoSweep.ViewModels"
+             xmlns:chrome="clr-namespace:Avalonia.Controls.Chrome;assembly=Avalonia.Controls"
+             x:Class="RepoSweep.Views.TitleBar"
+             x:DataType="vm:MainViewModel"
+             Height="44">
+
+    <!--
+        WindowDecorations.ElementRole="TitleBar" tells Avalonia this region is
+        the draggable title bar. The platform handles move-drag, double-click
+        maximize, and the system menu without any code-behind. Interactive
+        controls inside (Buttons) still receive input normally.
+    -->
+    <Border chrome:WindowDecorationProperties.ElementRole="TitleBar"
+            Background="{DynamicResource WindowChromeBackground}"
+            BorderBrush="{DynamicResource Line}"
+            BorderThickness="0,0,0,1">
+
+        <Grid ColumnDefinitions="Auto,*,Auto">
+
+            <!-- Left: app identity -->
+            <Grid Grid.Column="0"
+                  ColumnDefinitions="Auto,Auto,Auto"
+                  Margin="12,0,0,0"
+                  VerticalAlignment="Center">
+
+                <!-- Mac traffic-light spacer (~78dp) -->
+                <Border Grid.Column="0" Name="MacSpacer"
+                        Width="68" Height="44"
+                        IsVisible="False" />
+
+                <LucideIcon Grid.Column="1"
+                            Kind="Sparkles" Size="16"
+                            Foreground="{DynamicResource Accent}"
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center" />
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="RepoSweep"
+                               FontSize="13" FontWeight="SemiBold"
+                               Foreground="{DynamicResource Fg}"
+                               VerticalAlignment="Center" />
+                    <TextBlock Classes="mono"
+                               Text="{Binding TitlebarStat}"
+                               FontSize="11"
+                               Foreground="{DynamicResource Green}"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Center: pure drag space -->
+            <Border Grid.Column="1" Background="Transparent" />
+
+            <!-- Right: update banner + theme toggle + window controls -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6"
+                        VerticalAlignment="Center">
+
+                <!-- Update banner (only shown when Velopack reports a new release) -->
+                <Button Classes="Outline Sm"
+                        IsVisible="{Binding UpdateAvailable}"
+                        ToolTip.Tip="Download and restart to install"
+                        Click="OnApplyUpdateClick">
+                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <LucideIcon Kind="ArrowDownToLine" Size="12"
+                                    Foreground="{DynamicResource Accent}" />
+                        <TextBlock Text="{Binding UpdateBannerLabel}"
+                                   FontSize="11" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+
+                <Button Classes="Icon" Width="36" Height="32"
+                        ToolTip.Tip="Toggle theme"
+                        Click="OnThemeToggleClick">
+                    <LucideIcon Kind="SunMoon" Size="16" />
+                </Button>
+
+                <Grid Name="WindowControls" ColumnDefinitions="Auto,Auto,Auto">
+                    <Button Grid.Column="0" Classes="WindowChrome"
+                            ToolTip.Tip="Minimize"
+                            Click="OnMinimizeClick">
+                        <Path Stroke="{DynamicResource WindowControlForeground}"
+                              StrokeThickness="1"
+                              Data="M0,5 H10" />
+                    </Button>
+                    <Button Grid.Column="1" Classes="WindowChrome"
+                            Name="MaximizeButton"
+                            ToolTip.Tip="Maximize"
+                            Click="OnMaximizeClick">
+                        <Path Stroke="{DynamicResource WindowControlForeground}"
+                              StrokeThickness="1"
+                              Data="M0,0 H10 V10 H0 Z" />
+                    </Button>
+                    <Button Grid.Column="2" Classes="WindowChrome WindowClose"
+                            ToolTip.Tip="Close"
+                            Click="OnCloseClick">
+                        <Path Stroke="{DynamicResource WindowControlForeground}"
+                              StrokeThickness="1.2"
+                              Data="M0,0 L10,10 M10,0 L0,10" />
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

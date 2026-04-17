@@ -1,0 +1,81 @@
+name: Release
+
+# Tag-triggered. Push a tag like `v1.0.0` to publish installers + auto-update
+# deltas for every supported platform to the GitHub release of the same tag.
+#
+# See docs/RELEASING.md for the full flow + troubleshooting.
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write   # required by `vpk upload github` to create / edit releases
+
+jobs:
+  release:
+    name: ${{ matrix.rid }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-14,       rid: osx-arm64,   exe: RepoSweep }
+          - { os: macos-13,       rid: osx-x64,     exe: RepoSweep }
+          - { os: windows-latest, rid: win-x64,     exe: RepoSweep.exe }
+          - { os: ubuntu-latest,  rid: linux-x64,   exe: RepoSweep }
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install Velopack CLI
+        run: dotnet tool install -g vpk
+
+      - name: Resolve version from tag
+        id: ver
+        shell: bash
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      # Pull the previous release for this RID so vpk can build a delta.
+      # Harmless on the first release (the directory is just empty).
+      - name: Download previous release (for delta)
+        continue-on-error: true
+        run: |
+          mkdir -p releases/${{ matrix.rid }}
+          vpk download github \
+            --repoUrl ${{ github.server_url }}/${{ github.repository }} \
+            --outputDir releases/${{ matrix.rid }} \
+            --channel ${{ matrix.rid }}
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish (single self-contained binary)
+        run: dotnet publish -c Release -r ${{ matrix.rid }} -o publish/${{ matrix.rid }}
+
+      - name: Pack with Velopack
+        run: |
+          vpk pack \
+            -u RepoSweep \
+            -v ${{ steps.ver.outputs.version }} \
+            --packDir publish/${{ matrix.rid }} \
+            --outputDir releases/${{ matrix.rid }} \
+            --mainExe ${{ matrix.exe }} \
+            --channel ${{ matrix.rid }}
+        shell: bash
+
+      - name: Upload to GitHub release
+        run: |
+          vpk upload github \
+            --repoUrl ${{ github.server_url }}/${{ github.repository }} \
+            --tag ${{ github.ref_name }} \
+            --releaseDir releases/${{ matrix.rid }} \
+            --merge \
+            --publish
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
